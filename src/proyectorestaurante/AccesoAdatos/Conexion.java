@@ -28,7 +28,6 @@ public static Connection getConexion (){
             JOptionPane.showMessageDialog(null, "Error al cargar Driver");
         } catch (SQLException ex) {
           JOptionPane.showMessageDialog(null, "Error al conectar la bd");
-
         }
     }
     return connection;
