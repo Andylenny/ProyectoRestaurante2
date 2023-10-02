@@ -77,6 +77,11 @@ public class Mesa {
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
+
+    @Override
+    public String toString() {
+        return "Mesa{" + "idMesa=" + idMesa + ", idReserva=" + idReserva + ", idMesero=" + idMesero + ", idPedido=" + idPedido + ", capacidad=" + capacidad + ", estado=" + estado + '}';
+    }
     
     
 }
