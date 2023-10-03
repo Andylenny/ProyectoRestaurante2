@@ -121,6 +121,25 @@ public class ProductoData {
     
     
     */
+     
+     /*   public List<Producto> listarProductos() {
+     String sql = "SELECT codigo, nombre, cantidad, precio FROM productos";
+     List<Producto> productos = new ArrayList<>();
+     
+     try (PreparedStatement statement = conexion.prepareStatement(sql)) {
+     ResultSet resultSet = statement.executeQuery();
+     
+     while (resultSet.next()) {
+     Producto producto = new Producto(
+     resultSet.getInt("codigo"),
+     resultSet.getString("nombre"),
+     resultSet.getInt("cantidad"),
+     resultSet.getDouble("precio")
+     );
+     productos.add(producto);
+     }
+     } catch (SQLException e) {
+     e.printStackTrace();*/
     
     
     
