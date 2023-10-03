@@ -4,7 +4,6 @@ package proyectorestaurante.entidades;
 
 public class Producto {
     private int idProducto;
-    private int idPedido;
     private String nombreProducto;
     private int precio;
     private int stock;
@@ -14,9 +13,9 @@ public class Producto {
     public Producto() {
     }
 
-    public Producto(int idProducto, int idPedido, String nombreProducto, int precio, int stock, int codigo, boolean estado) {
+    public Producto(int idProducto, String nombreProducto, int precio, int stock, int codigo, boolean estado) {
         this.idProducto = idProducto;
-        this.idPedido = idPedido;
+ 
         this.nombreProducto = nombreProducto;
         this.precio = precio;
         this.stock = stock;
@@ -24,14 +23,15 @@ public class Producto {
         this.estado = estado;
     }
 
-    public Producto(int idPedido, String nombreProducto, int precio, int stock, int codigo, boolean estado) {
-        this.idPedido = idPedido;
+    public Producto(String nombreProducto, int precio, int stock, int codigo, boolean estado) {
         this.nombreProducto = nombreProducto;
         this.precio = precio;
         this.stock = stock;
         this.codigo = codigo;
         this.estado = estado;
     }
+    
+    
 
     public int getIdProducto() {
         return idProducto;
@@ -41,13 +41,6 @@ public class Producto {
         this.idProducto = idProducto;
     }
 
-    public int getIdPedido() {
-        return idPedido;
-    }
-
-    public void setIdPedido(int idPedido) {
-        this.idPedido = idPedido;
-    }
 
     public String getNombreProducto() {
         return nombreProducto;
@@ -91,7 +84,7 @@ public class Producto {
 
     @Override
     public String toString() {
-        return "Producto{" + "idProducto=" + idProducto + ", idPedido=" + idPedido + ", nombreProducto=" + nombreProducto + ", precio=" + precio + ", stock=" + stock + ", codigo=" + codigo + ", estado=" + estado + '}';
+        return "Producto{" + "idProducto=" + idProducto + ", nombreProducto=" + nombreProducto + ", precio=" + precio + ", stock=" + stock + ", codigo=" + codigo + ", estado=" + estado + '}';
     }
     
 
