@@ -45,37 +45,36 @@ public class ProductoData {
         }
 
     }
-    
 
     public void eliminarProducto(int codigo) {
         String sql = "DELETE FROM producto WHERE codigo = ?";
 
-        try (PreparedStatement ps =con.prepareStatement(sql)) {
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, codigo);
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "Producto Eliminado");
-            
+
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null,"Error al acceder al eliminar producto");
+            JOptionPane.showMessageDialog(null, "Error al acceder al eliminar producto");
 
         }
     }
-    
+
     public void eliminarProductoLogico(int codigo) {
         String sql = "UPDATE producto SET estado = 0 WHERE codigo = ?";
 
-        try (PreparedStatement ps =con.prepareStatement(sql)) {
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, codigo);
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "Producto Eliminado");
-            
+
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null,"Error al acceder al eliminar producto");
+            JOptionPane.showMessageDialog(null, "Error al acceder al eliminar producto");
 
         }
     }
-   
-     public void modificarProducto(Producto producto) {
+
+    public void modificarProducto(Producto producto) {
         String sql = "UPDATE `producto` SET nombreProducto=?,precio=?,stock=?,estado=?,codigo=? "
                 + "WHERE idProducto=?";
 
@@ -100,7 +99,8 @@ public class ProductoData {
         }
 
     }
-      public Producto buscarProductoporCodigo(int codigo) {
+
+    public Producto buscarProductoporCodigo(int codigo) {
         String sql = "SELECT idProducto,nombreProducto,precio,stock,estado FROM producto WHERE codigo =? AND estado =1";
         Producto producto = null;
 
@@ -115,8 +115,7 @@ public class ProductoData {
                 producto.setPrecio(rs.getInt("precio"));
                 producto.setStock(rs.getInt("stock"));
                 producto.setEstado(true);
-               
-              
+
             } else {
                 JOptionPane.showMessageDialog(null, "No existe ese producto");
             }
@@ -128,48 +127,30 @@ public class ProductoData {
         return producto;
 
     }
-    
-    
-    /* public List<Producto> buscarProductosPorNombre(String nombreProducto) {
-    String sql = "SELECT codigo, nombreProducto, cantidad, precio FROM productos WHERE nombre LIKE ?";
-    List<Producto> productos = new ArrayList<>();
-    
-    try (PreparedStatement ps = conexion.prepareStatement(sql)) {
-    ps.setString(1,  nombre );
-    ResultSet resultSet = ps.executeQuery();
-    
-    while (resultSet.next()) {
-    Producto producto = new Producto(
-    resultSet.getInt("codigo"),
-    resultSet.getString("nombre"),
-    resultSet.getInt("cantidad"),
-    resultSet.getDouble("precio")
-    );
-    productos.add(producto);
-    
-    
-    */
-     
-     /*   public List<Producto> listarProductos() {
-     String sql = "SELECT codigo, nombre, cantidad, precio FROM productos";
-     List<Producto> productos = new ArrayList<>();
-     
-     try (PreparedStatement statement = conexion.prepareStatement(sql)) {
-     ResultSet resultSet = statement.executeQuery();
-     
-     while (resultSet.next()) {
-     Producto producto = new Producto(
-     resultSet.getInt("codigo"),
-     resultSet.getString("nombre"),
-     resultSet.getInt("cantidad"),
-     resultSet.getDouble("precio")
-     );
-     productos.add(producto);
-     }
-     } catch (SQLException e) {
-     e.printStackTrace();*/
-    
-    
-    
-    
+
+    public List<Producto> listarProductos() {
+        String sql = "SELECT idProducto,nombreProducto,precio,stock FROM producto  WHERE estado=1";
+        ArrayList<Producto> productos = new ArrayList<>();
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Producto producto = new Producto();
+                producto.setIdProducto(rs.getInt("IdProducto"));
+                producto.setNombreProducto(rs.getString("nombreProducto"));
+                producto.setPrecio(rs.getInt("precio"));
+                producto.setStock(rs.getInt("stock"));
+                producto.setEstado(true);
+
+                productos.add(producto);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla alumno");
+        }
+        return productos;
+    }
+
 }

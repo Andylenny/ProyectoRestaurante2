@@ -4,8 +4,7 @@ package proyectorestaurante.entidades;
 
 public class Mesero {
     private int idMesero;
-    private int idMesa;
-    private int idPedido;
+    
     private String nombre;
     private String apellido;
     private int dni;
@@ -14,19 +13,17 @@ public class Mesero {
     public Mesero() {
     }
 
-    public Mesero(int idMesero, int idMesa, int idPedido, String nombre, String apellido, int dni, boolean estado) {
+    public Mesero(int idMesero, String nombre, String apellido, int dni, boolean estado) {
         this.idMesero = idMesero;
-        this.idMesa = idMesa;
-        this.idPedido = idPedido;
+        
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
         this.estado = estado;
     }
 
-    public Mesero(int idMesa, int idPedido, String nombre, String apellido, int dni, boolean estado) {
-        this.idMesa = idMesa;
-        this.idPedido = idPedido;
+    public Mesero( String nombre, String apellido, int dni, boolean estado) {
+       
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
@@ -41,21 +38,6 @@ public class Mesero {
         this.idMesero = idMesero;
     }
 
-    public int getIdMesa() {
-        return idMesa;
-    }
-
-    public void setIdMesa(int idMesa) {
-        this.idMesa = idMesa;
-    }
-
-    public int getIdPedido() {
-        return idPedido;
-    }
-
-    public void setIdPedido(int idPedido) {
-        this.idPedido = idPedido;
-    }
 
     public String getNombre() {
         return nombre;
@@ -91,7 +73,7 @@ public class Mesero {
 
     @Override
     public String toString() {
-        return "Mesero{" + "idMesero=" + idMesero + ", idMesa=" + idMesa + ", idPedido=" + idPedido + ", nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni + ", estado=" + estado + '}';
+        return "Mesero{" + "idMesero=" + idMesero +  ", nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni + ", estado=" + estado + '}';
     }
     
 
