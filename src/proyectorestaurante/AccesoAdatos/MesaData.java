@@ -84,6 +84,7 @@ public class MesaData {
             ps.setInt(1, mesa.getCapacidad());
             ps.setBoolean(2, mesa.isEstado());
             ps.setInt(3, mesa.getNumeroMesa());
+            ps.setInt(4, mesa.getIdMesa());
 
             int exito = ps.executeUpdate();
             if (exito == 1) {
