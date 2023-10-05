@@ -1,33 +1,34 @@
-
 package proyectorestaurante.entidades;
 
-
 public class Mesa {
+
     private int idMesa;
-    private int idReserva;
-    private int idMesero;
-    private int idPedido;
     private int capacidad;
     private boolean estado;
+    private int numeroMesa;
 
     public Mesa() {
     }
 
-    public Mesa(int idMesa, int idReserva, int idMesero, int idPedido, int capacidad, boolean estado) {
+    public Mesa(int idMesa, int capacidad, boolean estado, int numeroMesa) {
         this.idMesa = idMesa;
-        this.idReserva = idReserva;
-        this.idMesero = idMesero;
-        this.idPedido = idPedido;
         this.capacidad = capacidad;
         this.estado = estado;
+        this.numeroMesa = numeroMesa;
     }
 
-    public Mesa(int idReserva, int idMesero, int idPedido, int capacidad, boolean estado) {
-        this.idReserva = idReserva;
-        this.idMesero = idMesero;
-        this.idPedido = idPedido;
+    public Mesa(int capacidad, boolean estado, int numeroMesa) {
         this.capacidad = capacidad;
         this.estado = estado;
+        this.numeroMesa = numeroMesa;
+    }
+
+    public int getNumeroMesa() {
+        return numeroMesa;
+    }
+
+    public void setNumeroMesa(int numeroMesa) {
+        this.numeroMesa = numeroMesa;
     }
 
     public int getIdMesa() {
@@ -36,30 +37,6 @@ public class Mesa {
 
     public void setIdMesa(int idMesa) {
         this.idMesa = idMesa;
-    }
-
-    public int getIdReserva() {
-        return idReserva;
-    }
-
-    public void setIdReserva(int idReserva) {
-        this.idReserva = idReserva;
-    }
-
-    public int getIdMesero() {
-        return idMesero;
-    }
-
-    public void setIdMesero(int idMesero) {
-        this.idMesero = idMesero;
-    }
-
-    public int getIdPedido() {
-        return idPedido;
-    }
-
-    public void setIdPedido(int idPedido) {
-        this.idPedido = idPedido;
     }
 
     public int getCapacidad() {
@@ -80,8 +57,7 @@ public class Mesa {
 
     @Override
     public String toString() {
-        return "Mesa{" + "idMesa=" + idMesa + ", idReserva=" + idReserva + ", idMesero=" + idMesero + ", idPedido=" + idPedido + ", capacidad=" + capacidad + ", estado=" + estado + '}';
+        return "Mesa" + "idMesa=" + idMesa + ", capacidad=" + capacidad + ", estado=" + estado;
     }
-    
-    
+
 }
