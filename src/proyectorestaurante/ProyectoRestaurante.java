@@ -2,8 +2,10 @@ package proyectorestaurante;
 
 import java.sql.Connection;
 import proyectorestaurante.AccesoAdatos.Conexion;
+import proyectorestaurante.AccesoAdatos.MesaData;
 import proyectorestaurante.AccesoAdatos.MeseroData;
 import proyectorestaurante.AccesoAdatos.ProductoData;
+import proyectorestaurante.entidades.Mesa;
 import proyectorestaurante.entidades.Mesero;
 import proyectorestaurante.entidades.Producto;
 
@@ -48,6 +50,7 @@ public class ProyectoRestaurante {
 //        System.out.println("dni: " + mesero5.getDni());
         
         
+<<<<<<< Updated upstream
 //        for(Mesero ms : md.listarMeseros()){
 //            System.out.println(ms.getNombre());
 //            System.out.println(ms.getApellido());
@@ -61,3 +64,20 @@ public class ProyectoRestaurante {
     
     
 
+=======
+        for(Mesero ms : md.listarMeseros()){
+            System.out.println(ms.getNombre());
+            System.out.println(ms.getApellido());
+            System.out.println(ms.getDni());
+            
+        }
+        //MESA DATA 
+        
+        Mesa mesa1 = new Mesa(4, true, 1);
+        MesaData mesaData = new MesaData();
+        
+        mesaData.guardarMesa(mesa1);
+        
+    }
+}
+>>>>>>> Stashed changes
