@@ -13,7 +13,7 @@ public class Pedido {
     private LocalDate horaPedido;
     private boolean estadoPago;
     private boolean estado;
-
+    private int cantidadProducto;
     public Pedido() {
     }
 
@@ -26,6 +26,7 @@ public class Pedido {
         this.horaPedido = horaPedido;
         this.estadoPago = estadoPago;
         this.estado = estado;
+        this.cantidadProducto = cantidadProducto;
     }
 
     public Pedido(int idMesa, int idMesero, int idProducto, LocalDate fechaPedido, LocalDate horaPedido, boolean estadoPago, boolean estado) {
@@ -102,9 +103,17 @@ public class Pedido {
         this.estado = estado;
     }
 
+    public int getCantidadProducto() {
+        return cantidadProducto;
+    }
+
+    public void setCantidadProducto(int cantidadProducto) {
+        this.cantidadProducto = cantidadProducto;
+    }
+
     @Override
     public String toString() {
-        return "Pedido{" + "idPedido=" + idPedido + ", idMesa=" + idMesa + ", idMesero=" + idMesero + ", idProducto=" + idProducto + ", fechaPedido=" + fechaPedido + ", horaPedido=" + horaPedido + ", estadoPago=" + estadoPago + ", estado=" + estado + '}';
+        return "Pedido{" + "idPedido=" + idPedido + ", idMesa=" + idMesa + ", idMesero=" + idMesero + ", idProducto=" + idProducto + ", fechaPedido=" + fechaPedido + ", horaPedido=" + horaPedido + ", estadoPago=" + estadoPago + ", estado=" + estado + ", cantidadProducto=" + cantidadProducto +'}';
     }
     
     

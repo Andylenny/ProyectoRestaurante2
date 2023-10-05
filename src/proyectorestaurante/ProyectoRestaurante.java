@@ -20,32 +20,44 @@ public class ProyectoRestaurante {
 //        proddata.modificarProducto(prod);
 //         Producto productoEncontrado = proddata.buscarProductoporCodigo(1);
 //Metodo listar productos
-        /* for(Producto prod : proddata.listarProductos()){
-            System.out.println(prod.getNombreProducto());
-            System.out.println(prod.getPrecio());
-            System.out.println(prod.getStock());
+//         for(Producto prod : proddata.listarProductos()){
+//            System.out.println(prod.getNombreProducto());
+//            System.out.println(prod.getPrecio());
+//            System.out.println(prod.getStock());
             
         
-    }*/
-        //MeseroData
-        Mesero mesero1 = new Mesero(2, "Juan Jose", "Lopez", 33666333, true);
-        MeseroData md = new MeseroData();
-
-        //  md.guardarMesero(mesero1);
-        //md.modificarMesero(mesero1);
-//        Mesero meseroEncontado = md.buscarMeseroporDni(33666333);
-//        System.out.println("idMesero: " + mesero1.getIdMesero());
-//        System.out.println("apellido: " + mesero1.getApellido());
-//        System.out.println("nombre: " + mesero1.getNombre());
-//        System.out.println("dni: " + mesero1.getDni());
-        
-        
-        for(Mesero ms : md.listarMeseros()){
-            System.out.println(ms.getNombre());
-            System.out.println(ms.getApellido());
-            System.out.println(ms.getDni());
-            
-         
-        }
     }
-}
+        //MeseroData
+//        Mesero mesero1 = new Mesero(2, "Juan Jose", "Lopez", 33666333, true);
+//         Mesero mesero2 = new Mesero(1,"Federico ", "Messi", 22445566, true);
+//          Mesero mesero3 = new Mesero( 2,"Melisa", "Fernandez", 12345678, true);
+//           Mesero mesero4 = new Mesero(3, "Ezequiel", "Scheffer", 88776655, true);
+//            Mesero mesero5 = new Mesero(4, "Emanuel", "Gisler", 99887766, true);
+//        MeseroData md = new MeseroData();
+//
+//          md.guardarMesero(mesero3);
+//          md.guardarMesero(mesero4);
+//          md.guardarMesero(mesero5);
+//         
+//        md.modificarMesero(mesero1);
+       //ACOMODAR TRY CATCH DE BUSCAR MESERO POR DNI!!!!!!!!!!!!!!
+//        Mesero meseroEncontado = md.buscarMeseroporDni(99887766);
+//        System.out.println("idMesero: " + mesero5.getIdMesero());
+//        System.out.println("apellido: " + mesero5.getApellido());
+//        System.out.println("nombre: " + mesero5.getNombre());
+//        System.out.println("dni: " + mesero5.getDni());
+        
+        
+//        for(Mesero ms : md.listarMeseros()){
+//            System.out.println(ms.getNombre());
+//            System.out.println(ms.getApellido());
+//            System.out.println(ms.getDni());
+//            
+//         md.eliminarMesero(1);
+//         md.eliminarMesero(2);
+//         md.eliminarMesero(3);
+//         md.eliminarMesero(4);
+        }
+    
+    
+
