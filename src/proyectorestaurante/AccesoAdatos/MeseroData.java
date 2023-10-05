@@ -1,4 +1,3 @@
-
 package proyectorestaurante.AccesoAdatos;
 
 import java.sql.Connection;
@@ -12,9 +11,9 @@ import javax.swing.JOptionPane;
 import proyectorestaurante.entidades.Mesero;
 import proyectorestaurante.entidades.Producto;
 
-
 public class MeseroData {
-     private Connection con = null;
+
+    private Connection con = null;
 
     public MeseroData() {
         con = Conexion.getConexion();
@@ -27,7 +26,7 @@ public class MeseroData {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, mesero.getNombre());
             ps.setString(2, mesero.getApellido());
-            
+
             ps.setBoolean(3, mesero.isEstado());
             ps.setInt(4, mesero.getDni());
 
@@ -47,112 +46,111 @@ public class MeseroData {
 
     }
 
-    public void eliminarProducto(int codigo) {
-        String sql = "DELETE FROM producto WHERE codigo = ?";
+    public void eliminarMesero(int id) {
+        String sql = "DELETE FROM mesero WHERE idMesero = ?";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, codigo);
+            ps.setInt(1, id);
             ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Producto Eliminado");
+            JOptionPane.showMessageDialog(null, "Mesero dado de baja");
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al acceder al eliminar producto");
+            JOptionPane.showMessageDialog(null, "Error al acceder al eliminar mesero");
 
         }
     }
 
-    public void eliminarProductoLogico(int codigo) {
-        String sql = "UPDATE producto SET estado = 0 WHERE codigo = ?";
+    public void eliminarMeseroLogico(int id) {
+        String sql = "UPDATE mesero SET estado = 0 WHERE idMesero = ?";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, codigo);
+            ps.setInt(1, id);
             ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Producto Eliminado");
+            JOptionPane.showMessageDialog(null, "Mesero dado de baja");
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al acceder al eliminar producto");
+            JOptionPane.showMessageDialog(null, "Error al acceder al eliminar mesero");
 
         }
     }
 
-    public void modificarProducto(Producto producto) {
-        String sql = "UPDATE `producto` SET nombreProducto=?,precio=?,stock=?,estado=?,codigo=? "
-                + "WHERE idProducto=?";
+    public void modificarMesero(Mesero mesero) {
+        String sql = "UPDATE mesero SET nombre=?,apellido=?,estado=?,dni=? "
+                + "WHERE idMesero=?";
 
         try {
 
             PreparedStatement ps;
             ps = con.prepareStatement(sql);
-            ps.setString(1, producto.getNombreProducto());
-            ps.setInt(2, producto.getPrecio());
-            ps.setInt(3, producto.getStock());
-            ps.setBoolean(4, producto.isEstado());
-            ps.setInt(5, producto.getCodigo());
-            ps.setInt(6, producto.getIdProducto());
+            ps.setString(1, mesero.getNombre());
+            ps.setString(2, mesero.getApellido());
+            ps.setBoolean(3, mesero.isEstado());
+            ps.setInt(4, mesero.getDni());
+            ps.setInt(5, mesero.getIdMesero());
             int exito = ps.executeUpdate();
             if (exito == 1) {
-                JOptionPane.showMessageDialog(null, "Producto modificado con exito");
+                JOptionPane.showMessageDialog(null, "Mesero modificado con exito");
             }
 
         } catch (SQLException ex) {
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error al modificar el producto");
+            JOptionPane.showMessageDialog(null, "Error al modificar datos del mesero");
         }
 
     }
 
-    public Producto buscarProductoporCodigo(int codigo) {
-        String sql = "SELECT idProducto,nombreProducto,precio,stock,estado FROM producto WHERE codigo =? AND estado =1";
-        Producto producto = null;
+    public Mesero buscarMeseroporDni(int dni) {
+        String sql = "SELECT idMesero,nombre,apellido,estado FROM mesero WHERE dni =? AND estado =1";
+        Mesero mesero = null;
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, codigo);
+            ps.setInt(1, dni);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                producto = new Producto();
-                producto.setIdProducto(rs.getInt("idProducto"));
-                producto.setNombreProducto(rs.getString("nombreProducto"));
-                producto.setPrecio(rs.getInt("precio"));
-                producto.setStock(rs.getInt("stock"));
-                producto.setEstado(true);
-
+                mesero = new Mesero();
+                mesero.setIdMesero(rs.getInt("idMesero"));
+                mesero.setNombre(rs.getString("nombre"));
+                mesero.setApellido(rs.getString("apellido"));
+                mesero.setDni(rs.getInt("dni"));
+                mesero.setEstado(true);
+                JOptionPane.showMessageDialog(null, "Mesero encontrado");
+                
             } else {
-                JOptionPane.showMessageDialog(null, "No existe ese producto");
+                JOptionPane.showMessageDialog(null, "No existe el mesero");
             }
             ps.close();
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla productos");
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla meseros");
         }
-        return producto;
+        return mesero;
 
     }
 
-    public List<Producto> listarProductos() {
-        String sql = "SELECT idProducto,nombreProducto,precio,stock FROM producto  WHERE estado=1";
-        ArrayList<Producto> productos = new ArrayList<>();
+    public List<Mesero> listarMeseros() {
+        String sql = "SELECT idMesero,nombre,apellido,dni FROM mesero  WHERE estado=1";
+        ArrayList<Mesero> meseros = new ArrayList<>();
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Producto producto = new Producto();
-                producto.setIdProducto(rs.getInt("IdProducto"));
-                producto.setNombreProducto(rs.getString("nombreProducto"));
-                producto.setPrecio(rs.getInt("precio"));
-                producto.setStock(rs.getInt("stock"));
-                producto.setEstado(true);
+                Mesero mesero = new Mesero();
+                mesero.setIdMesero(rs.getInt("IdMesero"));
+                mesero.setNombre(rs.getString("nombre"));
+                mesero.setApellido(rs.getString("apellido"));
+                mesero.setDni(rs.getInt("dni"));
+                mesero.setEstado(true);
 
-                productos.add(producto);
+                meseros.add(mesero);
             }
             ps.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla alumno");
         }
-        return productos;
+        return meseros;
     }
-
 
 }
