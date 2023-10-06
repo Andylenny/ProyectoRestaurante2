@@ -75,11 +75,12 @@ public class ProyectoRestaurante {
         
 //        mesaData.guardarMesa(mesa1);  //METODO GUARDAR MESA
 //        mesaData.modificarMesa(mesa1);  // METODO MODIFICAR MESA
-         Mesa mesaEncontrada = mesaData.buscarMesaporId(2);
+         Mesa mesaEncontrada = mesaData.buscarMesaporId(2);   //METODO BUSCAR MESA POR ID
         System.out.println("idMesa: " + mesa1.getIdMesa());
         System.out.println("capacidad: " + mesa1.getCapacidad());
         System.out.println("estado: " + mesa1.isEstado());
         System.out.println("numeroMesa: " + mesa1.getNumeroMesa());
+<<<<<<< Updated upstream
         //       System.out.println(pedido1);
  //       PedidoData pedidoData=new PedidoData();
  //       Pedido pedido1=new Pedido(1, 2, 1, 8,7, LocalDate.of(2023, 6, 10), LocalTime.now(), false, true);
@@ -88,5 +89,8 @@ public class ProyectoRestaurante {
  //       for(Pedido pedido:lista){
  //           System.out.println(pedido);
  //       }
+=======
+      
+>>>>>>> Stashed changes
 }
 }
