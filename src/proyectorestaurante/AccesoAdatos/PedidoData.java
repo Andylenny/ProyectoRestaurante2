@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -171,7 +173,7 @@ public PedidoData(){
         return pedidos;
     }
     public List<Pedido> listarPedidosPorMesaI(int idMesa) {
-        //LISTA DE PEDIDOS ACTIVOS Y PAGOS DE UNA MESA
+        //LISTA DE PEDIDOS ACTIVOS Y NO PAGOS DE UNA MESA
         String sql = "SELECT idPedido, idMesero, fechaPedido, horaPedido, idProducto, cantidadProducto FROM pedido WHERE estadoPago=0 AND estado=1 AND idMesa=?";
     
         ArrayList<Pedido> pedidos = new ArrayList<>();
@@ -199,7 +201,91 @@ public PedidoData(){
         }
         return pedidos;
     }
-
+    
+    public List<Pedido> BuscarPedidosxHora(int idMesa,LocalTime hora) {
+        //LISTA DE PEDIDOS NO PAGO EN HORA
+        String sql = "SELECT idPedido, idMesero, fechaPedido, idProducto, cantidadProducto FROM pedido WHERE estadoPago=0 AND estado=1 AND idMesa=? AND horaPedido=?";
+    
+        ArrayList<Pedido> pedidos = new ArrayList<>();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1,idMesa);
+            ps.setTime(2,Time.valueOf(hora));
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Pedido pedido = new Pedido();
+                pedido.setIdPedido(rs.getInt("idPedido"));
+                pedido.setIdMesa(idMesa);
+                pedido.setIdMesero(rs.getInt("idMesero"));
+                pedido.setFechaPedido(rs.getDate("fechaPedido").toLocalDate());
+                pedido.setHoraPedido(hora);
+                pedido.setIdProducto(rs.getInt("idProducto"));
+                pedido.setCantidadProducto(rs.getInt("cantidadProducto"));
+                pedido.setEstado(true);
+                pedido.setEstadoPago(false);
+                pedidos.add(pedido);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla");
+        }
+        return pedidos;
+    }
+    public List<Pedido> BuscarPedidosxFecha(LocalDate dia) {
+        //LISTA DE PEDIDOS PAGO EN FECHA
+        String sql = "SELECT idPedido,idMesa, idMesero, horaPedido, idProducto, cantidadProducto FROM pedido WHERE estadoPago=1 AND estado=1 AND fechaPedido=?";
+        ArrayList<Pedido> pedidos = new ArrayList<>();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setDate(1,Date.valueOf(dia));
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Pedido pedido = new Pedido();
+                pedido.setIdPedido(rs.getInt("idPedido"));
+                pedido.setIdMesa(rs.getInt("idMesa"));
+                pedido.setIdMesero(rs.getInt("idMesero"));
+                pedido.setFechaPedido(dia);
+                pedido.setHoraPedido(rs.getTime("horaPedido").toLocalTime());
+                pedido.setIdProducto(rs.getInt("idProducto"));
+                pedido.setCantidadProducto(rs.getInt("cantidadProducto"));
+                pedido.setEstado(true);
+                pedido.setEstadoPago(true);
+                pedidos.add(pedido);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla");
+        }
+        return pedidos;
+    }
+    public List<Pedido> BuscarPedidosxMesero(int idMesero) {
+        //LISTA DE PEDIDOS X MESERO
+        String sql = "SELECT idPedido,idMesa, estadoPago, fechaPedido, horaPedido, idProducto, cantidadProducto, estado FROM pedido WHERE idMesero=?";
+        ArrayList<Pedido> pedidos = new ArrayList<>();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1,idMesero);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Pedido pedido = new Pedido();
+                pedido.setIdPedido(rs.getInt("idPedido"));
+                pedido.setIdMesa(rs.getInt("idMesa"));
+                pedido.setIdMesero(idMesero);
+                pedido.setFechaPedido(rs.getDate("fechaPedido").toLocalDate());
+                pedido.setHoraPedido(rs.getTime("horaPedido").toLocalTime());
+                pedido.setIdProducto(rs.getInt("idProducto"));
+                pedido.setCantidadProducto(rs.getInt("cantidadProducto"));
+                pedido.setEstado(rs.getBoolean("estado"));
+                pedido.setEstadoPago(rs.getBoolean("estadoPago"));
+                pedidos.add(pedido);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla");
+        }
+        return pedidos;
+    }
+    
 }
 
 
