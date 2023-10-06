@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -33,10 +34,10 @@ public PedidoData(){
             ps.setInt(3, pedido.getIdMesero());
             ps.setBoolean(4, pedido.isEstadoPago());
             ps.setDate(5, Date.valueOf(pedido.getFechaPedido()));
-            ps.setDate(6, Date.valueOf(pedido.getHoraPedido()));
+            ps.setTime(6, Time.valueOf(pedido.getHoraPedido()));
             ps.setInt(7, pedido.getIdProducto());
-            ps.setInt(9, pedido.getCantidadProducto());
-            ps.setBoolean(10, pedido.isEstado());
+            ps.setInt(8, pedido.getCantidadProducto());
+            ps.setBoolean(9, pedido.isEstado());
 
             ps.executeUpdate();
 
@@ -54,112 +55,150 @@ public PedidoData(){
 
     }
 
-//    public void eliminarProducto(int codigo) {
-//        String sql = "DELETE FROM producto WHERE codigo = ?";
-//
-//        try (PreparedStatement ps = con.prepareStatement(sql)) {
-//            ps.setInt(1, codigo);
-//            ps.executeUpdate();
-//            JOptionPane.showMessageDialog(null, "Producto Eliminado");
-//
-//        } catch (SQLException e) {
-//            JOptionPane.showMessageDialog(null, "Error al acceder al eliminar producto");
-//
-//        }
-//    }
-//
-//    public void eliminarProductoLogico(int codigo) {
-//        String sql = "UPDATE producto SET estado = 0 WHERE codigo = ?";
-//
-//        try (PreparedStatement ps = con.prepareStatement(sql)) {
-//            ps.setInt(1, codigo);
-//            ps.executeUpdate();
-//            JOptionPane.showMessageDialog(null, "Producto Eliminado");
-//
-//        } catch (SQLException e) {
-//            JOptionPane.showMessageDialog(null, "Error al acceder al eliminar producto");
-//
-//        }
-//    }
-//
-//    public void modificarProducto(Producto producto) {
-//        String sql = "UPDATE `producto` SET nombreProducto=?,precio=?,stock=?,estado=?,codigo=? "
-//                + "WHERE idProducto=?";
-//
-//        try {
-//
-//            PreparedStatement ps;
-//            ps = con.prepareStatement(sql);
-//            ps.setString(1, producto.getNombreProducto());
-//            ps.setInt(2, producto.getPrecio());
-//            ps.setInt(3, producto.getStock());
-//            ps.setBoolean(4, producto.isEstado());
-//            ps.setInt(5, producto.getCodigo());
-//            ps.setInt(6, producto.getIdProducto());
-//            int exito = ps.executeUpdate();
-//            if (exito == 1) {
-//                JOptionPane.showMessageDialog(null, "Producto modificado con exito");
-//            }
-//
-//        } catch (SQLException ex) {
-//            ex.printStackTrace();
-//            JOptionPane.showMessageDialog(null, "Error al modificar el producto");
-//        }
-//
-//    }
-//
-//    public Producto buscarProductoporCodigo(int codigo) {
-//        String sql = "SELECT idProducto,nombreProducto,precio,stock,estado FROM producto WHERE codigo =? AND estado =1";
-//        Producto producto = null;
-//
-//        try {
-//            PreparedStatement ps = con.prepareStatement(sql);
-//            ps.setInt(1, codigo);
-//            ResultSet rs = ps.executeQuery();
-//            if (rs.next()) {
-//                producto = new Producto();
-//                producto.setIdProducto(rs.getInt("idProducto"));
-//                producto.setNombreProducto(rs.getString("nombreProducto"));
-//                producto.setPrecio(rs.getInt("precio"));
-//                producto.setStock(rs.getInt("stock"));
-//                producto.setEstado(true);
-//
-//            } else {
-//                JOptionPane.showMessageDialog(null, "No existe ese producto");
-//            }
-//            ps.close();
-//
-//        } catch (SQLException ex) {
-//            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla productos");
-//        }
-//        return producto;
-//
-//    }
-//
-//    public List<Producto> listarProductos() {
-//        String sql = "SELECT idProducto,nombreProducto,precio,stock FROM producto  WHERE estado=1";
-//        ArrayList<Producto> productos = new ArrayList<>();
-//
-//        try {
-//            PreparedStatement ps = con.prepareStatement(sql);
-//
-//            ResultSet rs = ps.executeQuery();
-//            while (rs.next()) {
-//                Producto producto = new Producto();
-//                producto.setIdProducto(rs.getInt("IdProducto"));
-//                producto.setNombreProducto(rs.getString("nombreProducto"));
-//                producto.setPrecio(rs.getInt("precio"));
-//                producto.setStock(rs.getInt("stock"));
-//                producto.setEstado(true);
-//
-//                productos.add(producto);
-//            }
-//            ps.close();
-//        } catch (SQLException ex) {
-//            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla alumno");
-//        }
-//        return productos;
-//    }
+     public Pedido buscarPedidoCodigo(int id) {
+         //BUSCAR POR ID DE PEDIDO
+        String sql = "SELECT idMesa, idMesero, estadoPago, fechaPedido, horaPedido, idProducto, cantidadProducto, estado FROM pedido WHERE idPedido =? AND estado =1";
+        Pedido pedido = null;
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                pedido = new Pedido();
+                pedido.setIdPedido(id);
+                pedido.setIdMesa(rs.getInt("idMesa"));
+                pedido.setIdMesero(rs.getInt("idMesero"));
+                pedido.setEstadoPago(rs.getBoolean("estadoPago"));
+                pedido.setFechaPedido(rs.getDate("fechaPedido").toLocalDate());
+                pedido.setHoraPedido(rs.getTime("horaPedido").toLocalTime());
+                pedido.setIdProducto(rs.getInt("idProducto"));
+                pedido.setCantidadProducto(rs.getInt("cantidadProducto"));
+                pedido.setEstado(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe ese pedido");
+            }
+            ps.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla pedido");
+        }
+        return pedido;
+
+    }
+
+    public void eliminarPedido(int id) {
+        //ELIMINAR DE BASE DE DATOS
+        String sql = "DELETE FROM producto WHERE idPedido = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Pedido Eliminado");
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al acceder al eliminar pedido");
+
+        }
+    }
+
+    public void eliminarPedidoLogico(int id) {
+        //ELIMINAR LOGICO
+        String sql = "UPDATE producto SET estado = 0 WHERE id = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Pedido Eliminado");
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al acceder al eliminar pedido");
+        }
+    }
+
+    public void modificarPedido(Pedido pedido) {
+        //Modificar ESTADO DE PAGO - FECHA PEDIDO - HORA DE PEDIDO - IDPRODUCTO - CANTIDAD DE PRODUCTO
+        String sql = "UPDATE `pedido` SET estadoPago=?,fechaPedido=?,horaPedido=?,idProducto=?,cantidadProducto=? "
+                + "WHERE idPedido=?";
+        try {
+
+            PreparedStatement ps;
+            ps = con.prepareStatement(sql);
+            ps.setBoolean(1, pedido.isEstadoPago());
+            ps.setDate(2, Date.valueOf(pedido.getFechaPedido()));
+            ps.setTime(3, Time.valueOf(pedido.getHoraPedido()));
+            ps.setInt(4, pedido.getIdProducto());
+            ps.setInt(5, pedido.getCantidadProducto());
+            ps.setInt(6, pedido.getIdPedido());
+            int exito = ps.executeUpdate();
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(null, "Pedido modificado con exito");
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al modificar el Pedido");
+        }
+
+    }
+
+    public List<Pedido> listarPedidosPorMesaP(int idMesa) {
+        //LISTA DE PEDIDOS PAGOS Y ACTIVOS DE UNA MESA
+        String sql = "SELECT idPedido, idMesa, idMesero, fechaPedido, horaPedido, idProducto, cantidadProducto FROM pedido WHERE estado =1 AND estadoPago=1 AND idMesa=?";
+    
+        ArrayList<Pedido> pedidos = new ArrayList<>();
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1,idMesa);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Pedido pedido = new Pedido();
+                pedido.setIdPedido(rs.getInt("idPedido"));
+                pedido.setIdMesa(idMesa);
+                pedido.setIdMesero(rs.getInt("idMesero"));
+                pedido.setFechaPedido(rs.getDate("fechaPedido").toLocalDate());
+                pedido.setHoraPedido(rs.getTime("horaPedido").toLocalTime());
+                pedido.setIdProducto(rs.getInt("idProducto"));
+                pedido.setCantidadProducto(rs.getInt("cantidadProducto"));
+                pedido.setEstado(true);
+                pedido.setEstadoPago(true);
+                pedidos.add(pedido);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla");
+        }
+        return pedidos;
+    }
+    public List<Pedido> listarPedidosPorMesaI(int idMesa) {
+        //LISTA DE PEDIDOS ACTIVOS Y PAGOS DE UNA MESA
+        String sql = "SELECT idPedido, idMesero, fechaPedido, horaPedido, idProducto, cantidadProducto FROM pedido WHERE estadoPago=0 AND estado=1 AND idMesa=?";
+    
+        ArrayList<Pedido> pedidos = new ArrayList<>();
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1,idMesa);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Pedido pedido = new Pedido();
+                pedido.setIdPedido(rs.getInt("idPedido"));
+                pedido.setIdMesa(idMesa);
+                pedido.setIdMesero(rs.getInt("idMesero"));
+                pedido.setFechaPedido(rs.getDate("fechaPedido").toLocalDate());
+                pedido.setHoraPedido(rs.getTime("horaPedido").toLocalTime());
+                pedido.setIdProducto(rs.getInt("idProducto"));
+                pedido.setCantidadProducto(rs.getInt("cantidadProducto"));
+                pedido.setEstado(true);
+                pedido.setEstadoPago(false);
+                pedidos.add(pedido);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla");
+        }
+        return pedidos;
+    }
 
 }
 

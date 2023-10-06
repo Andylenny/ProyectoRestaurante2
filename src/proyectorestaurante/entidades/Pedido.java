@@ -1,7 +1,8 @@
-
+    
 package proyectorestaurante.entidades;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 
 public class Pedido {
@@ -10,14 +11,14 @@ public class Pedido {
     private int idMesero;
     private int idProducto;
     private LocalDate fechaPedido;
-    private LocalDate horaPedido;
+    private LocalTime horaPedido;
     private boolean estadoPago;
     private boolean estado;
     private int cantidadProducto;
     public Pedido() {
     }
 
-    public Pedido(int idPedido, int idMesa, int idMesero, int idProducto, LocalDate fechaPedido, LocalDate horaPedido, boolean estadoPago, boolean estado) {
+    public Pedido(int idPedido, int idMesa, int idMesero, int idProducto,int cantidadProducto, LocalDate fechaPedido, LocalTime horaPedido, boolean estadoPago, boolean estado) {
         this.idPedido = idPedido;
         this.idMesa = idMesa;
         this.idMesero = idMesero;
@@ -29,7 +30,7 @@ public class Pedido {
         this.cantidadProducto = cantidadProducto;
     }
 
-    public Pedido(int idMesa, int idMesero, int idProducto, LocalDate fechaPedido, LocalDate horaPedido, boolean estadoPago, boolean estado) {
+    public Pedido(int idMesa, int idMesero, int idProducto, LocalDate fechaPedido, LocalTime horaPedido, boolean estadoPago, boolean estado) {
         this.idMesa = idMesa;
         this.idMesero = idMesero;
         this.idProducto = idProducto;
@@ -79,11 +80,11 @@ public class Pedido {
         this.fechaPedido = fechaPedido;
     }
 
-    public LocalDate getHoraPedido() {
+    public LocalTime getHoraPedido() {
         return horaPedido;
     }
 
-    public void setHoraPedido(LocalDate horaPedido) {
+    public void setHoraPedido(LocalTime horaPedido) {
         this.horaPedido = horaPedido;
     }
 

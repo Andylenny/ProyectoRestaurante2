@@ -80,6 +80,13 @@ public class ProyectoRestaurante {
         System.out.println("capacidad: " + mesa1.getCapacidad());
         System.out.println("estado: " + mesa1.isEstado());
         System.out.println("numeroMesa: " + mesa1.getNumeroMesa());
-        
+        //       System.out.println(pedido1);
+ //       PedidoData pedidoData=new PedidoData();
+ //       Pedido pedido1=new Pedido(1, 2, 1, 8,7, LocalDate.of(2023, 6, 10), LocalTime.now(), false, true);
+ //       pedidoData.guardarPedido(pedido1);
+ //       List<Pedido> lista = pedidoData.listarPedidosPorMesaP(2);
+ //       for(Pedido pedido:lista){
+ //           System.out.println(pedido);
+ //       }
 }
 }
