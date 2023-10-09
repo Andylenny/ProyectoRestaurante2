@@ -5,6 +5,10 @@
  */
 package proyectorestaurante.vistas;
 
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author Lourdes
@@ -16,6 +20,8 @@ public class Restaurante extends javax.swing.JFrame {
      */
     public Restaurante() {
         initComponents();
+         this.setLocationRelativeTo(null);
+          this.setSize(700,600);
     }
 
     /**
@@ -31,13 +37,22 @@ public class Restaurante extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
-        escritorio = new javax.swing.JDesktopPane();
+        ImageIcon icono =new ImageIcon(getClass().getResource("/ProyectoRestaurante/recursos/escritorioproyecto.jpg"));
+        Image miImagen = icono.getImage();
+        escritorio = new javax.swing.JDesktopPane(){
+            public void paintComponent(Graphics g){
+                g.drawImage(miImagen,0,0,getWidth(),getHeight(),this);
+            }
+
+        };
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         PEDIDOS = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jMenu5 = new javax.swing.JMenu();
+        jMenuItem9 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
@@ -57,25 +72,42 @@ public class Restaurante extends javax.swing.JFrame {
         escritorio.setLayout(escritorioLayout);
         escritorioLayout.setHorizontalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 832, Short.MAX_VALUE)
+            .addGap(0, 618, Short.MAX_VALUE)
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 451, Short.MAX_VALUE)
         );
 
+        jMenuBar1.setBackground(new java.awt.Color(0, 0, 0));
+        jMenuBar1.setForeground(new java.awt.Color(255, 255, 255));
+
+        jMenu2.setBackground(new java.awt.Color(255, 255, 255));
+        jMenu2.setForeground(new java.awt.Color(102, 0, 0));
         jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/menu.png"))); // NOI18N
         jMenu2.setText("MENU");
+        jMenu2.setFont(new java.awt.Font("Copperplate Gothic Light", 1, 12)); // NOI18N
 
+        jMenuItem4.setBackground(new java.awt.Color(0, 0, 0));
+        jMenuItem4.setFont(new java.awt.Font("Copperplate Gothic Light", 1, 12)); // NOI18N
+        jMenuItem4.setForeground(new java.awt.Color(255, 51, 51));
+        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/platos.png"))); // NOI18N
         jMenuItem4.setText("PLATOS");
         jMenu2.add(jMenuItem4);
 
         jMenuBar1.add(jMenu2);
 
+        PEDIDOS.setBackground(new java.awt.Color(255, 255, 255));
+        PEDIDOS.setForeground(new java.awt.Color(102, 0, 0));
         PEDIDOS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/restaurantes.png"))); // NOI18N
         PEDIDOS.setText("PEDIDOS");
+        PEDIDOS.setFont(new java.awt.Font("Copperplate Gothic Light", 1, 12)); // NOI18N
 
-        jMenuItem5.setText("MESAS ");
+        jMenuItem5.setBackground(new java.awt.Color(0, 0, 0));
+        jMenuItem5.setFont(new java.awt.Font("Copperplate Gothic Light", 1, 12)); // NOI18N
+        jMenuItem5.setForeground(new java.awt.Color(255, 51, 51));
+        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/pedidos.png"))); // NOI18N
+        jMenuItem5.setText("PEDIDOS ");
         PEDIDOS.add(jMenuItem5);
 
         jMenuItem6.setText("jMenuItem6");
@@ -83,17 +115,46 @@ public class Restaurante extends javax.swing.JFrame {
 
         jMenuBar1.add(PEDIDOS);
 
+        jMenu5.setBackground(new java.awt.Color(255, 255, 255));
+        jMenu5.setForeground(new java.awt.Color(102, 0, 0));
+        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/sala.png"))); // NOI18N
+        jMenu5.setText("MESAS");
+        jMenu5.setFont(new java.awt.Font("Copperplate Gothic Light", 1, 12)); // NOI18N
+
+        jMenuItem9.setBackground(new java.awt.Color(0, 0, 0));
+        jMenuItem9.setFont(new java.awt.Font("Copperplate Gothic Light", 1, 12)); // NOI18N
+        jMenuItem9.setForeground(new java.awt.Color(255, 51, 51));
+        jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/mesa.png"))); // NOI18N
+        jMenuItem9.setText("MESAS");
+        jMenu5.add(jMenuItem9);
+
+        jMenuBar1.add(jMenu5);
+
+        jMenu4.setBackground(new java.awt.Color(255, 255, 255));
+        jMenu4.setForeground(new java.awt.Color(102, 0, 0));
         jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/camarero.png"))); // NOI18N
         jMenu4.setText("MESEROS");
+        jMenu4.setFont(new java.awt.Font("Copperplate Gothic Light", 1, 12)); // NOI18N
 
+        jMenuItem7.setBackground(new java.awt.Color(0, 0, 0));
+        jMenuItem7.setFont(new java.awt.Font("Copperplate Gothic Light", 1, 12)); // NOI18N
+        jMenuItem7.setForeground(new java.awt.Color(255, 51, 51));
+        jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/lupa.png"))); // NOI18N
         jMenuItem7.setText("INFORMACION");
         jMenu4.add(jMenuItem7);
 
         jMenuBar1.add(jMenu4);
 
-        jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/proyecto-de-ley.png"))); // NOI18N
+        jMenu3.setBackground(new java.awt.Color(255, 255, 255));
+        jMenu3.setForeground(new java.awt.Color(102, 0, 0));
+        jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/money.png"))); // NOI18N
         jMenu3.setText("CAJA");
+        jMenu3.setFont(new java.awt.Font("Copperplate Gothic Light", 1, 12)); // NOI18N
 
+        jMenuItem8.setBackground(new java.awt.Color(0, 0, 0));
+        jMenuItem8.setFont(new java.awt.Font("Copperplate Gothic Light", 1, 12)); // NOI18N
+        jMenuItem8.setForeground(new java.awt.Color(255, 51, 51));
+        jMenuItem8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/proyecto-de-ley.png"))); // NOI18N
         jMenuItem8.setText("COBRAR");
         jMenu3.add(jMenuItem8);
 
@@ -105,9 +166,7 @@ public class Restaurante extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(escritorio)
-                .addContainerGap())
+            .addComponent(escritorio)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -159,6 +218,7 @@ public class Restaurante extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
@@ -168,5 +228,6 @@ public class Restaurante extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     // End of variables declaration//GEN-END:variables
 }
