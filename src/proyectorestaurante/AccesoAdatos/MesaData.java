@@ -39,7 +39,7 @@ public class MesaData {
             ps.close();
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla mesa");
+            //JOptionPane.showMessageDialog(null, "Error al acceder a la tabla mesa");
 
         }
 
@@ -99,7 +99,7 @@ public class MesaData {
     }
 
     public Mesa buscarMesaporId(int id) {
-        String sql = "SELECT capacidad,estado,numeroMesa FROM mesa WHERE idMesa=? AND estado =1";
+        String sql = "SELECT idMesa, capacidad,estado,numeroMesa FROM mesa WHERE idMesa=? AND estado =1";
         Mesa mesa = null;
 
         try {
@@ -120,7 +120,7 @@ public class MesaData {
             ps.close();
 
         } catch (SQLException ex) {
-           // JOptionPane.showMessageDialog(null, "Error al acceder a la tabla mesa");
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla mesa" + ex.getMessage());
         }
         return mesa;
 

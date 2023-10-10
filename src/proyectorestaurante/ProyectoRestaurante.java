@@ -80,25 +80,25 @@ public class ProyectoRestaurante {
         
 //        mesaData.guardarMesa(mesa1);  //METODO GUARDAR MESA
 //        mesaData.modificarMesa(mesa1);  // METODO MODIFICAR MESA
-//         Mesa mesaEncontrada = mesaData.buscarMesaporId(2);   //METODO BUSCAR MESA POR ID
-//        System.out.println("idMesa: " + mesa1.getIdMesa());
-//        System.out.println("capacidad: " + mesa1.getCapacidad());
-//        System.out.println("estado: " + mesa1.isEstado());
-//        System.out.println("numeroMesa: " + mesa1.getNumeroMesa());
+         Mesa mesaEncontrada = mesaData.buscarMesaporId(2);   //METODO BUSCAR MESA POR ID
+        System.out.println("idMesa: " + mesa1.getIdMesa());
+        System.out.println("capacidad: " + mesa1.getCapacidad());
+        System.out.println("estado: " + mesa1.isEstado());
+        System.out.println("numeroMesa: " + mesa1.getNumeroMesa());
 
         //       System.out.println(pedido1);
-       PedidoData pedidoData=new PedidoData();
+//       PedidoData pedidoData=new PedidoData();
  //       Pedido pedido1=new Pedido(1, 2, 1, 8,7, LocalDate.of(2023, 6, 10), LocalTime.now(), false, true);
  //       pedidoData.guardarPedido(pedido1);
  //       List<Pedido> lista = pedidoData.listarPedidosPorMesaP(2);
  //         List<Pedido> lista = pedidoData.BuscarPedidosxHora(2, LocalTime.of(10, 0));
  //        List<Pedido> lista = pedidoData.BuscarPedidosxFecha(LocalDate.of(2023,10,27));
-         List<Pedido> lista = pedidoData.BuscarPedidosxMesero(1);
+//         List<Pedido> lista = pedidoData.BuscarPedidosxMesero(1);
  
-       for(Pedido pedido:lista){
-           System.out.println(pedido);
-           pedido.getIdProducto();
-       }
+//       for(Pedido pedido:lista){
+//           System.out.println(pedido);
+//           pedido.getIdProducto();
+//       }
 
 }
 }

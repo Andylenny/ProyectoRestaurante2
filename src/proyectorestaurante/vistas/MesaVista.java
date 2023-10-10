@@ -17,6 +17,9 @@ import proyectorestaurante.entidades.Mesa;
  */
 public class MesaVista extends javax.swing.JInternalFrame {
 
+    private MesaData mesa = new MesaData();
+    private Mesa mesa1 = null;
+
     /**
      * Creates new form Mesa
      */
@@ -42,15 +45,14 @@ public class MesaVista extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jtIdMesa = new javax.swing.JTextField();
+        jtidMesa = new javax.swing.JTextField();
         jtCapacidad = new javax.swing.JTextField();
-        jtEstado = new javax.swing.JTextField();
         jtNumMesa = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        jbBuscar = new javax.swing.JButton();
+        jbNuevo = new javax.swing.JButton();
+        jbGuardar = new javax.swing.JButton();
+        jbModificar = new javax.swing.JButton();
+        jbEliminar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jRadioButton1 = new javax.swing.JRadioButton();
@@ -59,6 +61,7 @@ public class MesaVista extends javax.swing.JInternalFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
+        jtEstado = new javax.swing.JRadioButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -95,20 +98,25 @@ public class MesaVista extends javax.swing.JInternalFrame {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Numero de mesa:");
 
-        jButton1.setText("Buscar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jbBuscar.setText("Buscar");
+        jbBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jbBuscarActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Nuevo");
+        jbNuevo.setText("Nuevo");
 
-        jButton3.setText("Guardar");
+        jbGuardar.setText("Guardar");
+        jbGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbGuardarActionPerformed(evt);
+            }
+        });
 
-        jButton4.setText("Modificar");
+        jbModificar.setText("Modificar");
 
-        jButton5.setText("Eliminar");
+        jbEliminar.setText("Eliminar");
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -194,25 +202,26 @@ public class MesaVista extends javax.swing.JInternalFrame {
                             .addComponent(jLabel4)
                             .addComponent(jLabel5))
                         .addGap(48, 48, 48)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jtIdMesa)
-                            .addComponent(jtCapacidad)
-                            .addComponent(jtEstado)
-                            .addComponent(jtNumMesa, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jtidMesa)
+                                .addComponent(jtCapacidad)
+                                .addComponent(jtNumMesa, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
+                            .addComponent(jtEstado))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(63, 63, 63)
-                                .addComponent(jButton5))
+                                .addComponent(jbEliminar))
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jButton1)
+                                    .addComponent(jbBuscar)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton2))
+                                    .addComponent(jbNuevo))
                                 .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jButton3)
+                                    .addComponent(jbGuardar)
                                     .addGap(47, 47, 47)
-                                    .addComponent(jButton4))))
+                                    .addComponent(jbModificar))))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -223,22 +232,22 @@ public class MesaVista extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(jtIdMesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1))
+                            .addComponent(jtidMesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jbBuscar))
                         .addGap(18, 18, 18)
                         .addComponent(jLabel3))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton2)
+                        .addComponent(jbNuevo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jtCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3)
-                            .addComponent(jButton4))))
+                            .addComponent(jbGuardar)
+                            .addComponent(jbModificar))))
                 .addGap(14, 14, 14)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5))
+                    .addComponent(jbEliminar)
+                    .addComponent(jtEstado))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -272,40 +281,48 @@ public class MesaVista extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
         // TODO add your handling code here:
-              try {
-            int id = Integer.parseInt(jtIdMesa.getText());
+        try {
+            int id = Integer.parseInt(jtidMesa.getText());
             MesaData mesaEncontrada = new MesaData();
 
-// Realiza la búsqueda del alumno por DNI
-           Mesa mesa = mesaEncontrada.buscarMesaporId(id);
+// Realiza la búsqueda de la mesa por ID
+            Mesa mesa = mesaEncontrada.buscarMesaporId(id);
 
             if (mesa != null) {
                 // Si se encuentra el alumno, muestra su información en los campos de texto
-                jtCapacidad.setText(String.valueOf(mesa.getCapacidad()));
-                jtEstado.setText(String.valueOf(mesa.isEstado()));
-                jtNumMesa.setText(String.valueOf(mesa.getNumeroMesa()));
-               
-                JOptionPane.showMessageDialog(null, "Mesa encontrada");
 
-            } else{
-                JOptionPane.showMessageDialog(null, "No se encontro la mesa");
+                jtCapacidad.setText(String.valueOf(mesa.getCapacidad()));
+                jtEstado.setSelected(mesa.isEstado());
+                jtNumMesa.setText(String.valueOf(mesa.getNumeroMesa()));
+
             }
 
         } catch (NumberFormatException n) {
+
             JOptionPane.showMessageDialog(this, "Debe ingresar un numero válido");
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jbBuscarActionPerformed
+
+    private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
+        // TODO add your handling code here:
+        
+        int capacidad = Integer.parseInt(jtCapacidad.getText());
+        int numeroMesa = Integer.parseInt(jtNumMesa.getText());
+        boolean estado = jtEstado.isEnabled();
+        
+
+        Mesa mesa = new Mesa( capacidad, estado, numeroMesa);
+
+        MesaData md = new MesaData();
+        md.guardarMesa(mesa);
+        JOptionPane.showMessageDialog(this, "Mesa Guardada");
+    }//GEN-LAST:event_jbGuardarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup grupo;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -322,9 +339,38 @@ public class MesaVista extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
+    private javax.swing.JButton jbBuscar;
+    private javax.swing.JButton jbEliminar;
+    private javax.swing.JButton jbGuardar;
+    private javax.swing.JButton jbModificar;
+    private javax.swing.JButton jbNuevo;
     private javax.swing.JTextField jtCapacidad;
-    private javax.swing.JTextField jtEstado;
-    private javax.swing.JTextField jtIdMesa;
+    private javax.swing.JRadioButton jtEstado;
     private javax.swing.JTextField jtNumMesa;
+    private javax.swing.JTextField jtidMesa;
     // End of variables declaration//GEN-END:variables
+  private void desactivarCampos() {
+        jtidMesa.setEnabled(false);
+        jtCapacidad.setEnabled(false);
+        jtNumMesa.setEnabled(false);
+        jtEstado.setSelected(false);
+
+    }
+
+    private void activarCampos() {
+        jtidMesa.setEnabled(true);
+        jtCapacidad.setEnabled(true);
+        jtNumMesa.setEnabled(true);
+        jtEstado.setSelected(true);
+
+    }
+
+    private void limpiar() {
+
+        jtidMesa.setText("");
+        jtCapacidad.setText("");
+        jtNumMesa.setText("");
+        jtEstado.setSelected(true);
+
+    }
 }
