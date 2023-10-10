@@ -7,7 +7,10 @@ package proyectorestaurante.vistas;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import proyectorestaurante.AccesoAdatos.MesaData;
 import proyectorestaurante.entidades.Mesa;
 
@@ -17,14 +20,21 @@ import proyectorestaurante.entidades.Mesa;
  */
 public class MesaVista extends javax.swing.JInternalFrame {
 
+    private DefaultTableModel modelo = new DefaultTableModel() {
+        public boolean isCellEditable(int fila, int columna) {
+            return false;
+        }
+    };
     private MesaData mesa = new MesaData();
     private Mesa mesa1 = null;
-
+private ArrayList<Mesa> listaMesas;
     /**
      * Creates new form Mesa
      */
     public MesaVista() {
         initComponents();
+        cargarAlumnos();
+        armarCabecera();
     }
 
     /**
@@ -141,9 +151,19 @@ public class MesaVista extends javax.swing.JInternalFrame {
 
         grupo.add(jrMesaSi);
         jrMesaSi.setText("Mesas Disponibles ");
+        jrMesaSi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrMesaSiActionPerformed(evt);
+            }
+        });
 
         grupo.add(jrMesaNo);
         jrMesaNo.setText("Mesas No Disponibles");
+        jrMesaNo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrMesaNoActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("Seleccione una mesa:");
 
@@ -367,34 +387,34 @@ public class MesaVista extends javax.swing.JInternalFrame {
 
     private void jbEliminarLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarLActionPerformed
         // TODO add your handling code here:
-         int id = Integer.parseInt(jtidMesa.getText());
+        int id = Integer.parseInt(jtidMesa.getText());
         MesaData mesaEncontrada = new MesaData();
 
-          Mesa mesa = mesaEncontrada.buscarMesaporId(id);
+        Mesa mesa = mesaEncontrada.buscarMesaporId(id);
 
         if (mesa != null) {
 //             Si se encuentra el alumno, elimínalo
             mesaEncontrada.eliminarMeseroLogico(id);
-          
+
         } else {
 //             Si no se encuentra el alumno, muestra un mensaje de error
             JOptionPane.showMessageDialog(this, "Mesa no encontrado");
         }
 
-        
+
     }//GEN-LAST:event_jbEliminarLActionPerformed
 
     private void jbEliminarTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarTActionPerformed
         // TODO add your handling code here:
-         int id = Integer.parseInt(jtidMesa.getText());
+        int id = Integer.parseInt(jtidMesa.getText());
         MesaData mesaEncontrada = new MesaData();
 
-          Mesa mesa = mesaEncontrada.buscarMesaporId(id);
+        Mesa mesa = mesaEncontrada.buscarMesaporId(id);
 
         if (mesa != null) {
 //             Si se encuentra el alumno, elimínalo
             mesaEncontrada.eliminarMesa(id);
-           
+
         } else {
 //             Si no se encuentra el alumno, muestra un mensaje de error
             JOptionPane.showMessageDialog(this, "Mesa no encontrado");
@@ -403,25 +423,53 @@ public class MesaVista extends javax.swing.JInternalFrame {
 
     private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
         // TODO add your handling code here:
-        try{
-             int id = Integer.parseInt(jtidMesa.getText());
-             int cap = Integer.parseInt(jtCapacidad.getText());
-             int numMesa= Integer.parseInt(jtNumMesa.getText());
-        MesaData mesaEncontrada = new MesaData();
+        try {
+            int id = Integer.parseInt(jtidMesa.getText());
+            int cap = Integer.parseInt(jtCapacidad.getText());
+            int numMesa = Integer.parseInt(jtNumMesa.getText());
+            MesaData mesaEncontrada = new MesaData();
 
-          Mesa mesa = mesaEncontrada.buscarMesaporId(id);
-             if (mesa != null) {
-                 mesa.setCapacidad(id);
-                 mesa.setCapacidad(cap);
-                 mesa.setNumeroMesa(numMesa);
-                 mesaEncontrada.modificarMesa(mesa);
-           
-             }
-        }catch(NumberFormatException n){
-                JOptionPane.showMessageDialog(null, "Debe ingresar un id válido");
-                }
-         
+            Mesa mesa = mesaEncontrada.buscarMesaporId(id);
+            if (mesa != null) {
+                mesa.setCapacidad(id);
+                mesa.setCapacidad(cap);
+                mesa.setNumeroMesa(numMesa);
+                mesaEncontrada.modificarMesa(mesa);
+
+            }
+        } catch (NumberFormatException n) {
+            JOptionPane.showMessageDialog(null, "Debe ingresar un id válido");
+        }
+
     }//GEN-LAST:event_jbModificarActionPerformed
+
+    private void jrMesaSiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrMesaSiActionPerformed
+        // TODO add your handling code here:
+        
+        borrarFilas();
+        Mesa mesabox = (Mesa)jcMesa.getSelectedItem();
+        listaMesas = (ArrayList)mesa.listarMesas();
+        for(Mesa mesa1:listaMesas){
+            modelo.addRow(new Object[]{mesa1.getIdMesa(),mesa1.getCapacidad(),mesa1.getNumeroMesa()});
+     
+        }
+        
+        
+    }//GEN-LAST:event_jrMesaSiActionPerformed
+
+    private void jrMesaNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrMesaNoActionPerformed
+        // TODO add your handling code here:
+          
+        borrarFilas();
+        Mesa mesabox = (Mesa)jcMesa.getSelectedItem();
+        listaMesas = (ArrayList)mesa.listarMesasVacias();
+        for(Mesa mesa1:listaMesas){
+            modelo.addRow(new Object[]{mesa1.getIdMesa(),mesa1.getCapacidad(),mesa1.getNumeroMesa()});
+     
+        }
+        
+        
+    }//GEN-LAST:event_jrMesaNoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -444,7 +492,7 @@ public class MesaVista extends javax.swing.JInternalFrame {
     private javax.swing.JButton jbGuardar;
     private javax.swing.JButton jbModificar;
     private javax.swing.JButton jbNuevo;
-    private javax.swing.JComboBox<String> jcMesa;
+    private javax.swing.JComboBox<Mesa> jcMesa;
     private javax.swing.JRadioButton jrMesaNo;
     private javax.swing.JRadioButton jrMesaSi;
     private javax.swing.JTextField jtCapacidad;
@@ -477,4 +525,36 @@ public class MesaVista extends javax.swing.JInternalFrame {
         jtEstado.setSelected(false);
 
     }
+
+    public void cargarAlumnos() {
+        for (Mesa mesa : mesa.listarMesas()) {
+            jcMesa.addItem(mesa);
+        }
+
+    }
+
+    private void armarCabecera() {
+        ArrayList<Object> columnas = new ArrayList<>();
+        modelo.addColumn("IdMesa");
+        modelo.addColumn("Capacidad");
+        modelo.addColumn("Numero Mesa");
+        modelo.addColumn("Estado");
+        jtTabla.setModel(modelo);
+
+        for (Object it : columnas) {
+            modelo.addColumn(it);
+        }
+        jtTabla.setModel(modelo);
+
+    }
+
+    private void borrarFilas() {
+        int filas = jtTabla.getRowCount() - 1;
+
+        for (int f = filas; f >= 0; f--) {
+            modelo.removeRow(f);
+        }
+
+    }
+
 }

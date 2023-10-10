@@ -39,12 +39,12 @@ public class ProyectoRestaurante {
 //         Mesero mesero2 = new Mesero(1,"Federico ", "Messi", 22445566, true);
 //          Mesero mesero3 = new Mesero( 2,"Melisa", "Fernandez", 12345678, true);
 //           Mesero mesero4 = new Mesero(3, "Ezequiel", "Scheffer", 88776655, true);
-            Mesero mesero5 = new Mesero(4, "Emanuel", "Gisler", 99887766, true);
-        MeseroData md = new MeseroData();
-////
+//            Mesero mesero5 = new Mesero(4, "Emanuel", "Gisler", 99887766, true);
+//        MeseroData md = new MeseroData();
+//////
 //          md.guardarMesero(mesero3);
 //          md.guardarMesero(mesero4);
-          md.guardarMesero(mesero5);
+//          md.guardarMesero(mesero5);
 //         
 //        md.modificarMesero(mesero1);
        //ACOMODAR TRY CATCH DE BUSCAR MESERO POR DNI!!!!!!!!!!!!!!
@@ -77,7 +77,7 @@ public class ProyectoRestaurante {
         
 //        Mesa mesa1 = new Mesa(2,5, true, 1);
 //         Mesa mesa2 = new Mesa(6, true, 4);
-//        MesaData mesaData = new MesaData();
+        MesaData mesaData = new MesaData();
 //        
 //        mesaData.guardarMesa(mesa2);  //METODO GUARDAR MESA
 //        mesaData.modificarMesa(mesa1);  // METODO MODIFICAR MESA
@@ -86,6 +86,13 @@ public class ProyectoRestaurante {
 //        System.out.println("capacidad: " + mesa1.getCapacidad());
 //        System.out.println("estado: " + mesa1.isEstado());
 //        System.out.println("numeroMesa: " + mesa1.getNumeroMesa());
+        for(Mesa me : mesaData.listarMesas()){ //METODO LISTAR MESAS VACIAS
+            System.out.println("ID: "+me.getIdMesa());
+            System.out.println("Capacidad: "+ me.getCapacidad());
+            System.out.println("Numero de mesa: "+me.getNumeroMesa());
+             System.out.println("Estado:" + me.isEstado());
+ 
+    //  PEDIDO DATA
 
         //       System.out.println(pedido1);
 //       PedidoData pedidoData=new PedidoData();
@@ -102,4 +109,5 @@ public class ProyectoRestaurante {
 //       }
 
 }
+    }
 }

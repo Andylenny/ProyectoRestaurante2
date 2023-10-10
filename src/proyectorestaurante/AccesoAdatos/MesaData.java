@@ -149,5 +149,27 @@ public class MesaData {
         }
         return mesas;
     }
+   public List<Mesa> listarMesasVacias() {
+        String sql = "SELECT idMesa,capacidad,estado,numeroMesa FROM mesa  WHERE estado=0";
+        ArrayList<Mesa> mesas = new ArrayList<>();
 
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Mesa mesa = new Mesa();
+                mesa.setIdMesa(rs.getInt("IdMesa"));
+                mesa.setCapacidad(rs.getInt("capacidad"));
+                mesa.setNumeroMesa(rs.getInt("numeroMesa"));
+                mesa.setEstado(false);
+
+                mesas.add(mesa);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla alumno");
+        }
+        return mesas;
+    }
 }
