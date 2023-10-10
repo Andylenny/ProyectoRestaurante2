@@ -39,12 +39,12 @@ public class ProyectoRestaurante {
 //         Mesero mesero2 = new Mesero(1,"Federico ", "Messi", 22445566, true);
 //          Mesero mesero3 = new Mesero( 2,"Melisa", "Fernandez", 12345678, true);
 //           Mesero mesero4 = new Mesero(3, "Ezequiel", "Scheffer", 88776655, true);
-//            Mesero mesero5 = new Mesero(4, "Emanuel", "Gisler", 99887766, true);
+            Mesero mesero5 = new Mesero(4, "Emanuel", "Gisler", 99887766, true);
         MeseroData md = new MeseroData();
-//
+////
 //          md.guardarMesero(mesero3);
 //          md.guardarMesero(mesero4);
-//          md.guardarMesero(mesero5);
+          md.guardarMesero(mesero5);
 //         
 //        md.modificarMesero(mesero1);
        //ACOMODAR TRY CATCH DE BUSCAR MESERO POR DNI!!!!!!!!!!!!!!
@@ -75,16 +75,17 @@ public class ProyectoRestaurante {
 //        }
         //MESA DATA 
         
-        Mesa mesa1 = new Mesa(2,5, true, 1);
-        MesaData mesaData = new MesaData();
-        
-//        mesaData.guardarMesa(mesa1);  //METODO GUARDAR MESA
+//        Mesa mesa1 = new Mesa(2,5, true, 1);
+//         Mesa mesa2 = new Mesa(6, true, 4);
+//        MesaData mesaData = new MesaData();
+//        
+//        mesaData.guardarMesa(mesa2);  //METODO GUARDAR MESA
 //        mesaData.modificarMesa(mesa1);  // METODO MODIFICAR MESA
-         Mesa mesaEncontrada = mesaData.buscarMesaporId(2);   //METODO BUSCAR MESA POR ID
-        System.out.println("idMesa: " + mesa1.getIdMesa());
-        System.out.println("capacidad: " + mesa1.getCapacidad());
-        System.out.println("estado: " + mesa1.isEstado());
-        System.out.println("numeroMesa: " + mesa1.getNumeroMesa());
+//         Mesa mesaEncontrada = mesaData.buscarMesaporId(2);   //METODO BUSCAR MESA POR ID
+//        System.out.println("idMesa: " + mesa1.getIdMesa());
+//        System.out.println("capacidad: " + mesa1.getCapacidad());
+//        System.out.println("estado: " + mesa1.isEstado());
+//        System.out.println("numeroMesa: " + mesa1.getNumeroMesa());
 
         //       System.out.println(pedido1);
 //       PedidoData pedidoData=new PedidoData();

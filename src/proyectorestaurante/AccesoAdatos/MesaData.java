@@ -51,7 +51,7 @@ public class MesaData {
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, id);
             ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Mesa vacia");
+            JOptionPane.showMessageDialog(null, "Mesa Eliminada");
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla mesa");
