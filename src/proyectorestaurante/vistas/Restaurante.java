@@ -5,6 +5,7 @@
  */
 package proyectorestaurante.vistas;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
@@ -126,6 +127,11 @@ public class Restaurante extends javax.swing.JFrame {
         jMenuItem9.setForeground(new java.awt.Color(255, 51, 51));
         jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/mesa.png"))); // NOI18N
         jMenuItem9.setText("MESAS");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem9);
 
         jMenuBar1.add(jMenu5);
@@ -175,6 +181,18 @@ public class Restaurante extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        // TODO add your handling code here:
+            escritorio.removeAll();
+        escritorio.repaint();
+        MesaVista mesa= new MesaVista();
+        mesa.setVisible(true);
+        //ga.getContentPane().setBackground(new Color(0,153,204));
+        escritorio.add(mesa);
+        escritorio.moveToFront(mesa);
+        
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     /**
      * @param args the command line arguments
