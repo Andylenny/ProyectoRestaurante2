@@ -93,7 +93,7 @@ public class MesaData {
 
         } catch (SQLException ex) {
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error al modificar datos del mesero");
+            JOptionPane.showMessageDialog(null, "Error al modificar datos de la mesa");
         }
 
     }
