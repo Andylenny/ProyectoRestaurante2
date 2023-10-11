@@ -118,6 +118,7 @@ public class MesaVista extends javax.swing.JInternalFrame {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Numero de mesa:");
 
+        jbBuscar.setForeground(new java.awt.Color(0, 0, 0));
         jbBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/lupa_1.png"))); // NOI18N
         jbBuscar.setText("Buscar");
         jbBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -126,6 +127,7 @@ public class MesaVista extends javax.swing.JInternalFrame {
             }
         });
 
+        jbNuevo.setForeground(new java.awt.Color(0, 0, 0));
         jbNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/registro.png"))); // NOI18N
         jbNuevo.setText("Nuevo");
         jbNuevo.addActionListener(new java.awt.event.ActionListener() {
@@ -134,6 +136,7 @@ public class MesaVista extends javax.swing.JInternalFrame {
             }
         });
 
+        jbGuardar.setForeground(new java.awt.Color(0, 0, 0));
         jbGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/salvar.png"))); // NOI18N
         jbGuardar.setText("Guardar");
         jbGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -142,6 +145,7 @@ public class MesaVista extends javax.swing.JInternalFrame {
             }
         });
 
+        jbModificar.setForeground(new java.awt.Color(0, 0, 0));
         jbModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/editar.png"))); // NOI18N
         jbModificar.setText("Modificar");
         jbModificar.addActionListener(new java.awt.event.ActionListener() {
@@ -150,6 +154,7 @@ public class MesaVista extends javax.swing.JInternalFrame {
             }
         });
 
+        jbEliminarL.setForeground(new java.awt.Color(0, 0, 0));
         jbEliminarL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/reparar.png"))); // NOI18N
         jbEliminarL.setText("Eliminar Temporalmente ");
         jbEliminarL.addActionListener(new java.awt.event.ActionListener() {
@@ -163,6 +168,7 @@ public class MesaVista extends javax.swing.JInternalFrame {
         jLabel6.setFont(new java.awt.Font("Courier New", 1, 18)); // NOI18N
         jLabel6.setText("Organizacion");
 
+        jtLibre.setBackground(new java.awt.Color(255, 153, 102));
         jtLibre.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -176,6 +182,7 @@ public class MesaVista extends javax.swing.JInternalFrame {
         ));
         jScrollPane2.setViewportView(jtLibre);
 
+        jtOcupada.setBackground(new java.awt.Color(255, 153, 102));
         jtOcupada.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -189,22 +196,28 @@ public class MesaVista extends javax.swing.JInternalFrame {
         ));
         jScrollPane3.setViewportView(jtOcupada);
 
-        jbOcupar.setText("jButton1");
+        jbOcupar.setForeground(new java.awt.Color(0, 0, 0));
+        jbOcupar.setText("Ocupar");
         jbOcupar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbOcuparActionPerformed(evt);
             }
         });
 
-        jbLiberar.setText("jButton2");
+        jbLiberar.setForeground(new java.awt.Color(0, 0, 0));
+        jbLiberar.setText("Liberar");
         jbLiberar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbLiberarActionPerformed(evt);
             }
         });
 
+        jLabel8.setFont(new java.awt.Font("Corbel", 1, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Mesas Libres");
 
+        jLabel9.setFont(new java.awt.Font("Corbel", 1, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Mesas Ocupadas");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -214,7 +227,7 @@ public class MesaVista extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jbLiberar, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jbOcupar, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -249,9 +262,10 @@ public class MesaVista extends javax.swing.JInternalFrame {
                         .addGap(34, 34, 34)
                         .addComponent(jbLiberar))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(126, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
+        jbEliminarT.setForeground(new java.awt.Color(0, 0, 0));
         jbEliminarT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/eliminar.png"))); // NOI18N
         jbEliminarT.setText("Eliminacion Total");
         jbEliminarT.addActionListener(new java.awt.event.ActionListener() {
@@ -299,7 +313,7 @@ public class MesaVista extends javax.swing.JInternalFrame {
                             .addComponent(jbGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE))
                         .addGap(27, 27, 27)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jbNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
+                            .addComponent(jbNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jbModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap(64, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -329,7 +343,6 @@ public class MesaVista extends javax.swing.JInternalFrame {
                             .addComponent(jtCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jbGuardar)
                             .addComponent(jbModificar))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -341,7 +354,7 @@ public class MesaVista extends javax.swing.JInternalFrame {
                             .addComponent(jLabel5)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jbEliminarL)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jbEliminarT, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -355,10 +368,10 @@ public class MesaVista extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(212, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(188, 188, 188)
                 .addComponent(jLabel1)
-                .addGap(176, 176, 176))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

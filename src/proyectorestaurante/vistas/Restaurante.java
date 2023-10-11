@@ -93,6 +93,11 @@ public class Restaurante extends javax.swing.JFrame {
         jMenuItem4.setForeground(new java.awt.Color(255, 51, 51));
         jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/platos.png"))); // NOI18N
         jMenuItem4.setText("PLATOS");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem4);
 
         jMenuBar1.add(jMenu2);
@@ -205,6 +210,17 @@ public class Restaurante extends javax.swing.JFrame {
         escritorio.add(mesero);
         escritorio.moveToFront(mesero);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+        ProductoV pro = new ProductoV();
+        pro.setVisible(true);
+         pro.getContentPane().setBackground(new Color(255,153,102));
+        escritorio.add(pro);
+        escritorio.moveToFront(pro);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments
