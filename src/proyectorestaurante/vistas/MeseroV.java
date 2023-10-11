@@ -79,18 +79,38 @@ public class MeseroV extends javax.swing.JInternalFrame {
         jbNuevo.setForeground(new java.awt.Color(0, 0, 0));
         jbNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/registro.png"))); // NOI18N
         jbNuevo.setText("Nuevo");
+        jbNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbNuevoActionPerformed(evt);
+            }
+        });
 
         jbGuardar.setForeground(new java.awt.Color(0, 0, 0));
         jbGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/salvar.png"))); // NOI18N
         jbGuardar.setText("Guardar");
+        jbGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbGuardarActionPerformed(evt);
+            }
+        });
 
         jbModificar.setForeground(new java.awt.Color(0, 0, 0));
         jbModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/editar.png"))); // NOI18N
         jbModificar.setText("Modificar");
+        jbModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbModificarActionPerformed(evt);
+            }
+        });
 
         jbEliminar.setForeground(new java.awt.Color(0, 0, 0));
         jbEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/eliminar_1.png"))); // NOI18N
         jbEliminar.setText("Eliminar");
+        jbEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEliminarActionPerformed(evt);
+            }
+        });
 
         jbSalir.setText("Salir");
 
@@ -132,11 +152,15 @@ public class MeseroV extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jbSalir)
-                            .addComponent(jButton7)
-                            .addComponent(jButton8)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jbSalir)
+                                    .addComponent(jButton7)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(9, 9, 9)
+                                .addComponent(jButton8))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
@@ -205,11 +229,11 @@ public class MeseroV extends javax.swing.JInternalFrame {
                             .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(7, Short.MAX_VALUE))
+                        .addContainerGap(12, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jbSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -244,6 +268,79 @@ public class MeseroV extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jbBuscarActionPerformed
 
+    private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
+        // TODO add your handling code here:
+            activarCampos();
+        limpiar();
+        jtDni.requestFocus();
+        jtNombre.setEnabled(true);
+        jtApellido.setEnabled(true);
+        jrEstado.setEnabled(true);
+        jtId.setEnabled(true);
+        jbModificar.setEnabled(true);
+        jbGuardar.setEnabled(true);
+        jbBuscar.setEnabled(true);
+        jbEliminar.setEnabled(true);
+        
+    }//GEN-LAST:event_jbNuevoActionPerformed
+
+    private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
+        // TODO add your handling code here:
+         int dni= Integer.parseInt(jtDni.getText());
+        String nombre = jtNombre.getText();
+            String apellido = jtApellido.getText();
+        boolean estado = jrEstado.isEnabled();
+        
+
+        Mesero mesero = new Mesero(nombre, apellido, dni, estado);
+
+        MeseroData md = new MeseroData();
+        md.guardarMesero(mesero);
+     
+    }//GEN-LAST:event_jbGuardarActionPerformed
+
+    private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
+        // TODO add your handling code here:
+            try {
+            int dni = Integer.parseInt(jtDni.getText());
+            String nombre = jtNombre.getText();
+            String apellido = jtApellido.getText();
+           //COLOCAR ESTADO
+            
+           
+            
+            MeseroData meseroEncontrado = new MeseroData();
+            Mesero mesero = meseroEncontrado.buscarMeseroporDni(dni);
+            if (mesero != null) {
+                mesero.setDni(dni);
+                mesero.setNombre(nombre);
+                mesero.setApellido(apellido);
+                meseroEncontrado.modificarMesero(mesero);
+            }
+        
+        } catch (NumberFormatException n) {
+            JOptionPane.showMessageDialog(null, "Debe ingresar un id válido");
+        }
+        
+    }//GEN-LAST:event_jbModificarActionPerformed
+
+    private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
+        // TODO add your handling code here:
+        int dni= Integer.parseInt(jtDni.getText());
+        MeseroData meseroEncontrado= new MeseroData();
+
+        Mesero mesero = meseroEncontrado.buscarMeseroporDni(dni);
+
+        if (mesero != null) {
+//             Si se encuentra el alumno, elimínalo
+            meseroEncontrado.eliminarMesero(dni);
+            
+        } else {
+//             Si no se encuentra el alumno, muestra un mensaje de error
+            JOptionPane.showMessageDialog(this, "Mesa no encontrado");
+        }
+    }//GEN-LAST:event_jbEliminarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton7;
@@ -268,4 +365,29 @@ public class MeseroV extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jtNombre;
     private javax.swing.JTable tabla;
     // End of variables declaration//GEN-END:variables
+private void desactivarCampos() {
+        jtDni.setEnabled(false);
+        jtNombre.setEnabled(false);
+        jtApellido.setEnabled(false);
+        jrEstado.setSelected(false);
+        jtId.setEnabled(false);
+    }
+
+    private void activarCampos() {
+       jtDni.setEnabled(true);
+        jtNombre.setEnabled(true);
+        jtApellido.setEnabled(true);
+        jrEstado.setSelected(true);
+        jtId.setEnabled(true);
+    }
+
+    private void limpiar() {
+
+        jtDni.setText("");
+        jtNombre.setText("");
+        jtApellido.setText("");
+        jrEstado.setSelected(false);
+        jtId.setText("");   
+    }
+
 }

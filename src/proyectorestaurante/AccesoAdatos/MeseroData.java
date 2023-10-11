@@ -46,13 +46,13 @@ public class MeseroData {
 
     }
 
-    public void eliminarMesero(int id) {
-        String sql = "DELETE FROM mesero WHERE idMesero = ?";
+    public void eliminarMesero(int dni) {
+        String sql = "DELETE FROM mesero WHERE dni = ?";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, id);
+            ps.setInt(1, dni);
             ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Mesero dado de baja");
+            JOptionPane.showMessageDialog(null, "Mesero Despedido");
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al acceder al eliminar mesero");
