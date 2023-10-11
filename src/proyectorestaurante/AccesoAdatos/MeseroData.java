@@ -100,7 +100,7 @@ public class MeseroData {
     }
 
     public Mesero buscarMeseroporDni(int dni) {
-        String sql = "SELECT idMesero,nombre,apellido,estado FROM mesero WHERE dni =? AND estado =1";
+        String sql = "SELECT idMesero,nombre,apellido,estado,dni FROM mesero WHERE dni =? AND estado =1";
         Mesero mesero = null;
 
         try {

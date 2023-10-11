@@ -21,8 +21,8 @@ public class Restaurante extends javax.swing.JFrame {
      */
     public Restaurante() {
         initComponents();
-         this.setLocationRelativeTo(null);
-          this.setSize(700,600);
+        this.setLocationRelativeTo(null);
+        
     }
 
     /**
@@ -51,7 +51,6 @@ public class Restaurante extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         PEDIDOS = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
@@ -111,9 +110,6 @@ public class Restaurante extends javax.swing.JFrame {
         jMenuItem5.setText("PEDIDOS ");
         PEDIDOS.add(jMenuItem5);
 
-        jMenuItem6.setText("jMenuItem6");
-        PEDIDOS.add(jMenuItem6);
-
         jMenuBar1.add(PEDIDOS);
 
         jMenu5.setBackground(new java.awt.Color(255, 255, 255));
@@ -147,6 +143,11 @@ public class Restaurante extends javax.swing.JFrame {
         jMenuItem7.setForeground(new java.awt.Color(255, 51, 51));
         jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/lupa.png"))); // NOI18N
         jMenuItem7.setText("INFORMACION");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem7);
 
         jMenuBar1.add(jMenu4);
@@ -184,15 +185,26 @@ public class Restaurante extends javax.swing.JFrame {
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
         // TODO add your handling code here:
-            escritorio.removeAll();
+        escritorio.removeAll();
         escritorio.repaint();
-        MesaVista mesa= new MesaVista();
+        MesaVista mesa = new MesaVista();
         mesa.setVisible(true);
         //ga.getContentPane().setBackground(new Color(0,153,204));
         escritorio.add(mesa);
         escritorio.moveToFront(mesa);
-        
+
     }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+        MeseroV mesero = new MeseroV();
+        mesero.setVisible(true);
+         mesero.getContentPane().setBackground(new Color(255,153,102));
+        escritorio.add(mesero);
+        escritorio.moveToFront(mesero);
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -243,7 +255,6 @@ public class Restaurante extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;

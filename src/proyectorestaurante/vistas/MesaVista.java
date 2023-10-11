@@ -93,9 +93,10 @@ private ArrayList<Mesa> listaMesas;
         setResizable(true);
 
         jLabel1.setFont(new java.awt.Font("Courier New", 1, 18)); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/mesa.png"))); // NOI18N
         jLabel1.setText("Administacion de Mesas");
 
-        jPanel1.setBackground(new java.awt.Color(153, 51, 0));
+        jPanel1.setBackground(new java.awt.Color(255, 153, 102));
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("ID:");
@@ -151,7 +152,7 @@ private ArrayList<Mesa> listaMesas;
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel6.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Courier New", 1, 18)); // NOI18N
         jLabel6.setText("Organizacion");
 
         grupo.add(jrMesaSi);
@@ -211,7 +212,7 @@ private ArrayList<Mesa> listaMesas;
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jcMesa, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(136, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -332,10 +333,10 @@ private ArrayList<Mesa> listaMesas;
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(165, 165, 165)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addGap(0, 211, Short.MAX_VALUE))
+                .addGap(176, 176, 176))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
