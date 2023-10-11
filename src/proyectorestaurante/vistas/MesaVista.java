@@ -20,21 +20,27 @@ import proyectorestaurante.entidades.Mesa;
  */
 public class MesaVista extends javax.swing.JInternalFrame {
 
-    private DefaultTableModel modelo = new DefaultTableModel() {
+    private DefaultTableModel modelo1 = new DefaultTableModel() {
+        public boolean isCellEditable(int fila, int columna) {
+            return false;
+        }
+    };
+    private DefaultTableModel modelo2 = new DefaultTableModel() {
         public boolean isCellEditable(int fila, int columna) {
             return false;
         }
     };
     private MesaData mesa = new MesaData();
     private Mesa mesa1 = null;
-private ArrayList<Mesa> listaMesas;
+    private ArrayList<Mesa> listaMesas;
     /**
      * Creates new form Mesa
      */
     public MesaVista() {
         initComponents();
-        cargarAlumnos();
-        armarCabecera();
+        armarCabecera1();
+        armarCabecera2();
+        armarTabla();
     }
 
     /**
@@ -65,12 +71,14 @@ private ArrayList<Mesa> listaMesas;
         jbEliminarL = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        jrMesaSi = new javax.swing.JRadioButton();
-        jrMesaNo = new javax.swing.JRadioButton();
-        jLabel7 = new javax.swing.JLabel();
-        jcMesa = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jtTabla = new javax.swing.JTable();
+        jtLibre = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jtOcupada = new javax.swing.JTable();
+        jbOcupar = new javax.swing.JButton();
+        jbLiberar = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         jtEstado = new javax.swing.JRadioButton();
         jbEliminarT = new javax.swing.JButton();
 
@@ -155,25 +163,7 @@ private ArrayList<Mesa> listaMesas;
         jLabel6.setFont(new java.awt.Font("Courier New", 1, 18)); // NOI18N
         jLabel6.setText("Organizacion");
 
-        grupo.add(jrMesaSi);
-        jrMesaSi.setText("Mesas Disponibles ");
-        jrMesaSi.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jrMesaSiActionPerformed(evt);
-            }
-        });
-
-        grupo.add(jrMesaNo);
-        jrMesaNo.setText("Mesas No Disponibles");
-        jrMesaNo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jrMesaNoActionPerformed(evt);
-            }
-        });
-
-        jLabel7.setText("Seleccione una mesa:");
-
-        jtTabla.setModel(new javax.swing.table.DefaultTableModel(
+        jtLibre.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -184,51 +174,82 @@ private ArrayList<Mesa> listaMesas;
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(jtTabla);
+        jScrollPane2.setViewportView(jtLibre);
+
+        jtOcupada.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(jtOcupada);
+
+        jbOcupar.setText("jButton1");
+        jbOcupar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbOcuparActionPerformed(evt);
+            }
+        });
+
+        jbLiberar.setText("jButton2");
+        jbLiberar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbLiberarActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("Mesas Libres");
+
+        jLabel9.setText("Mesas Ocupadas");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(218, 218, 218)
-                        .addComponent(jLabel6))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(79, 79, 79)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jrMesaSi)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(27, 27, 27)
-                                        .addComponent(jLabel7)))
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(66, 66, 66)
-                                        .addComponent(jrMesaNo))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jcMesa, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
-                .addContainerGap(136, Short.MAX_VALUE))
+                    .addComponent(jbLiberar, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jbOcupar, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(111, 111, 111)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel9)
+                .addGap(96, 96, 96))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(254, 254, 254)
+                .addComponent(jLabel6)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel6)
-                .addGap(19, 19, 19)
+                .addGap(1, 1, 1)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jcMesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(17, 17, 17)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jrMesaNo)
-                    .addComponent(jrMesaSi))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel9))
+                .addGap(3, 3, 3)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addComponent(jbOcupar)
+                        .addGap(34, 34, 34)
+                        .addComponent(jbLiberar))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(126, Short.MAX_VALUE))
         );
 
         jbEliminarT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/eliminar.png"))); // NOI18N
@@ -270,43 +291,45 @@ private ArrayList<Mesa> listaMesas;
                         .addComponent(jtCapacidad)
                         .addComponent(jtNumMesa, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
                     .addComponent(jtEstado))
-                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jbEliminarT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jbEliminarL, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                        .addGap(42, 42, 42))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jbBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jbGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE))
                         .addGap(27, 27, 27)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jbNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
+                            .addComponent(jbModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(64, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jbModificar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jbNuevo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jbEliminarT)
+                            .addComponent(jbEliminarL, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(86, 86, 86))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
+                .addGap(7, 7, 7)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(jtidMesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jbBuscar)
-                            .addComponent(jbNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jbBuscar))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3)
                         .addGap(12, 12, 12))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jtCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jbGuardar)
-                        .addComponent(jbModificar)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jbNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jtCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jbGuardar)
+                            .addComponent(jbModificar))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -315,13 +338,12 @@ private ArrayList<Mesa> listaMesas;
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jtNumMesa, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addComponent(jLabel5)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jbEliminarL)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jbEliminarT, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(9, 9, 9)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                        .addComponent(jbEliminarT, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -334,14 +356,14 @@ private ArrayList<Mesa> listaMesas;
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(212, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(176, 176, 176))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -412,7 +434,7 @@ private ArrayList<Mesa> listaMesas;
         if (mesa != null) {
 //             Si se encuentra el alumno, elimínalo
             mesaEncontrada.eliminarMeseroLogico(id);
-
+            recargar();
         } else {
 //             Si no se encuentra el alumno, muestra un mensaje de error
             JOptionPane.showMessageDialog(this, "Mesa no encontrado");
@@ -431,7 +453,7 @@ private ArrayList<Mesa> listaMesas;
         if (mesa != null) {
 //             Si se encuentra el alumno, elimínalo
             mesaEncontrada.eliminarMesa(id);
-
+            recargar();
         } else {
 //             Si no se encuentra el alumno, muestra un mensaje de error
             JOptionPane.showMessageDialog(this, "Mesa no encontrado");
@@ -452,41 +474,45 @@ private ArrayList<Mesa> listaMesas;
                 mesa.setCapacidad(cap);
                 mesa.setNumeroMesa(numMesa);
                 mesaEncontrada.modificarMesa(mesa);
-
             }
+            recargar();
         } catch (NumberFormatException n) {
             JOptionPane.showMessageDialog(null, "Debe ingresar un id válido");
         }
-
+        
     }//GEN-LAST:event_jbModificarActionPerformed
 
-    private void jrMesaSiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrMesaSiActionPerformed
-        // TODO add your handling code here:
-        
-        borrarFilas();
-        Mesa mesabox = (Mesa)jcMesa.getSelectedItem();
-        listaMesas = (ArrayList)mesa.listarMesas();
-        for(Mesa mesa1:listaMesas){
-            modelo.addRow(new Object[]{mesa1.getIdMesa(),mesa1.getCapacidad(),mesa1.getNumeroMesa()});
-     
+    private void jbOcuparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbOcuparActionPerformed
+        // OCUPAR MESA
+        int fila = jtLibre.getSelectedRow();
+        mesa1=new Mesa();
+        if(fila >=0){
+            mesa1.setIdMesa((int) modelo1.getValueAt(fila, 0));
+            mesa1.setCapacidad((int) modelo1.getValueAt(fila,1));
+            mesa1.setNumeroMesa((int) modelo1.getValueAt(fila,2));
+            mesa1.setEstado(true);
+            mesa.modificarMesa(mesa1);
+            recargar();
+        }else{
+            JOptionPane.showMessageDialog(this, "Seleccione una mesa libre");
         }
-        
-        
-    }//GEN-LAST:event_jrMesaSiActionPerformed
+    }//GEN-LAST:event_jbOcuparActionPerformed
 
-    private void jrMesaNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrMesaNoActionPerformed
-        // TODO add your handling code here:
-          
-        borrarFilas();
-        Mesa mesabox = (Mesa)jcMesa.getSelectedItem();
-        listaMesas = (ArrayList)mesa.listarMesasVacias();
-        for(Mesa mesa1:listaMesas){
-            modelo.addRow(new Object[]{mesa1.getIdMesa(),mesa1.getCapacidad(),mesa1.getNumeroMesa()});
-     
+    private void jbLiberarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLiberarActionPerformed
+        // LIBERAR MESA
+        int fila = jtOcupada.getSelectedRow();
+        mesa1=new Mesa();
+        if(fila >=0){
+            mesa1.setIdMesa((int) modelo2.getValueAt(fila, 0));
+            mesa1.setCapacidad((int) modelo2.getValueAt(fila,1));
+            mesa1.setNumeroMesa((int) modelo2.getValueAt(fila,2));
+            mesa1.setEstado(false);
+            mesa.modificarMesa(mesa1);
+            recargar();
+        }else{
+            JOptionPane.showMessageDialog(this, "Seleccione una mesa ocupada");
         }
-        
-        
-    }//GEN-LAST:event_jrMesaNoActionPerformed
+    }//GEN-LAST:event_jbLiberarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -497,25 +523,27 @@ private ArrayList<Mesa> listaMesas;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
     private javax.swing.JButton jbBuscar;
     private javax.swing.JButton jbEliminarL;
     private javax.swing.JButton jbEliminarT;
     private javax.swing.JButton jbGuardar;
+    private javax.swing.JButton jbLiberar;
     private javax.swing.JButton jbModificar;
     private javax.swing.JButton jbNuevo;
-    private javax.swing.JComboBox<Mesa> jcMesa;
-    private javax.swing.JRadioButton jrMesaNo;
-    private javax.swing.JRadioButton jrMesaSi;
+    private javax.swing.JButton jbOcupar;
     private javax.swing.JTextField jtCapacidad;
     private javax.swing.JRadioButton jtEstado;
+    private javax.swing.JTable jtLibre;
     private javax.swing.JTextField jtNumMesa;
-    private javax.swing.JTable jtTabla;
+    private javax.swing.JTable jtOcupada;
     private javax.swing.JTextField jtidMesa;
     // End of variables declaration//GEN-END:variables
   private void desactivarCampos() {
@@ -543,35 +571,62 @@ private ArrayList<Mesa> listaMesas;
 
     }
 
-    public void cargarAlumnos() {
-        for (Mesa mesa : mesa.listarMesas()) {
-            jcMesa.addItem(mesa);
-        }
-
-    }
-
-    private void armarCabecera() {
+    private void armarCabecera1() {
         ArrayList<Object> columnas = new ArrayList<>();
-        modelo.addColumn("IdMesa");
-        modelo.addColumn("Capacidad");
-        modelo.addColumn("Numero Mesa");
-        modelo.addColumn("Estado");
-        jtTabla.setModel(modelo);
+        modelo1.addColumn("IdMesa");
+        modelo1.addColumn("Capacidad");
+        modelo1.addColumn("Numero Mesa");
+        modelo1.addColumn("Estado");
+        jtLibre.setModel(modelo1);
 
         for (Object it : columnas) {
-            modelo.addColumn(it);
+            modelo1.addColumn(it);
         }
-        jtTabla.setModel(modelo);
+        jtLibre.setModel(modelo1);
+    }
+    private void armarCabecera2() {
+        ArrayList<Object> columnas = new ArrayList<>();
+        modelo2.addColumn("IdMesa");
+        modelo2.addColumn("Capacidad");
+        modelo2.addColumn("Numero Mesa");
+        modelo2.addColumn("Estado");
+        jtOcupada.setModel(modelo2);
 
+        for (Object it : columnas) {
+            modelo2.addColumn(it);
+        }
+        jtOcupada.setModel(modelo2);
     }
 
-    private void borrarFilas() {
-        int filas = jtTabla.getRowCount() - 1;
+    private void borrarFilas1() {
+        int filas = jtLibre.getRowCount() - 1;
 
         for (int f = filas; f >= 0; f--) {
-            modelo.removeRow(f);
+            modelo1.removeRow(f);
         }
+    }
+    private void borrarFilas2() {
+        int filas = jtOcupada.getRowCount() - 1;
 
+        for (int f = filas; f >= 0; f--) {
+            modelo2.removeRow(f);
+        }
     }
 
+    private void armarTabla(){
+        listaMesas=(ArrayList<Mesa>) mesa.listarMesasVacias();
+        for(Mesa x:listaMesas){
+            modelo1.addRow(new Object[]{x.getIdMesa(),x.getCapacidad(),x.getNumeroMesa(),"Libre"});
+        }
+        listaMesas=(ArrayList<Mesa>) mesa.listarMesas();
+                for(Mesa x:listaMesas){
+            modelo2.addRow(new Object[]{x.getIdMesa(),x.getCapacidad(),x.getNumeroMesa(),"Ocupada"});
+        }
+    }
+    
+    private void recargar(){
+        borrarFilas1();
+        borrarFilas2();
+        armarTabla();
+    }
 }
