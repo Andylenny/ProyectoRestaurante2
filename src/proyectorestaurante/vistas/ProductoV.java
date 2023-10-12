@@ -6,8 +6,10 @@
 package proyectorestaurante.vistas;
 
 import javax.swing.JOptionPane;
+import proyectorestaurante.AccesoAdatos.MesaData;
 import proyectorestaurante.AccesoAdatos.MeseroData;
 import proyectorestaurante.AccesoAdatos.ProductoData;
+import proyectorestaurante.entidades.Mesa;
 import proyectorestaurante.entidades.Mesero;
 import proyectorestaurante.entidades.Producto;
 
@@ -83,8 +85,18 @@ public class ProductoV extends javax.swing.JInternalFrame {
         });
 
         jbGuardar.setText("GUARDAR");
+        jbGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbGuardarActionPerformed(evt);
+            }
+        });
 
         jbModificar.setText("MODIFICAR");
+        jbModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbModificarActionPerformed(evt);
+            }
+        });
 
         jbEliminar.setText("ELIMINAR");
 
@@ -114,20 +126,20 @@ public class ProductoV extends javax.swing.JInternalFrame {
                                     .addComponent(jtNombre)
                                     .addComponent(jtStock))
                                 .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jbModificar)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jbEliminar))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jbNuevo)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jbGuardar))))
+                                        .addComponent(jbGuardar))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jbModificar)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jbEliminar))))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jbBuscar)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(15, 15, 15))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -203,7 +215,7 @@ public class ProductoV extends javax.swing.JInternalFrame {
 
     private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
         // TODO add your handling code here:
-          limpiar();
+        limpiar();
         jtCodigo.requestFocus();
         jtNombre.setEnabled(true);
         jtPrecio.setEnabled(true);
@@ -214,6 +226,47 @@ public class ProductoV extends javax.swing.JInternalFrame {
         jbBuscar.setEnabled(true);
         jbEliminar.setEnabled(true);
     }//GEN-LAST:event_jbNuevoActionPerformed
+
+    private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
+        // TODO add your handling code here:
+        int codigo = Integer.parseInt(jtCodigo.getText());
+        String nombre = jtNombre.getText();
+        int precio = Integer.parseInt(jtPrecio.getText());
+        int stock = Integer.parseInt(jtStock.getText());
+        boolean estado = jrEstado.isEnabled();
+
+        Producto pro = new Producto(nombre, precio, stock, codigo, estado);
+        ProductoData pd = new ProductoData();
+        pd.guardarProducto(pro);
+
+    }//GEN-LAST:event_jbGuardarActionPerformed
+
+    private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
+        // TODO add your handling code here:
+
+        try {
+            int codigo = Integer.parseInt(jtCodigo.getText());
+            String nombre = jtNombre.getText();
+            int precio = Integer.parseInt(jtPrecio.getText());
+            int stock = Integer.parseInt(jtStock.getText());
+            boolean estado = jrEstado.isSelected();
+
+            ProductoData pd = new ProductoData();
+
+            Producto pro = pd.buscarProductoporCodigo(codigo);
+            if (pro != null) {
+                pro.setCodigo(codigo);
+                pro.setNombreProducto(nombre);
+                pro.setPrecio(precio);
+                pro.setStock(stock);
+                pro.setEstado(estado);
+                pd.modificarProducto(pro);
+            }
+
+        } catch (NumberFormatException n) {
+            JOptionPane.showMessageDialog(null, "Debe ingresar un id válido");
+        }
+    }//GEN-LAST:event_jbModificarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -243,7 +296,7 @@ private void desactivarCampos() {
     }
 
     private void activarCampos() {
-       jtCodigo.setEnabled(true);
+        jtCodigo.setEnabled(true);
         jtNombre.setEnabled(true);
         jtPrecio.setEnabled(true);
         jrEstado.setSelected(true);
@@ -256,7 +309,7 @@ private void desactivarCampos() {
         jtNombre.setText("");
         jtPrecio.setText("");
         jrEstado.setSelected(false);
-        jtStock.setText("");   
+        jtStock.setText("");
     }
 
 }

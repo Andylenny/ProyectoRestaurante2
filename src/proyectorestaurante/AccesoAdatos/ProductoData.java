@@ -76,7 +76,7 @@ public class ProductoData {
 
     public void modificarProducto(Producto producto) {
         String sql = "UPDATE `producto` SET nombreProducto=?,precio=?,stock=?,estado=?,codigo=? "
-                + "WHERE idProducto=?";
+                + "WHERE codigo=?";
 
         try {
 
@@ -101,7 +101,7 @@ public class ProductoData {
     }
 
     public Producto buscarProductoporCodigo(int codigo) {
-        String sql = "SELECT idProducto,nombreProducto,precio,stock,estado FROM producto WHERE codigo =? AND estado =1";
+        String sql = "SELECT idProducto,nombreProducto,precio,stock,estado, codigo FROM producto WHERE codigo =? AND estado =1";
         Producto producto = null;
 
         try {

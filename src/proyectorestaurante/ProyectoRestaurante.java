@@ -20,7 +20,7 @@ public class ProyectoRestaurante {
         Connection conexion = Conexion.getConexion();
 //        Producto produ = new Producto(8,"Ñoquis",2,20,1,true);
 ////        /*Producto prod2 = new Producto("Ravioles",130,10,2,true);*/
-        ProductoData proddata = new ProductoData();
+//        ProductoData proddata = new ProductoData();
 
         /*proddata.guardarProducto(prod);*/
  /*proddata.eliminarProducto(2);*/
@@ -77,7 +77,7 @@ public class ProyectoRestaurante {
         
 //        Mesa mesa1 = new Mesa(2,5, true, 1);
 //         Mesa mesa2 = new Mesa(6, true, 4);
-        MesaData mesaData = new MesaData();
+//        MesaData mesaData = new MesaData();
 //        
 //        mesaData.guardarMesa(mesa2);  //METODO GUARDAR MESA
 //        mesaData.modificarMesa(mesa1);  // METODO MODIFICAR MESA
@@ -86,11 +86,11 @@ public class ProyectoRestaurante {
 //        System.out.println("capacidad: " + mesa1.getCapacidad());
 //        System.out.println("estado: " + mesa1.isEstado());
 //        System.out.println("numeroMesa: " + mesa1.getNumeroMesa());
-        for(Mesa me : mesaData.listarMesas()){ //METODO LISTAR MESAS VACIAS
-            System.out.println("ID: "+me.getIdMesa());
-            System.out.println("Capacidad: "+ me.getCapacidad());
-            System.out.println("Numero de mesa: "+me.getNumeroMesa());
-             System.out.println("Estado:" + me.isEstado());
+//        for(Mesa me : mesaData.listarMesas()){ //METODO LISTAR MESAS VACIAS
+//            System.out.println("ID: "+me.getIdMesa());
+//            System.out.println("Capacidad: "+ me.getCapacidad());
+//            System.out.println("Numero de mesa: "+me.getNumeroMesa());
+//             System.out.println("Estado:" + me.isEstado());
  
     //  PEDIDO DATA
 
@@ -110,4 +110,4 @@ public class ProyectoRestaurante {
 
 }
     }
-}
+
