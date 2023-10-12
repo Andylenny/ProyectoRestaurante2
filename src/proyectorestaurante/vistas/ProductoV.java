@@ -5,6 +5,12 @@
  */
 package proyectorestaurante.vistas;
 
+import javax.swing.JOptionPane;
+import proyectorestaurante.AccesoAdatos.MeseroData;
+import proyectorestaurante.AccesoAdatos.ProductoData;
+import proyectorestaurante.entidades.Mesero;
+import proyectorestaurante.entidades.Producto;
+
 /**
  *
  * @author Lourdes
@@ -38,11 +44,11 @@ public class ProductoV extends javax.swing.JInternalFrame {
         jtStock = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jrEstado = new javax.swing.JRadioButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        jbBuscar = new javax.swing.JButton();
+        jbNuevo = new javax.swing.JButton();
+        jbGuardar = new javax.swing.JButton();
+        jbModificar = new javax.swing.JButton();
+        jbEliminar = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -62,15 +68,25 @@ public class ProductoV extends javax.swing.JInternalFrame {
 
         jLabel6.setText("ESTADO:");
 
-        jButton1.setText("BUSCAR");
+        jbBuscar.setText("BUSCAR");
+        jbBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbBuscarActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("NUEVO");
+        jbNuevo.setText("NUEVO");
+        jbNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbNuevoActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("GUARDAR");
+        jbGuardar.setText("GUARDAR");
 
-        jButton4.setText("MODIFICAR");
+        jbModificar.setText("MODIFICAR");
 
-        jButton5.setText("ELIMINAR");
+        jbEliminar.setText("ELIMINAR");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -100,17 +116,17 @@ public class ProductoV extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButton4)
+                                        .addComponent(jbModificar)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jButton5))
+                                        .addComponent(jbEliminar))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButton2)
+                                        .addComponent(jbNuevo)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jButton3))))
+                                        .addComponent(jbGuardar))))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton1)))))
+                                .addComponent(jbBuscar)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -123,7 +139,7 @@ public class ProductoV extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(2, 2, 2)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -144,12 +160,12 @@ public class ProductoV extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(87, 87, 87)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jbNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jbGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jbEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jbModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -160,23 +176,87 @@ public class ProductoV extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
+        // TODO add your handling code here:
+        try {
+            int codigo = Integer.parseInt(jtCodigo.getText());
+            ProductoData productoData = new ProductoData();
+
+// Realiza la búsqueda de la mesa por ID
+            Producto pro = productoData.buscarProductoporCodigo(codigo);
+
+            if (pro != null) {
+                // Si se encuentra el alumno, muestra su información en los campos de texto
+
+                jtNombre.setText(String.valueOf(pro.getNombreProducto()));
+                jtPrecio.setText(String.valueOf(pro.getPrecio()));
+                jtStock.setText(String.valueOf(pro.getStock()));
+                jrEstado.setSelected(pro.isEstado());
+
+            }
+
+        } catch (NumberFormatException n) {
+
+            JOptionPane.showMessageDialog(this, "Debe ingresar un numero válido");
+        }
+    }//GEN-LAST:event_jbBuscarActionPerformed
+
+    private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
+        // TODO add your handling code here:
+          limpiar();
+        jtCodigo.requestFocus();
+        jtNombre.setEnabled(true);
+        jtPrecio.setEnabled(true);
+        jrEstado.setEnabled(true);
+        jtStock.setEnabled(true);
+        jbModificar.setEnabled(true);
+        jbGuardar.setEnabled(true);
+        jbBuscar.setEnabled(true);
+        jbEliminar.setEnabled(true);
+    }//GEN-LAST:event_jbNuevoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JButton jbBuscar;
+    private javax.swing.JButton jbEliminar;
+    private javax.swing.JButton jbGuardar;
+    private javax.swing.JButton jbModificar;
+    private javax.swing.JButton jbNuevo;
     private javax.swing.JRadioButton jrEstado;
     private javax.swing.JTextField jtCodigo;
     private javax.swing.JTextField jtNombre;
     private javax.swing.JTextField jtPrecio;
     private javax.swing.JTextField jtStock;
     // End of variables declaration//GEN-END:variables
+private void desactivarCampos() {
+        jtCodigo.setEnabled(false);
+        jtNombre.setEnabled(false);
+        jtPrecio.setEnabled(false);
+        jrEstado.setSelected(false);
+        jtStock.setEnabled(false);
+    }
+
+    private void activarCampos() {
+       jtCodigo.setEnabled(true);
+        jtNombre.setEnabled(true);
+        jtPrecio.setEnabled(true);
+        jrEstado.setSelected(true);
+        jtStock.setEnabled(true);
+    }
+
+    private void limpiar() {
+
+        jtCodigo.setText("");
+        jtNombre.setText("");
+        jtPrecio.setText("");
+        jrEstado.setSelected(false);
+        jtStock.setText("");   
+    }
+
 }
