@@ -5,7 +5,9 @@
  */
 package proyectorestaurante.vistas;
 
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import proyectorestaurante.AccesoAdatos.MesaData;
 import proyectorestaurante.AccesoAdatos.MeseroData;
 import proyectorestaurante.entidades.Mesa;
@@ -16,12 +18,21 @@ import proyectorestaurante.entidades.Mesero;
  * @author Lourdes
  */
 public class MeseroV extends javax.swing.JInternalFrame {
-
+    private DefaultTableModel modelo = new DefaultTableModel() {
+        public boolean isCellEditable(int fila, int columna) {
+            return false;
+        }
+    };
+    private ArrayList<Mesero> listaMeseros;
+    private MeseroData md=new MeseroData();
+    private Mesero mesero= new Mesero();
     /**
      * Creates new form MeseroV
      */
     public MeseroV() {
         initComponents();
+        armarCabecera();
+        armarTabla();
     }
 
     /**
@@ -50,10 +61,9 @@ public class MeseroV extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
         jbBuscar = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jtDni = new javax.swing.JTextField();
-        jButton8 = new javax.swing.JButton();
+        jBaja = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -76,7 +86,6 @@ public class MeseroV extends javax.swing.JInternalFrame {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Estado:");
 
-        jbNuevo.setForeground(new java.awt.Color(0, 0, 0));
         jbNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/registro.png"))); // NOI18N
         jbNuevo.setText("Nuevo");
         jbNuevo.addActionListener(new java.awt.event.ActionListener() {
@@ -85,7 +94,6 @@ public class MeseroV extends javax.swing.JInternalFrame {
             }
         });
 
-        jbGuardar.setForeground(new java.awt.Color(0, 0, 0));
         jbGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/salvar.png"))); // NOI18N
         jbGuardar.setText("Guardar");
         jbGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -94,7 +102,6 @@ public class MeseroV extends javax.swing.JInternalFrame {
             }
         });
 
-        jbModificar.setForeground(new java.awt.Color(0, 0, 0));
         jbModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/editar.png"))); // NOI18N
         jbModificar.setText("Modificar");
         jbModificar.addActionListener(new java.awt.event.ActionListener() {
@@ -103,7 +110,6 @@ public class MeseroV extends javax.swing.JInternalFrame {
             }
         });
 
-        jbEliminar.setForeground(new java.awt.Color(0, 0, 0));
         jbEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/eliminar_1.png"))); // NOI18N
         jbEliminar.setText("Eliminar");
         jbEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -113,6 +119,11 @@ public class MeseroV extends javax.swing.JInternalFrame {
         });
 
         jbSalir.setText("Salir");
+        jbSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSalirActionPerformed(evt);
+            }
+        });
 
         tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -127,7 +138,6 @@ public class MeseroV extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(tabla);
 
-        jbBuscar.setForeground(new java.awt.Color(0, 0, 0));
         jbBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/lupa_1.png"))); // NOI18N
         jbBuscar.setText("Buscar");
         jbBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -136,57 +146,58 @@ public class MeseroV extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton7.setText("Listar");
-
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("ID:");
 
-        jButton8.setText("Dar de baja");
+        jBaja.setText("Alta/Baja");
+        jBaja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBajaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jbSalir)
-                                    .addComponent(jButton7)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(9, 9, 9)
-                                .addComponent(jButton8))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel4)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(jLabel6)))
-                        .addGap(37, 37, 37)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jtNombre)
-                                    .addComponent(jtApellido)
-                                    .addComponent(jtId)
-                                    .addComponent(jrEstado)
-                                    .addComponent(jtDni, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jbBuscar)
-                                    .addComponent(jbNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jbModificar, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-                                    .addComponent(jbGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jbEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel5)
+                                .addComponent(jLabel4)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(12, 12, 12)
+                                    .addComponent(jLabel6)))
+                            .addGap(37, 37, 37)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel1)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jtNombre)
+                                        .addComponent(jtApellido)
+                                        .addComponent(jtId)
+                                        .addComponent(jrEstado)
+                                        .addComponent(jtDni, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jbBuscar)
+                                        .addComponent(jbNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jbModificar, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                                        .addComponent(jbGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jbEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(jBaja)
+                            .addGap(18, 18, 18)
+                            .addComponent(jbSalir)
+                            .addGap(20, 20, 20)))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -222,22 +233,20 @@ public class MeseroV extends javax.swing.JInternalFrame {
                         .addComponent(jbEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(33, 33, 33))
                     .addComponent(jLabel6))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jrEstado)
+                    .addComponent(jLabel5))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jrEstado)
-                            .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(12, Short.MAX_VALUE))
+                        .addGap(2, 29, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(17, 17, 17))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jbSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(5, 5, 5))))
         );
 
         pack();
@@ -296,7 +305,7 @@ public class MeseroV extends javax.swing.JInternalFrame {
 
         MeseroData md = new MeseroData();
         md.guardarMesero(mesero);
-     
+        recargar();
     }//GEN-LAST:event_jbGuardarActionPerformed
 
     private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
@@ -316,6 +325,7 @@ public class MeseroV extends javax.swing.JInternalFrame {
                 mesero.setNombre(nombre);
                 mesero.setApellido(apellido);
                 meseroEncontrado.modificarMesero(mesero);
+                recargar();
             }
         
         } catch (NumberFormatException n) {
@@ -334,17 +344,41 @@ public class MeseroV extends javax.swing.JInternalFrame {
         if (mesero != null) {
 //             Si se encuentra el alumno, elimínalo
             meseroEncontrado.eliminarMesero(dni);
-            
+            recargar();
         } else {
 //             Si no se encuentra el alumno, muestra un mensaje de error
             JOptionPane.showMessageDialog(this, "Mesa no encontrado");
         }
     }//GEN-LAST:event_jbEliminarActionPerformed
 
+    private void jBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBajaActionPerformed
+        // TODO add your handling code here:
+        int fila = tabla.getSelectedRow();
+        if(fila >=0){
+            mesero.setIdMesero((int) modelo.getValueAt(fila, 0));
+            mesero.setNombre((String) modelo.getValueAt(fila,1));
+            mesero.setApellido((String) modelo.getValueAt(fila,2));
+            mesero.setDni((int) modelo.getValueAt(fila,3));
+            if((Boolean)modelo.getValueAt(fila, 4)){
+                mesero.setEstado(false);
+            }
+            else{
+                mesero.setEstado(true);
+            }
+            md.modificarMesero(mesero);
+            recargar();
+        }else{
+            JOptionPane.showMessageDialog(this, "Seleccione una mesa ocupada");
+        }
+    }//GEN-LAST:event_jBajaActionPerformed
+
+    private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbSalirActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jBaja;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -382,7 +416,6 @@ private void desactivarCampos() {
     }
 
     private void limpiar() {
-
         jtDni.setText("");
         jtNombre.setText("");
         jtApellido.setText("");
@@ -390,4 +423,31 @@ private void desactivarCampos() {
         jtId.setText("");   
     }
 
+        private void armarCabecera() {
+        modelo.addColumn("IdMesero");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Apellido");
+        modelo.addColumn("DNI");
+        modelo.addColumn("Estado");
+        tabla.setModel(modelo);
+    }
+
+    private void borrarFilas() {
+        int filas = tabla.getRowCount() - 1;
+        for (int f = filas; f >= 0; f--) {
+            modelo.removeRow(f);
+        }
+    }
+
+    private void armarTabla(){
+        listaMeseros=(ArrayList<Mesero>) md.listarMeseros();
+        for(Mesero x:listaMeseros){
+            modelo.addRow(new Object[]{x.getIdMesero(),x.getNombre(),x.getApellido(),x.getDni(),x.isEstado()});
+        }
+    }
+    
+    private void recargar(){
+        borrarFilas();
+        armarTabla();
+    }
 }

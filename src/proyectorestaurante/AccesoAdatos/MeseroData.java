@@ -100,7 +100,7 @@ public class MeseroData {
     }
 
     public Mesero buscarMeseroporDni(int dni) {
-        String sql = "SELECT idMesero,nombre,apellido,estado,dni FROM mesero WHERE dni =? AND estado =1";
+        String sql = "SELECT idMesero,nombre,apellido,estado,dni FROM mesero WHERE dni =?";
         Mesero mesero = null;
 
         try {
@@ -113,7 +113,7 @@ public class MeseroData {
                 mesero.setNombre(rs.getString("nombre"));
                 mesero.setApellido(rs.getString("apellido"));
                 mesero.setDni(rs.getInt("dni"));
-                mesero.setEstado(true);
+                mesero.setEstado(rs.getBoolean("estado"));
                 JOptionPane.showMessageDialog(null, "Mesero encontrado");
                 
             } else {
@@ -129,7 +129,7 @@ public class MeseroData {
     }
 
     public List<Mesero> listarMeseros() {
-        String sql = "SELECT idMesero,nombre,apellido,dni FROM mesero  WHERE estado=1";
+        String sql = "SELECT idMesero,nombre,apellido,dni,estado FROM mesero";
         ArrayList<Mesero> meseros = new ArrayList<>();
 
         try {
@@ -142,7 +142,7 @@ public class MeseroData {
                 mesero.setNombre(rs.getString("nombre"));
                 mesero.setApellido(rs.getString("apellido"));
                 mesero.setDni(rs.getInt("dni"));
-                mesero.setEstado(true);
+                mesero.setEstado(rs.getBoolean("estado"));
 
                 meseros.add(mesero);
             }
