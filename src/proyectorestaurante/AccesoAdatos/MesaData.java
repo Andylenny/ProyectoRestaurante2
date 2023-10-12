@@ -20,7 +20,7 @@ public class MesaData {
     }
 
     public void guardarMesa(Mesa mesa) {
-        String sql = "INSERT INTO `mesa`(`idMesa`, `capacidad`, `estado`, `numeroMesa`) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO `mesa`(`idMesa`, `capacidad`, `estado`, `numeroMesa`, `baja`) VALUES (?,?,?,?,?)";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -28,6 +28,7 @@ public class MesaData {
             ps.setInt(2, mesa.getCapacidad());
             ps.setBoolean(3, mesa.isEstado());
             ps.setInt(4, mesa.getNumeroMesa());
+            ps.setBoolean(5, mesa.isBaja());
 
             ps.executeUpdate();
 
@@ -60,7 +61,7 @@ public class MesaData {
     }
 
     public void eliminarMeseroLogico(int id) {
-        String sql = "UPDATE mesa SET estado = 0 WHERE idMesa = ?";
+        String sql = "UPDATE mesa SET baja = 0 WHERE idMesa = ?";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, id);
@@ -74,7 +75,7 @@ public class MesaData {
     }
 
     public void modificarMesa(Mesa mesa) {
-        String sql = "UPDATE mesa SET capacidad=?,estado=?,numeroMesa=? "
+        String sql = "UPDATE mesa SET capacidad=?,estado=?,numeroMesa=?,baja=? "
                 + "WHERE idMesa=?";
 
         try {
@@ -84,7 +85,8 @@ public class MesaData {
             ps.setInt(1, mesa.getCapacidad());
             ps.setBoolean(2, mesa.isEstado());
             ps.setInt(3, mesa.getNumeroMesa());
-            ps.setInt(4, mesa.getIdMesa());
+            ps.setBoolean(4, mesa.isBaja());
+            ps.setInt(5, mesa.getIdMesa());
 
             int exito = ps.executeUpdate();
             if (exito == 1) {
@@ -99,7 +101,7 @@ public class MesaData {
     }
 
     public Mesa buscarMesaporId(int id) {
-        String sql = "SELECT idMesa, capacidad,estado,numeroMesa FROM mesa WHERE idMesa=? AND estado =1";
+        String sql = "SELECT idMesa, capacidad,estado,numeroMesa,baja FROM mesa WHERE idMesa=?";
         Mesa mesa = null;
 
         try {
@@ -111,7 +113,8 @@ public class MesaData {
                 mesa.setIdMesa(rs.getInt("idMesa"));
                 mesa.setCapacidad(rs.getInt("capacidad"));
                 mesa.setNumeroMesa(rs.getInt("numeroMesa"));
-                mesa.setEstado(true);
+                mesa.setEstado(rs.getBoolean("estado"));
+                mesa.setBaja(rs.getBoolean("baja"));
                 JOptionPane.showMessageDialog(null, "Mesa encontrada");
 
             } else {
@@ -127,7 +130,7 @@ public class MesaData {
     }
 
     public List<Mesa> listarMesas() {
-        String sql = "SELECT idMesa,capacidad,estado,numeroMesa FROM mesa  WHERE estado=1";
+        String sql = "SELECT idMesa,capacidad,estado,numeroMesa,baja FROM mesa  WHERE estado=1 AND baja=1";
         ArrayList<Mesa> mesas = new ArrayList<>();
 
         try {
@@ -140,7 +143,7 @@ public class MesaData {
                 mesa.setCapacidad(rs.getInt("capacidad"));
                 mesa.setNumeroMesa(rs.getInt("numeroMesa"));
                 mesa.setEstado(true);
-
+                mesa.setBaja(true);
                 mesas.add(mesa);
             }
             ps.close();
@@ -149,8 +152,9 @@ public class MesaData {
         }
         return mesas;
     }
+    
    public List<Mesa> listarMesasVacias() {
-        String sql = "SELECT idMesa,capacidad,estado,numeroMesa FROM mesa  WHERE estado=0";
+        String sql = "SELECT idMesa,capacidad,estado,numeroMesa FROM mesa  WHERE estado=0 AND baja=1";
         ArrayList<Mesa> mesas = new ArrayList<>();
 
         try {
@@ -163,6 +167,7 @@ public class MesaData {
                 mesa.setCapacidad(rs.getInt("capacidad"));
                 mesa.setNumeroMesa(rs.getInt("numeroMesa"));
                 mesa.setEstado(false);
+                mesa.setBaja(true);
 
                 mesas.add(mesa);
             }

@@ -6,21 +6,23 @@ public class Mesa {
     private int capacidad;
     private boolean estado;
     private int numeroMesa;
-
+    private boolean baja;
     public Mesa() {
     }
 
-    public Mesa(int idMesa, int capacidad, boolean estado, int numeroMesa) {
+    public Mesa(int idMesa, int capacidad, boolean estado, int numeroMesa, boolean baja) {
         this.idMesa = idMesa;
         this.capacidad = capacidad;
         this.estado = estado;
         this.numeroMesa = numeroMesa;
+        this.baja= baja;
     }
 
-    public Mesa(int capacidad, boolean estado, int numeroMesa) {
+    public Mesa(int capacidad, boolean estado, int numeroMesa, boolean baja) {
         this.capacidad = capacidad;
         this.estado = estado;
         this.numeroMesa = numeroMesa;
+        this.baja = baja;
     }
 
     public int getNumeroMesa() {
@@ -58,6 +60,14 @@ public class Mesa {
     @Override
     public String toString() {
         return  "id:"+ idMesa + ",cap:"+ capacidad +",est=" + estado;
+    }
+
+    public boolean isBaja() {
+        return baja;
+    }
+
+    public void setBaja(boolean baja) {
+        this.baja = baja;
     }
 
 }
