@@ -177,6 +177,11 @@ public class MesaVista extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jtLibre.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtLibreMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jtLibre);
 
         jtOcupada.setBackground(new java.awt.Color(255, 153, 102));
@@ -539,6 +544,11 @@ public class MesaVista extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Seleccione una mesa ocupada");
         }
     }//GEN-LAST:event_jbLiberarActionPerformed
+
+    private void jtLibreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtLibreMouseClicked
+        // TODO add your handling code here:
+        System.out.println(modelo1.getValueAt((jtLibre.getSelectedRow()),(jtLibre.getSelectedColumn())));
+    }//GEN-LAST:event_jtLibreMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -107,12 +107,22 @@ public class Restaurante extends javax.swing.JFrame {
         PEDIDOS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/restaurantes.png"))); // NOI18N
         PEDIDOS.setText("PEDIDOS");
         PEDIDOS.setFont(new java.awt.Font("Copperplate Gothic Light", 1, 12)); // NOI18N
+        PEDIDOS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PEDIDOSActionPerformed(evt);
+            }
+        });
 
         jMenuItem5.setBackground(new java.awt.Color(0, 0, 0));
         jMenuItem5.setFont(new java.awt.Font("Copperplate Gothic Light", 1, 12)); // NOI18N
         jMenuItem5.setForeground(new java.awt.Color(255, 51, 51));
         jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/pedidos.png"))); // NOI18N
         jMenuItem5.setText("PEDIDOS ");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         PEDIDOS.add(jMenuItem5);
 
         jMenuBar1.add(PEDIDOS);
@@ -221,6 +231,22 @@ public class Restaurante extends javax.swing.JFrame {
         escritorio.add(pro);
         escritorio.moveToFront(pro);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void PEDIDOSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PEDIDOSActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_PEDIDOSActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // TODO add your handling code here:
+                escritorio.removeAll();
+        escritorio.repaint();
+        PedidosVista pedido = new PedidosVista();
+        pedido.setVisible(true);
+        pedido.getContentPane().setBackground(new Color(255,153,102));
+        escritorio.add(pedido);
+        escritorio.moveToFront(pedido);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     /**
      * @param args the command line arguments
