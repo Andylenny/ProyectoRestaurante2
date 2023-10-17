@@ -51,6 +51,7 @@ public class Restaurante extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         PEDIDOS = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
@@ -124,6 +125,14 @@ public class Restaurante extends javax.swing.JFrame {
             }
         });
         PEDIDOS.add(jMenuItem5);
+
+        jMenuItem6.setText("Gestion de pedidos");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        PEDIDOS.add(jMenuItem6);
 
         jMenuBar1.add(PEDIDOS);
 
@@ -239,7 +248,7 @@ public class Restaurante extends javax.swing.JFrame {
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // TODO add your handling code here:
-                escritorio.removeAll();
+        escritorio.removeAll();
         escritorio.repaint();
         PedidosVista pedido = new PedidosVista();
         pedido.setVisible(true);
@@ -247,6 +256,17 @@ public class Restaurante extends javax.swing.JFrame {
         escritorio.add(pedido);
         escritorio.moveToFront(pedido);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+        PedidosEstado pedido = new PedidosEstado();
+        pedido.setVisible(true);
+        pedido.getContentPane().setBackground(new Color(255,153,102));
+        escritorio.add(pedido);
+        escritorio.moveToFront(pedido);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -297,6 +317,7 @@ public class Restaurante extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;

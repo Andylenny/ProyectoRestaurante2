@@ -11,6 +11,7 @@ import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import javax.swing.JOptionPane;
 import proyectorestaurante.entidades.Mesa;
@@ -284,6 +285,10 @@ public PedidoData(){
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla");
         }
         return pedidos;
+    }
+
+    public Collection<? extends Pedido> listarPedidosPorMesaP(Mesa mesa1) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
