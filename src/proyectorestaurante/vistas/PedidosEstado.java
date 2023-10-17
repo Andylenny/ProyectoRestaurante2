@@ -35,8 +35,8 @@ private DefaultTableModel modelo = new DefaultTableModel() {
     private ArrayList<Pedido> listaPedidos;
     public PedidosEstado() {
         initComponents();
-        cargarCombo();
         armarCabecera();
+        cargarCombo();
     }
 
     /**
@@ -138,19 +138,19 @@ private DefaultTableModel modelo = new DefaultTableModel() {
     private void comboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboActionPerformed
         // TODO add your handling code here:
         mesa1=(Mesa) combo.getSelectedItem();
+        borrarFilas();
         listaPedidos=(ArrayList<Pedido>)pedidoData.listarPedidosPorMesaI(mesa1.getIdMesa());
         for(Pedido pedido:listaPedidos){
             Producto producto=productoData.buscarProductoporId(pedido.getIdProducto());
             String nombre=producto.getNombreProducto();
             int precio=producto.getPrecio();
-            //modelo.addRow(new Object[]{pedido.getIdPedido(), nombre,precio, pedido.getCantidadProducto(), precio*pedido.getCantidadProducto(), Estado(pedido)});
+            modelo.addRow(new Object[]{pedido.getIdPedido(), nombre,precio, pedido.getCantidadProducto(), precio*pedido.getCantidadProducto(), Estado(pedido)});
         }
- 
     }//GEN-LAST:event_comboActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<Mesa> combo;
+    private javax.swing.JComboBox<Object> combo;
     private javax.swing.JButton eliminar;
     private javax.swing.JButton entregar;
     private javax.swing.JLabel jLabel1;
