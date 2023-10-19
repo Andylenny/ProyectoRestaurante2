@@ -6,6 +6,7 @@
 package proyectorestaurante.vistas;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import proyectorestaurante.AccesoAdatos.MesaData;
 import proyectorestaurante.AccesoAdatos.PedidoData;
@@ -67,6 +68,11 @@ private DefaultTableModel modelo = new DefaultTableModel() {
         });
 
         eliminar.setText("Eliminar");
+        eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarActionPerformed(evt);
+            }
+        });
 
         combo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         combo.addActionListener(new java.awt.event.ActionListener() {
@@ -133,20 +139,43 @@ private DefaultTableModel modelo = new DefaultTableModel() {
 
     private void entregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entregarActionPerformed
         // TODO add your handling code here:
+        int fila = tabla.getSelectedRow();
+        if(fila >=0){
+            Pedido pedido=pedidoData.buscarPedidoCodigo((int)modelo.getValueAt(fila,0));
+            if(pedido.isEstado()==false){
+                pedido.setEstado(true);
+                pedidoData.modificarPedido(pedido);
+                borrarFilas();
+                armarTabla();
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Seleccione un pedido pendiente.");
+            }
+        }
     }//GEN-LAST:event_entregarActionPerformed
 
     private void comboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboActionPerformed
         // TODO add your handling code here:
         mesa1=(Mesa) combo.getSelectedItem();
         borrarFilas();
-        listaPedidos=(ArrayList<Pedido>)pedidoData.listarPedidosPorMesaI(mesa1.getIdMesa());
-        for(Pedido pedido:listaPedidos){
-            Producto producto=productoData.buscarProductoporId(pedido.getIdProducto());
-            String nombre=producto.getNombreProducto();
-            int precio=producto.getPrecio();
-            modelo.addRow(new Object[]{pedido.getIdPedido(), nombre,precio, pedido.getCantidadProducto(), precio*pedido.getCantidadProducto(), Estado(pedido)});
-        }
+        armarTabla();
     }//GEN-LAST:event_comboActionPerformed
+
+    private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
+        // TODO add your handling code here:
+        int fila = tabla.getSelectedRow();
+        if(fila >=0){
+            Pedido pedido=pedidoData.buscarPedidoCodigo((int)modelo.getValueAt(fila,0));
+            if(pedido.isEstado()==false){
+               pedidoData.eliminarPedido(pedido.getIdPedido());
+                borrarFilas();
+                armarTabla();
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Seleccione un pedido pendiente.");
+            }
+        }
+    }//GEN-LAST:event_eliminarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -183,11 +212,32 @@ private DefaultTableModel modelo = new DefaultTableModel() {
     private String Estado(Pedido pedido){
         String estado;
         if(pedido.isEstado()==true){
+            if(pedido.isEstadoPago()==true){
+                estado="Pago";
+            }
+            else{
             estado="Entregado";
+            }
         }
         else{
             estado="Pendiente";
         }
         return estado;
+    }
+    private void armarTabla(){
+        listaPedidos=(ArrayList<Pedido>)pedidoData.listarPedidosPorMesaI(mesa1.getIdMesa());
+        for(Pedido pedido:listaPedidos){
+            Producto producto=productoData.buscarProductoporId(pedido.getIdProducto());
+            String nombre=producto.getNombreProducto();
+            int precio=producto.getPrecio();
+            modelo.addRow(new Object[]{pedido.getIdPedido(), nombre,precio, pedido.getCantidadProducto(), precio*pedido.getCantidadProducto(), Estado(pedido)});
+        }
+        listaPedidos=(ArrayList<Pedido>)pedidoData.listarPedidosPorMesaP(mesa1.getIdMesa());
+        for(Pedido pedido:listaPedidos){
+            Producto producto=productoData.buscarProductoporId(pedido.getIdProducto());
+            String nombre=producto.getNombreProducto();
+            int precio=producto.getPrecio();
+            modelo.addRow(new Object[]{pedido.getIdPedido(), nombre,precio, pedido.getCantidadProducto(), precio*pedido.getCantidadProducto(), Estado(pedido)});
+        }
     }
 }

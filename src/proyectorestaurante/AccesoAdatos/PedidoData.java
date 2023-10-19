@@ -60,7 +60,7 @@ public PedidoData(){
 
      public Pedido buscarPedidoCodigo(int id) {
          //BUSCAR POR ID DE PEDIDO
-        String sql = "SELECT idMesa, idMesero, estadoPago, fechaPedido, horaPedido, idProducto, cantidadProducto, estado FROM pedido WHERE idPedido =? AND estado =1";
+        String sql = "SELECT idMesa, idMesero, estadoPago, fechaPedido, horaPedido, idProducto, cantidadProducto, estado FROM pedido WHERE idPedido =?";
         Pedido pedido = null;
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -76,7 +76,7 @@ public PedidoData(){
                 pedido.setHoraPedido(rs.getTime("horaPedido").toLocalTime());
                 pedido.setIdProducto(rs.getInt("idProducto"));
                 pedido.setCantidadProducto(rs.getInt("cantidadProducto"));
-                pedido.setEstado(true);
+                pedido.setEstado(rs.getBoolean("estado"));
             } else {
                 JOptionPane.showMessageDialog(null, "No existe ese pedido");
             }
@@ -91,7 +91,7 @@ public PedidoData(){
 
     public void eliminarPedido(int id) {
         //ELIMINAR DE BASE DE DATOS
-        String sql = "DELETE FROM producto WHERE idPedido = ?";
+        String sql = "DELETE FROM pedido WHERE idPedido = ?";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, id);
@@ -106,7 +106,7 @@ public PedidoData(){
 
     public void eliminarPedidoLogico(int id) {
         //ELIMINAR LOGICO
-        String sql = "UPDATE producto SET estado = 0 WHERE id = ?";
+        String sql = "UPDATE pedido SET estado = 0 WHERE id = ?";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, id);
@@ -120,7 +120,7 @@ public PedidoData(){
 
     public void modificarPedido(Pedido pedido) {
         //Modificar ESTADO DE PAGO - FECHA PEDIDO - HORA DE PEDIDO - IDPRODUCTO - CANTIDAD DE PRODUCTO
-        String sql = "UPDATE `pedido` SET estadoPago=?,fechaPedido=?,horaPedido=?,idProducto=?,cantidadProducto=? "
+        String sql = "UPDATE `pedido` SET estadoPago=?,fechaPedido=?,horaPedido=?,idProducto=?,cantidadProducto=?,estado=? "
                 + "WHERE idPedido=?";
         try {
 
@@ -131,7 +131,8 @@ public PedidoData(){
             ps.setTime(3, Time.valueOf(pedido.getHoraPedido()));
             ps.setInt(4, pedido.getIdProducto());
             ps.setInt(5, pedido.getCantidadProducto());
-            ps.setInt(6, pedido.getIdPedido());
+            ps.setBoolean(6, pedido.isEstado());
+            ps.setInt(7, pedido.getIdPedido());
             int exito = ps.executeUpdate();
             if (exito == 1) {
                 JOptionPane.showMessageDialog(null, "Pedido modificado con exito");
@@ -175,7 +176,7 @@ public PedidoData(){
     }
     public List<Pedido> listarPedidosPorMesaI(int idMesa) {
         //LISTA DE PEDIDOS ACTIVOS Y NO PAGOS DE UNA MESA
-        String sql = "SELECT idPedido, idMesero, fechaPedido, horaPedido, idProducto, cantidadProducto FROM pedido WHERE estadoPago=0 AND estado=1 AND idMesa=?";
+        String sql = "SELECT idPedido, idMesero, fechaPedido, horaPedido, idProducto, cantidadProducto,estado FROM pedido WHERE estadoPago=0 AND idMesa=?";
     
         ArrayList<Pedido> pedidos = new ArrayList<>();
 
@@ -192,7 +193,7 @@ public PedidoData(){
                 pedido.setHoraPedido(rs.getTime("horaPedido").toLocalTime());
                 pedido.setIdProducto(rs.getInt("idProducto"));
                 pedido.setCantidadProducto(rs.getInt("cantidadProducto"));
-                pedido.setEstado(true);
+                pedido.setEstado(rs.getBoolean("estado"));
                 pedido.setEstadoPago(false);
                 pedidos.add(pedido);
             }

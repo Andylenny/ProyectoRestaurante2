@@ -300,8 +300,8 @@ public class PedidosVista extends javax.swing.JInternalFrame {
         }else{
             JOptionPane.showMessageDialog(this, "Seleccione producto");
         }
-        pedido=new Pedido(0, mesa.getIdMesa(), mesero.getIdMesero(), producto.getIdProducto(), 1 , fechaPedido, horaPedido, false, true);
-        GuardarPedido(pedido);
+        pedido=new Pedido(0, mesa.getIdMesa(), mesero.getIdMesero(), producto.getIdProducto(), 1 , fechaPedido, horaPedido, false, false);
+        GuardarPedido(pedido,producto);
         CargarTotal();
     }//GEN-LAST:event_tProductoMouseClicked
 
@@ -391,14 +391,20 @@ public class PedidosVista extends javax.swing.JInternalFrame {
             modelo2.removeRow(f);
         }
     }
-    private void GuardarPedido(Pedido x){
+    
+    private void GuardarPedido(Pedido x,Producto y){
         int z= listaPedidos.size();
         int p=0;
         for(int i=0;i<z;i++){
             if(listaPedidos.get(i).getIdProducto()==x.getIdProducto()){
                 Pedido a=listaPedidos.get(i);
+                if(y.getStock()>a.getCantidadProducto()){
                 a.setCantidadProducto(a.getCantidadProducto()+1);
                 listaPedidos.set(i, a);
+                }
+                else{
+                    JOptionPane.showMessageDialog(this, "Stock insuficiente: "+y.getNombreProducto()+"="+y.getStock());
+                }
                 borrarFilas();
                 armarTabla();
                 p=p+1;
@@ -434,6 +440,7 @@ public class PedidosVista extends javax.swing.JInternalFrame {
                     listaPedidos.remove(i);
                     borrarFilas();
                     armarTabla();
+                    break;
                 }
             }
         }
