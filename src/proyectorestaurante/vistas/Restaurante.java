@@ -62,6 +62,7 @@ public class Restaurante extends javax.swing.JFrame {
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
+        jMenuItem14 = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -175,6 +176,11 @@ public class Restaurante extends javax.swing.JFrame {
         jMenuItem11.setFont(new java.awt.Font("Copperplate Gothic Light", 1, 14)); // NOI18N
         jMenuItem11.setForeground(new java.awt.Color(255, 51, 51));
         jMenuItem11.setText("PEDIDOS DE MESAS");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem11);
 
         jMenuBar1.add(jMenu5);
@@ -200,6 +206,11 @@ public class Restaurante extends javax.swing.JFrame {
         jMenuItem10.setFont(new java.awt.Font("Copperplate Gothic Light", 1, 14)); // NOI18N
         jMenuItem10.setForeground(new java.awt.Color(255, 51, 51));
         jMenuItem10.setText("Pedidos por meseros");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem10);
 
         jMenuBar1.add(jMenu4);
@@ -216,6 +227,14 @@ public class Restaurante extends javax.swing.JFrame {
         jMenuItem8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/proyecto-de-ley.png"))); // NOI18N
         jMenuItem8.setText("COBRAR");
         jMenu3.add(jMenuItem8);
+
+        jMenuItem14.setText("jMenuItem14");
+        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem14ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem14);
 
         jMenuBar1.add(jMenu3);
 
@@ -298,7 +317,7 @@ public class Restaurante extends javax.swing.JFrame {
 
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
         // TODO add your handling code here:
-             escritorio.removeAll();
+        escritorio.removeAll();
         escritorio.repaint();
         ListaProductosVista listapro = new ListaProductosVista();
         listapro.setVisible(true);
@@ -306,6 +325,39 @@ public class Restaurante extends javax.swing.JFrame {
         escritorio.add(listapro);
         escritorio.moveToFront(listapro);
     }//GEN-LAST:event_jMenuItem13ActionPerformed
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+        PedidosMeseroVista listaMesero = new PedidosMeseroVista();
+        listaMesero.setVisible(true);
+        listaMesero.getContentPane().setBackground(new Color(255,153,102));
+        escritorio.add(listaMesero);
+        escritorio.moveToFront(listaMesero);
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+        PedidoMesaVista listaMesa = new PedidoMesaVista();
+        listaMesa.setVisible(true);
+        listaMesa.getContentPane().setBackground(new Color(255,153,102));
+        escritorio.add(listaMesa);
+        escritorio.moveToFront(listaMesa);
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
+
+    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+        // TODO add your handling code here:        
+        escritorio.removeAll();
+        escritorio.repaint();
+        PagosFecha pago = new PagosFecha();
+        pago.setVisible(true);
+        pago.getContentPane().setBackground(new Color(255,153,102));
+        escritorio.add(pago);
+        escritorio.moveToFront(pago);
+    }//GEN-LAST:event_jMenuItem14ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -356,6 +408,7 @@ public class Restaurante extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.List;
 import javax.swing.JOptionPane;
 import proyectorestaurante.entidades.Mesa;
+import proyectorestaurante.entidades.Mesero;
 import proyectorestaurante.entidades.Pedido;
 import proyectorestaurante.entidades.Producto;
 
@@ -233,19 +234,20 @@ public PedidoData(){
         }
         return pedidos;
     }
-    public List<Pedido> BuscarPedidosxFecha(LocalDate dia) {
+    public List<Pedido> BuscarPedidosxFecha(LocalDate dia,Mesero mesero) {
         //LISTA DE PEDIDOS PAGO EN FECHA
-        String sql = "SELECT idPedido,idMesa, idMesero, horaPedido, idProducto, cantidadProducto FROM pedido WHERE estadoPago=1 AND estado=1 AND fechaPedido=?";
+        String sql = "SELECT idPedido,idMesa, idMesero, horaPedido, idProducto, cantidadProducto FROM pedido WHERE estadoPago=1 AND estado=1 AND fechaPedido=? AND idMesero=?";
         ArrayList<Pedido> pedidos = new ArrayList<>();
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setDate(1,Date.valueOf(dia));
+            ps.setInt(2, mesero.getIdMesero());
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Pedido pedido = new Pedido();
                 pedido.setIdPedido(rs.getInt("idPedido"));
                 pedido.setIdMesa(rs.getInt("idMesa"));
-                pedido.setIdMesero(rs.getInt("idMesero"));
+                pedido.setIdMesero(mesero.getIdMesero());
                 pedido.setFechaPedido(dia);
                 pedido.setHoraPedido(rs.getTime("horaPedido").toLocalTime());
                 pedido.setIdProducto(rs.getInt("idProducto"));
@@ -262,7 +264,7 @@ public PedidoData(){
     }
     public List<Pedido> BuscarPedidosxMesero(int idMesero) {
         //LISTA DE PEDIDOS X MESERO
-        String sql = "SELECT idPedido,idMesa, estadoPago, fechaPedido, horaPedido, idProducto, cantidadProducto, estado FROM pedido WHERE idMesero=?";
+        String sql = "SELECT idPedido,idMesa, estadoPago, fechaPedido, horaPedido, idProducto, cantidadProducto, estado FROM pedido WHERE idMesero=? AND estadoPago=0";
         ArrayList<Pedido> pedidos = new ArrayList<>();
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -291,7 +293,8 @@ public PedidoData(){
     public Collection<? extends Pedido> listarPedidosPorMesaP(Mesa mesa1) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+    //BUSCAR PEDIDO X FECHA ENTRE HORAS
+    //SELECT * FROM `pedido` WHERE horaPedido BETWEEN '08:00:00' AND '12:00:00' AND fechaPedido='2023-06-10'; 
 }
 
 
