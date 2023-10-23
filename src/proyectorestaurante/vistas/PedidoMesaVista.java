@@ -5,6 +5,9 @@
  */
 package proyectorestaurante.vistas;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import proyectorestaurante.AccesoAdatos.MesaData;
@@ -12,6 +15,7 @@ import proyectorestaurante.AccesoAdatos.PedidoData;
 import proyectorestaurante.AccesoAdatos.ProductoData;
 import proyectorestaurante.entidades.Mesa;
 import proyectorestaurante.entidades.Pedido;
+import proyectorestaurante.entidades.Producto;
 
 /**
  *
@@ -48,13 +52,13 @@ public class PedidoMesaVista extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         Hora = new javax.swing.JLabel();
-        hora = new javax.swing.JTextField();
+        horaIni = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        minuto = new javax.swing.JTextField();
+        minutoIni = new javax.swing.JTextField();
         Hora1 = new javax.swing.JLabel();
-        hora1 = new javax.swing.JTextField();
+        horaFin = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        minuto1 = new javax.swing.JTextField();
+        minutoFin = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jCfecha = new com.toedter.calendar.JDateChooser();
         combo = new javax.swing.JComboBox<>();
@@ -70,26 +74,26 @@ public class PedidoMesaVista extends javax.swing.JInternalFrame {
         Hora.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         Hora.setText("Hora:");
 
-        hora.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        hora.setText("00");
+        horaIni.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        horaIni.setText("00");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText(":");
 
-        minuto.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        minuto.setText("00");
+        minutoIni.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        minutoIni.setText("00");
 
         Hora1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         Hora1.setText("Hora:");
 
-        hora1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        hora1.setText("00");
+        horaFin.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        horaFin.setText("00");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setText(":");
 
-        minuto1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        minuto1.setText("00");
+        minutoFin.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        minutoFin.setText("00");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setText("Fecha:");
@@ -118,6 +122,11 @@ public class PedidoMesaVista extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(tabla);
 
         jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -140,19 +149,19 @@ public class PedidoMesaVista extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(Hora)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(hora, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(horaIni, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(minuto, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(minutoIni, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(56, 56, 56)
                                 .addComponent(Hora1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(hora1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(horaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(minuto1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(minutoFin, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton1))))
                     .addGroup(layout.createSequentialGroup()
@@ -175,14 +184,14 @@ public class PedidoMesaVista extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(hora1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(minuto1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(horaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(minutoFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(Hora1)
                         .addComponent(jButton1))
                     .addComponent(jLabel1)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(hora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(minuto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(horaIni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(minutoIni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(Hora)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -197,13 +206,23 @@ public class PedidoMesaVista extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_comboActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        mesa1=(Mesa) combo.getSelectedItem();
+        LocalDate fechaPedido=jCfecha.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalTime Ini=LocalTime.of(Integer.parseInt(horaIni.getText()), Integer.parseInt(minutoIni.getText()));
+        LocalTime Fin=LocalTime.of(Integer.parseInt(horaFin.getText()), Integer.parseInt(minutoFin.getText()));
+        listaPedidos=(ArrayList<Pedido>) pedidoData.BuscarPedidosEntreHora(mesa1.getIdMesa(),Ini,Fin,fechaPedido);
+        armarTabla();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Hora;
     private javax.swing.JLabel Hora1;
     private javax.swing.JComboBox<Object> combo;
-    private javax.swing.JTextField hora;
-    private javax.swing.JTextField hora1;
+    private javax.swing.JTextField horaFin;
+    private javax.swing.JTextField horaIni;
     private javax.swing.JButton jButton1;
     private com.toedter.calendar.JDateChooser jCfecha;
     private javax.swing.JLabel jLabel1;
@@ -211,8 +230,8 @@ public class PedidoMesaVista extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField minuto;
-    private javax.swing.JTextField minuto1;
+    private javax.swing.JTextField minutoFin;
+    private javax.swing.JTextField minutoIni;
     private javax.swing.JTable tabla;
     // End of variables declaration//GEN-END:variables
     private void cargarCombo(){
@@ -237,6 +256,29 @@ public class PedidoMesaVista extends javax.swing.JInternalFrame {
         for (int f = filas; f >= 0; f--) {
             modelo.removeRow(f);
         }
-        
+    }
+    private String Estado(Pedido pedido){
+        String estado;
+        if(pedido.isEstado()==true){
+            if(pedido.isEstadoPago()==true){
+                estado="Pago";
+            }
+            else{
+            estado="Entregado";
+            }
+        }
+        else{
+            estado="Pendiente";
+        }
+        return estado;
+    }
+    private void armarTabla(){
+        borrarFilas();
+        for(Pedido pedido:listaPedidos){
+            Producto producto=productoData.buscarProductoporId(pedido.getIdProducto());
+            String nombre=producto.getNombreProducto();
+            int precio=producto.getPrecio();
+            modelo.addRow(new Object[]{pedido.getIdPedido(), pedido.getHoraPedido(), nombre, pedido.getCantidadProducto(), precio, pedido.getCantidadProducto()*precio, Estado(pedido)});
+        }
     }
 }

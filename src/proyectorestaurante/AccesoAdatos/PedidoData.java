@@ -289,12 +289,67 @@ public PedidoData(){
         }
         return pedidos;
     }
-
-    public Collection<? extends Pedido> listarPedidosPorMesaP(Mesa mesa1) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     //BUSCAR PEDIDO X FECHA ENTRE HORAS
     //SELECT * FROM `pedido` WHERE horaPedido BETWEEN '08:00:00' AND '12:00:00' AND fechaPedido='2023-06-10'; 
+    public List<Pedido> BuscarPedidosEntreHora(int idMesa, LocalTime ini, LocalTime fin, LocalDate fecha) {
+        String sql = "SELECT * FROM `pedido` WHERE horaPedido BETWEEN ? AND ? AND fechaPedido=? AND idMesa=?";
+
+        ArrayList<Pedido> pedidos = new ArrayList<>();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setTime(1, Time.valueOf(ini));
+            ps.setTime(2, Time.valueOf(fin));
+            ps.setDate(3, Date.valueOf(fecha));
+            ps.setInt(4, idMesa);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Pedido pedido = new Pedido();
+                pedido.setIdPedido(rs.getInt("idPedido"));
+                pedido.setIdMesa(idMesa);
+                pedido.setIdMesero(rs.getInt("idMesero"));
+                pedido.setFechaPedido(rs.getDate("fechaPedido").toLocalDate());
+                pedido.setHoraPedido(rs.getTime("horaPedido").toLocalTime());
+                pedido.setIdProducto(rs.getInt("idProducto"));
+                pedido.setCantidadProducto(rs.getInt("cantidadProducto"));
+                pedido.setEstado(rs.getBoolean("estado"));
+                pedido.setEstadoPago(rs.getBoolean("estadoPago"));
+                pedidos.add(pedido);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla");
+        }
+        return pedidos;
+    }
+    public List<Pedido> listarPedidosPagosxFecha(LocalDate fecha) {
+        //LISTA DE PEDIDOS PAGOS Y ACTIVOS DE UNA MESA
+        String sql = "SELECT idPedido, idMesa, idMesero, fechaPedido, horaPedido, idProducto, cantidadProducto FROM pedido WHERE estado =1 AND estadoPago=1 AND fechaPedido=?";
+    
+        ArrayList<Pedido> pedidos = new ArrayList<>();
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setDate(1, Date.valueOf(fecha));
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Pedido pedido = new Pedido();
+                pedido.setIdPedido(rs.getInt("idPedido"));
+                pedido.setIdMesa(rs.getInt("idMesa"));
+                pedido.setIdMesero(rs.getInt("idMesero"));
+                pedido.setFechaPedido(rs.getDate("fechaPedido").toLocalDate());
+                pedido.setHoraPedido(rs.getTime("horaPedido").toLocalTime());
+                pedido.setIdProducto(rs.getInt("idProducto"));
+                pedido.setCantidadProducto(rs.getInt("cantidadProducto"));
+                pedido.setEstado(true);
+                pedido.setEstadoPago(true);
+                pedidos.add(pedido);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla");
+        }
+        return pedidos;
+    }
 }
 
 

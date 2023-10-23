@@ -5,17 +5,54 @@
  */
 package proyectorestaurante.vistas;
 
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import proyectorestaurante.AccesoAdatos.MesaData;
+import proyectorestaurante.AccesoAdatos.PedidoData;
+import proyectorestaurante.AccesoAdatos.ProductoData;
+import proyectorestaurante.entidades.Mesa;
+import proyectorestaurante.entidades.Pedido;
+import proyectorestaurante.entidades.Producto;
+
 /**
  *
  * @author pc
  */
 public class CajaVista extends javax.swing.JInternalFrame {
-
+    private DefaultTableModel modeloPediente = new DefaultTableModel() {
+        public boolean isCellEditable(int fila, int columna) {
+            return false;
+        }
+    };
+    private DefaultTableModel modeloPago = new DefaultTableModel() {
+        public boolean isCellEditable(int fila, int columna) {
+            return false;
+        }
+    };
+    private DefaultTableModel modeloCobrar = new DefaultTableModel() {
+        public boolean isCellEditable(int fila, int columna) {
+            return false;
+        }
+    };
     /**
      * Creates new form CajaVista
      */
+   private MesaData mesa = new MesaData();
+    private PedidoData pedidoData= new PedidoData();
+    private ProductoData productoData=new ProductoData();
+    private Mesa mesa1 = new Mesa();
+    private Pedido pedido=new Pedido();
+    private ArrayList<Mesa> listaMesas;
+    private ArrayList<Pedido> listaPedidos;
+    private ArrayList<Pedido> listaPagos;
+    private ArrayList<Pedido> listaGuardar=new ArrayList();
     public CajaVista() {
         initComponents();
+        armarCabecera1();
+        armarCabecera2();
+        armarCabecera3();
+        cargarCombo();
     }
 
     /**
@@ -28,16 +65,16 @@ public class CajaVista extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        pagos = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        acobrar = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        pendiente = new javax.swing.JTable();
+        combo = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         Cobrar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        Total = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -46,7 +83,7 @@ public class CajaVista extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        pagos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -57,9 +94,9 @@ public class CajaVista extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(pagos);
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        acobrar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -70,9 +107,14 @@ public class CajaVista extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        acobrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                acobrarMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(acobrar);
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        pendiente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -83,13 +125,17 @@ public class CajaVista extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane3.setViewportView(jTable3);
+        pendiente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pendienteMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(pendiente);
 
-        jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        combo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        combo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                comboActionPerformed(evt);
             }
         });
 
@@ -97,12 +143,17 @@ public class CajaVista extends javax.swing.JInternalFrame {
         jLabel1.setText("Mesa");
 
         Cobrar.setText("Cobrar");
+        Cobrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CobrarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setText("Total:");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel3.setText("0.00");
+        Total.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Total.setText("0.00");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel4.setText("Pedidos Pagos");
@@ -118,12 +169,12 @@ public class CajaVista extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(combo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(82, 82, 82)
                         .addComponent(jLabel5))
@@ -145,7 +196,7 @@ public class CajaVista extends javax.swing.JInternalFrame {
                         .addGap(41, 41, 41)
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel3)
+                        .addComponent(Total)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(Cobrar)
                         .addGap(37, 37, 37))
@@ -157,11 +208,11 @@ public class CajaVista extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(17, Short.MAX_VALUE)
+                .addContainerGap(19, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -170,7 +221,7 @@ public class CajaVista extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel3)
+                            .addComponent(Total)
                             .addComponent(Cobrar))
                         .addGap(37, 37, 37))
                     .addGroup(layout.createSequentialGroup()
@@ -187,25 +238,213 @@ public class CajaVista extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void comboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+        mesa1=(Mesa) combo.getSelectedItem();
+        listaPagos=(ArrayList<Pedido>) pedidoData.listarPedidosPorMesaP(mesa1.getIdMesa());
+        armarTablaPagos();
+        listaPedidos=(ArrayList<Pedido>) pedidoData.listarPedidosPorMesaI(mesa1.getIdMesa());
+        armarTablaPendiente();
+    }//GEN-LAST:event_comboActionPerformed
+
+    private void pendienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pendienteMouseClicked
+        // TODO add your handling code here:
+        int fila = pendiente.getSelectedRow();
+        if(fila >=0){
+            String estado=(String) modeloPediente.getValueAt(fila,6);
+            if(estado.equals("Entregado")){
+                int id=(int) modeloPediente.getValueAt(fila, 0);
+                pedido=pedidoData.buscarPedidoCodigo(id);
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Seleccione pedido entregado.");
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Seleccione producto");
+        }
+        intercambio();    
+        armarTablaPendiente();
+        armarTablaCobrar();
+        total();
+    }//GEN-LAST:event_pendienteMouseClicked
+
+    private void acobrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_acobrarMouseClicked
+        // TODO add your handling code here:
+        int fila = acobrar.getSelectedRow();
+        if(fila >=0){
+                int id=(int) modeloCobrar.getValueAt(fila, 0);
+                pedido=pedidoData.buscarPedidoCodigo(id);
+        }else{
+            JOptionPane.showMessageDialog(this, "Seleccione producto");
+        }
+        intercambioC();    
+        armarTablaPendiente();
+        armarTablaCobrar();
+        total();
+    }//GEN-LAST:event_acobrarMouseClicked
+
+    private void CobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CobrarActionPerformed
+        // TODO add your handling code here:
+        for(Pedido x:listaGuardar){
+            pedidoData.modificarPedido(x);
+        }
+        listaPagos=(ArrayList<Pedido>) pedidoData.listarPedidosPorMesaP(mesa1.getIdMesa());
+        armarTablaPagos();
+        listaGuardar=new ArrayList();
+        armarTablaCobrar();
+        total();
+    }//GEN-LAST:event_CobrarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Cobrar;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JLabel Total;
+    private javax.swing.JTable acobrar;
+    private javax.swing.JComboBox<Mesa> combo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
+    private javax.swing.JTable pagos;
+    private javax.swing.JTable pendiente;
     // End of variables declaration//GEN-END:variables
+    private void cargarCombo(){
+        listaMesas=(ArrayList<Mesa>) mesa.listarMesas();
+        for(Mesa m:listaMesas){
+            combo.addItem(m);
+        }
+    }
+    private void armarCabecera1() {
+        ArrayList<Object> columnas = new ArrayList<>();
+        modeloPediente.addColumn("Id Pedido");
+        modeloPediente.addColumn("Hora");
+        modeloPediente.addColumn("Producto");
+        modeloPediente.addColumn("Cantidad");
+        modeloPediente.addColumn("Precio unidad");
+        modeloPediente.addColumn("Total");
+        modeloPediente.addColumn("Estado");
+        pendiente.setModel(modeloPediente);
+    }
+    private void borrarFilas1(){
+        int filas = pendiente.getRowCount() -1;
+        for (int f = filas; f >= 0; f--) {
+            modeloPediente.removeRow(f);
+        }
+    }
+    private void armarCabecera2() {
+        ArrayList<Object> columnas = new ArrayList<>();
+        modeloPago.addColumn("Id Pedido");
+        modeloPago.addColumn("Hora");
+        modeloPago.addColumn("Producto");
+        modeloPago.addColumn("Cantidad");
+        modeloPago.addColumn("Precio unidad");
+        modeloPago.addColumn("Total");
+        pagos.setModel(modeloPago);
+    }
+    private void borrarFilas2(){
+        int filas = pagos.getRowCount() -1;
+        for (int f = filas; f >= 0; f--) {
+            modeloPago.removeRow(f);
+        }
+    }
+    private void armarCabecera3() {
+        ArrayList<Object> columnas = new ArrayList<>();
+        modeloCobrar.addColumn("Id Pedido");
+        modeloCobrar.addColumn("Hora");
+        modeloCobrar.addColumn("Producto");
+        modeloCobrar.addColumn("Cantidad");
+        modeloCobrar.addColumn("Precio unidad");
+        modeloCobrar.addColumn("Total");
+        acobrar.setModel(modeloCobrar);
+    }
+    private void borrarFilas3(){
+        int filas = acobrar.getRowCount() -1;
+        for (int f = filas; f >= 0; f--) {
+            modeloCobrar.removeRow(f);
+        }
+    }
+    private void armarTablaPagos(){
+        borrarFilas2();
+        for(Pedido pedido:listaPagos){
+            Producto producto=productoData.buscarProductoporId(pedido.getIdProducto());
+            String nombre=producto.getNombreProducto();
+            int precio=producto.getPrecio();
+            modeloPago.addRow(new Object[]{pedido.getIdPedido(), pedido.getHoraPedido(), nombre, pedido.getCantidadProducto(), precio, pedido.getCantidadProducto()*precio});
+        }
+    }
+    private String Estado(Pedido pedido){
+        String estado;
+        if(pedido.isEstado()==true){
+            if(pedido.isEstadoPago()==true){
+                estado="Pago";
+            }
+            else{
+            estado="Entregado";
+            }
+        }
+        else{
+            estado="Pendiente";
+        }
+        return estado;
+    }
+    private void armarTablaPendiente(){
+        borrarFilas1();
+        for(Pedido pedido:listaPedidos){
+            Producto producto=productoData.buscarProductoporId(pedido.getIdProducto());
+            String nombre=producto.getNombreProducto();
+            int precio=producto.getPrecio();
+            modeloPediente.addRow(new Object[]{pedido.getIdPedido(), pedido.getHoraPedido(), nombre, pedido.getCantidadProducto(), precio, pedido.getCantidadProducto()*precio, Estado(pedido)});
+        }
+    }
+    private void armarTablaCobrar(){
+        borrarFilas3();
+        for(Pedido pedido:listaGuardar){
+            Producto producto=productoData.buscarProductoporId(pedido.getIdProducto());
+            String nombre=producto.getNombreProducto();
+            int precio=producto.getPrecio();
+            modeloCobrar.addRow(new Object[]{pedido.getIdPedido(), pedido.getHoraPedido(), nombre, pedido.getCantidadProducto(), precio, pedido.getCantidadProducto()*precio});
+        }
+    }
+    private void intercambio(){
+        pedido.setEstadoPago(true);
+        for(Pedido p:listaPedidos){
+            if(p.getIdPedido()==pedido.getIdPedido()){
+                listaGuardar.add(pedido);
+            }
+        }
+        int tamaño=listaPedidos.size();
+        for(int i=0; i<tamaño; i++){
+            if(listaPedidos.get(i).getIdPedido()==pedido.getIdPedido()){
+                listaPedidos.remove(i);
+                break;
+            }
+        }
+    }
+    private void intercambioC(){
+        pedido.setEstadoPago(false);
+        for(Pedido p:listaGuardar){
+            if(p.getIdPedido()==pedido.getIdPedido()){
+                listaPedidos.add(pedido);
+            }
+        }
+        int tamaño=listaGuardar.size();
+        for(int i=0; i<tamaño; i++){
+            if(listaGuardar.get(i).getIdPedido()==pedido.getIdPedido()){
+                listaGuardar.remove(i);
+                break;
+            }
+        }
+    }
+    private void total(){
+        int suma=0;
+        for(Pedido p:listaGuardar){
+            Producto producto=productoData.buscarProductoporId(p.getIdProducto());
+            suma=producto.getPrecio()*p.getCantidadProducto()+suma;
+        }
+        Total.setText(suma+"");
+    }
 }

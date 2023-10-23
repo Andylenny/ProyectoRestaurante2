@@ -226,6 +226,11 @@ public class Restaurante extends javax.swing.JFrame {
         jMenuItem8.setForeground(new java.awt.Color(255, 51, 51));
         jMenuItem8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/proyecto-de-ley.png"))); // NOI18N
         jMenuItem8.setText("COBRAR");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem8);
 
         jMenuItem14.setText("jMenuItem14");
@@ -358,6 +363,17 @@ public class Restaurante extends javax.swing.JFrame {
         escritorio.add(pago);
         escritorio.moveToFront(pago);
     }//GEN-LAST:event_jMenuItem14ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+        CajaVista caja = new CajaVista();
+        caja.setVisible(true);
+        caja.getContentPane().setBackground(new Color(255,153,102));
+        escritorio.add(caja);
+        escritorio.moveToFront(caja);
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     /**
      * @param args the command line arguments

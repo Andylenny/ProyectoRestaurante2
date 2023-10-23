@@ -5,17 +5,35 @@
  */
 package proyectorestaurante.vistas;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import proyectorestaurante.AccesoAdatos.PedidoData;
+import proyectorestaurante.AccesoAdatos.ProductoData;
+import proyectorestaurante.entidades.Pedido;
+import proyectorestaurante.entidades.Producto;
+
 /**
  *
  * @author pc
  */
 public class PagosFecha extends javax.swing.JInternalFrame {
-
+    private DefaultTableModel modelo = new DefaultTableModel() {
+        public boolean isCellEditable(int fila, int columna) {
+            return false;
+        }
+    };
     /**
      * Creates new form PagosFecha
      */
+
+    private PedidoData pedidoData= new PedidoData();
+    private ProductoData productoData=new ProductoData();
+    private ArrayList<Pedido> listaPedidos;
     public PagosFecha() {
         initComponents();
+        armarCabecera();
     }
 
     /**
@@ -27,14 +45,14 @@ public class PagosFecha extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jCfecha2 = new com.toedter.calendar.JDateChooser();
+        jCfecha = new com.toedter.calendar.JDateChooser();
         jLabel9 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabla = new javax.swing.JTable();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
+        total = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -44,8 +62,13 @@ public class PagosFecha extends javax.swing.JInternalFrame {
         jLabel9.setText("Fecha");
 
         jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -56,7 +79,7 @@ public class PagosFecha extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane3.setViewportView(jTable1);
+        jScrollPane3.setViewportView(tabla);
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel10.setText("Pedidos Pagos");
@@ -64,8 +87,8 @@ public class PagosFecha extends javax.swing.JInternalFrame {
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel11.setText("Total:");
 
-        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel12.setText("00.00");
+        total.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        total.setText("00.00");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -77,7 +100,7 @@ public class PagosFecha extends javax.swing.JInternalFrame {
                         .addGap(95, 95, 95)
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCfecha2, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jCfecha, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
@@ -90,7 +113,7 @@ public class PagosFecha extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel11)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel12)
+                        .addComponent(total)
                         .addGap(61, 61, 61))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel10)
@@ -104,7 +127,7 @@ public class PagosFecha extends javax.swing.JInternalFrame {
                     .addComponent(jButton1)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jLabel9)
-                        .addComponent(jCfecha2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jCfecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -112,22 +135,60 @@ public class PagosFecha extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(jLabel12))
+                    .addComponent(total))
                 .addGap(30, 30, 30))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        LocalDate fechaPedido=jCfecha.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        listaPedidos=(ArrayList<Pedido>) pedidoData.listarPedidosPagosxFecha(fechaPedido);
+        armarTabla();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private com.toedter.calendar.JDateChooser jCfecha2;
+    private com.toedter.calendar.JDateChooser jCfecha;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tabla;
+    private javax.swing.JLabel total;
     // End of variables declaration//GEN-END:variables
+        private void armarCabecera() {
+        ArrayList<Object> columnas = new ArrayList<>();
+        modelo.addColumn("Id Pedido");
+        modelo.addColumn("Id Mesa");
+        modelo.addColumn("Hora");
+        modelo.addColumn("Producto");
+        modelo.addColumn("Cantidad");
+        modelo.addColumn("Precio unidad");
+        modelo.addColumn("Total");
+        modelo.addColumn("Estado"); 
+        tabla.setModel(modelo);
+    }
+    private void borrarFilas(){
+        int filas = tabla.getRowCount() -1;
+        for (int f = filas; f >= 0; f--) {
+            modelo.removeRow(f);
+        }
+    }
+
+    private void armarTabla(){
+        int suma=0;
+        borrarFilas();
+        for(Pedido pedido:listaPedidos){
+            Producto producto=productoData.buscarProductoporId(pedido.getIdProducto());
+            String nombre=producto.getNombreProducto();
+            int precio=producto.getPrecio();
+            suma=precio*pedido.getCantidadProducto()+suma;
+            modelo.addRow(new Object[]{pedido.getIdPedido(), pedido.getIdMesa(), pedido.getHoraPedido(), nombre, pedido.getCantidadProducto(), precio, pedido.getCantidadProducto()*precio, "Pago"});
+        }
+        total.setText(suma+"");
+    }
 }
