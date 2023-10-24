@@ -3,11 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Lourdes/Desktop/Elecciones/ProyectoRestaurante2/src/proyectorestaurante/AccesoAdatos/MesaData.java</file>
-            <file>file:/C:/Users/Lourdes/Desktop/Elecciones/ProyectoRestaurante2/src/proyectorestaurante/AccesoAdatos/PedidoData.java</file>
-            <file>file:/C:/Users/Lourdes/Desktop/Elecciones/ProyectoRestaurante2/src/proyectorestaurante/AccesoAdatos/ProductoData.java</file>
-            <file>file:/C:/Users/Lourdes/Desktop/Elecciones/ProyectoRestaurante2/src/proyectorestaurante/vistas/Restaurante.java</file>
-            <file>file:/C:/Users/Lourdes/Desktop/Elecciones/ProyectoRestaurante2/src/proyectorestaurante/vistas/PedidosEstado.java</file>
+            <file>file:/C:/Users/Lourdes/Documents/Nueva%20carpeta/ProyectoRestaurante2/src/proyectorestaurante/entidades/Mesa.java</file>
+            <file>file:/C:/Users/Lourdes/Documents/Nueva%20carpeta/ProyectoRestaurante2/src/proyectorestaurante/vistas/MesaVista.java</file>
+            <file>file:/C:/Users/Lourdes/Documents/Nueva%20carpeta/ProyectoRestaurante2/src/proyectorestaurante/entidades/Pedido.java</file>
+            <file>file:/C:/Users/Lourdes/Documents/Nueva%20carpeta/ProyectoRestaurante2/src/proyectorestaurante/vistas/MeseroV.java</file>
+            <file>file:/C:/Users/Lourdes/Documents/Nueva%20carpeta/ProyectoRestaurante2/src/proyectorestaurante/entidades/Producto.java</file>
+            <file>file:/C:/Users/Lourdes/Documents/Nueva%20carpeta/ProyectoRestaurante2/src/proyectorestaurante/entidades/Mesero.java</file>
+            <file>file:/C:/Users/Lourdes/Documents/Nueva%20carpeta/ProyectoRestaurante2/src/proyectorestaurante/vistas/PedidosMeseroVista.java</file>
+            <file>file:/C:/Users/Lourdes/Documents/Nueva%20carpeta/ProyectoRestaurante2/src/proyectorestaurante/entidades/Reserva.java</file>
+            <file>file:/C:/Users/Lourdes/Documents/Nueva%20carpeta/ProyectoRestaurante2/src/proyectorestaurante/vistas/PedidosEstado.java</file>
+            <file>file:/C:/Users/Lourdes/Documents/Nueva%20carpeta/ProyectoRestaurante2/src/proyectorestaurante/vistas/PedidosVista.java</file>
         </group>
     </open-files>
 </project-private>

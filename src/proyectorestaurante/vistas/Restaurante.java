@@ -50,7 +50,6 @@ public class Restaurante extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem13 = new javax.swing.JMenuItem();
         PEDIDOS = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
@@ -107,16 +106,6 @@ public class Restaurante extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem4);
-
-        jMenuItem13.setFont(new java.awt.Font("Copperplate Gothic Light", 1, 14)); // NOI18N
-        jMenuItem13.setForeground(new java.awt.Color(255, 51, 51));
-        jMenuItem13.setText("LISTA DE PRODUCTOS");
-        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem13ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem13);
 
         jMenuBar1.add(jMenu2);
 
@@ -233,7 +222,10 @@ public class Restaurante extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem8);
 
-        jMenuItem14.setText("jMenuItem14");
+        jMenuItem14.setBackground(new java.awt.Color(0, 0, 0));
+        jMenuItem14.setFont(new java.awt.Font("Copperplate Gothic Light", 1, 12)); // NOI18N
+        jMenuItem14.setForeground(new java.awt.Color(255, 51, 51));
+        jMenuItem14.setText("PEDIDOS PAGOS");
         jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem14ActionPerformed(evt);
@@ -319,17 +311,6 @@ public class Restaurante extends javax.swing.JFrame {
         escritorio.add(pedido);
         escritorio.moveToFront(pedido);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
-
-    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
-        // TODO add your handling code here:
-        escritorio.removeAll();
-        escritorio.repaint();
-        ListaProductosVista listapro = new ListaProductosVista();
-        listapro.setVisible(true);
-        listapro.getContentPane().setBackground(new Color(255,153,102));
-        escritorio.add(listapro);
-        escritorio.moveToFront(listapro);
-    }//GEN-LAST:event_jMenuItem13ActionPerformed
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
         // TODO add your handling code here:
@@ -423,7 +404,6 @@ public class Restaurante extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
