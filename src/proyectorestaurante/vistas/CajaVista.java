@@ -240,29 +240,43 @@ public class CajaVista extends javax.swing.JInternalFrame {
 
     private void comboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboActionPerformed
         // TODO add your handling code here:
+        try {
+            
         mesa1=(Mesa) combo.getSelectedItem();
+         if (mesa1 != null) {
         listaPagos=(ArrayList<Pedido>) pedidoData.listarPedidosPorMesaP(mesa1.getIdMesa());
         armarTablaPagos();
         listaPedidos=(ArrayList<Pedido>) pedidoData.listarPedidosPorMesaI(mesa1.getIdMesa());
         armarTablaPendiente();
+         }else{
+              JOptionPane.showMessageDialog(this, "Seleccione una mesa válida.");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar los pedidos: " + e.getMessage());
+        }
+         
+                              
     }//GEN-LAST:event_comboActionPerformed
 
     private void pendienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pendienteMouseClicked
         // TODO add your handling code here:
         int fila = pendiente.getSelectedRow();
-        if(fila >=0){
-            String estado=(String) modeloPediente.getValueAt(fila,6);
-            if(estado.equals("Entregado")){
-                int id=(int) modeloPediente.getValueAt(fila, 0);
-                pedido=pedidoData.buscarPedidoCodigo(id);
+        if (fila >= 0) {
+            try {
+                String estado = (String) modeloPediente.getValueAt(fila, 6);
+                if (estado.equals("Entregado")) {
+                    int id = (int) modeloPediente.getValueAt(fila, 0);
+                    pedido = pedidoData.buscarPedidoCodigo(id);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Seleccione un pedido entregado.");
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al seleccionar el pedido: " + e.getMessage());
             }
-            else{
-                JOptionPane.showMessageDialog(this, "Seleccione pedido entregado.");
-            }
-        }else{
-            JOptionPane.showMessageDialog(this, "Seleccione producto");
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione un producto.");
         }
-        intercambio();    
+        intercambio();
         armarTablaPendiente();
         armarTablaCobrar();
         total();
@@ -271,13 +285,17 @@ public class CajaVista extends javax.swing.JInternalFrame {
     private void acobrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_acobrarMouseClicked
         // TODO add your handling code here:
         int fila = acobrar.getSelectedRow();
-        if(fila >=0){
-                int id=(int) modeloCobrar.getValueAt(fila, 0);
-                pedido=pedidoData.buscarPedidoCodigo(id);
-        }else{
-            JOptionPane.showMessageDialog(this, "Seleccione producto");
+        if (fila >= 0) {
+            try {
+                int id = (int) modeloCobrar.getValueAt(fila, 0);
+                pedido = pedidoData.buscarPedidoCodigo(id);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al seleccionar el pedido a cobrar: " + e.getMessage());
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione un producto.");
         }
-        intercambioC();    
+        intercambioC();
         armarTablaPendiente();
         armarTablaCobrar();
         total();
@@ -285,14 +303,18 @@ public class CajaVista extends javax.swing.JInternalFrame {
 
     private void CobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CobrarActionPerformed
         // TODO add your handling code here:
-        for(Pedido x:listaGuardar){
-            pedidoData.modificarPedido(x);
+       try {
+            for (Pedido x : listaGuardar) {
+                pedidoData.modificarPedido(x);
+            }
+            listaPagos = (ArrayList<Pedido>) pedidoData.listarPedidosPorMesaP(mesa1.getIdMesa());
+            armarTablaPagos();
+            listaGuardar = new ArrayList();
+            armarTablaCobrar();
+            total();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al realizar el cobro: " + e.getMessage());
         }
-        listaPagos=(ArrayList<Pedido>) pedidoData.listarPedidosPorMesaP(mesa1.getIdMesa());
-        armarTablaPagos();
-        listaGuardar=new ArrayList();
-        armarTablaCobrar();
-        total();
     }//GEN-LAST:event_CobrarActionPerformed
 
 
