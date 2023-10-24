@@ -255,26 +255,29 @@ public class MeseroV extends javax.swing.JInternalFrame {
     private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
         // TODO add your handling code here:
         try {
-            int dni = Integer.parseInt(jtDni.getText());
+        String dniText = jtDni.getText().trim(); // Obtén el texto del campo DNI y elimina espacios en blanco
+        if (dniText.length() == 8) { // Verifica que el DNI tenga una longitud de 8 caracteres
+            int dni = Integer.parseInt(dniText); // Realiza el casting a entero
             MeseroData meseroEncontrado = new MeseroData();
-
-// Realiza la búsqueda de la mesa por ID
             Mesero mesero = meseroEncontrado.buscarMeseroporDni(dni);
 
             if (mesero != null) {
-                // Si se encuentra el alumno, muestra su información en los campos de texto
-
-                jtNombre.setText(String.valueOf(mesero.getNombre()));
+                // Si se encuentra el mesero, muestra su información en los campos de texto
+                jtNombre.setText(mesero.getNombre());
                 jtApellido.setText(mesero.getApellido());
                 jrEstado.setSelected(mesero.isEstado());
                 jtId.setText(String.valueOf(mesero.getIdMesero()));
-
+            } else {
+                JOptionPane.showMessageDialog(this, "Mesero no encontrado.");
             }
-
-        } catch (NumberFormatException n) {
-
-            JOptionPane.showMessageDialog(this, "Debe ingresar un numero válido");
+        } else {
+            JOptionPane.showMessageDialog(this, "El DNI debe tener una longitud de 8 caracteres y ser un número válido o positivo.");
         }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Debe ingresar un número válido para el DNI del mesero.");
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al buscar al mesero: " + e.getMessage());
+    }
     }//GEN-LAST:event_jbBuscarActionPerformed
 
     private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
@@ -295,81 +298,95 @@ public class MeseroV extends javax.swing.JInternalFrame {
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
         // TODO add your handling code here:
-         int dni= Integer.parseInt(jtDni.getText());
+         try {
+              String dniText = jtDni.getText().trim(); // Obtén el texto del campo DNI y elimina espacios en blanco
+        if (dniText.length() == 8) { // Verifica que el DNI tenga una longitud de 8 caracteres
+        int dni = Integer.parseInt(jtDni.getText());
         String nombre = jtNombre.getText();
-            String apellido = jtApellido.getText();
-        boolean estado = jrEstado.isEnabled();
-        
+        String apellido = jtApellido.getText();
+        boolean estado = jrEstado.isSelected();
 
         Mesero mesero = new Mesero(nombre, apellido, dni, estado);
 
         MeseroData md = new MeseroData();
         md.guardarMesero(mesero);
         recargar();
+        } else {
+            JOptionPane.showMessageDialog(this, "El DNI debe tener una longitud de 8 caracteres y ser un número válido o positivo.");
+        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Ingrese un DNI válido.");
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al guardar al mesero: " + e.getMessage());
+    }
     }//GEN-LAST:event_jbGuardarActionPerformed
 
     private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
         // TODO add your handling code here:
-            try {
-            int dni = Integer.parseInt(jtDni.getText());
-            String nombre = jtNombre.getText();
-            String apellido = jtApellido.getText();
-           //COLOCAR ESTADO
-            
-           
-            
-            MeseroData meseroEncontrado = new MeseroData();
-            Mesero mesero = meseroEncontrado.buscarMeseroporDni(dni);
-            if (mesero != null) {
-                mesero.setDni(dni);
-                mesero.setNombre(nombre);
-                mesero.setApellido(apellido);
-                meseroEncontrado.modificarMesero(mesero);
-                recargar();
-            }
-        
-        } catch (NumberFormatException n) {
-            JOptionPane.showMessageDialog(null, "Debe ingresar un id válido");
+             try {
+        int dni = Integer.parseInt(jtDni.getText());
+        String nombre = jtNombre.getText();
+        String apellido = jtApellido.getText();
+        boolean estado = jrEstado.isSelected();
+
+        MeseroData meseroEncontrado = new MeseroData();
+        Mesero mesero = meseroEncontrado.buscarMeseroporDni(dni);
+        if (mesero != null) {
+            mesero.setDni(dni);
+            mesero.setNombre(nombre);
+            mesero.setApellido(apellido);
+            mesero.setEstado(estado);
+            meseroEncontrado.modificarMesero(mesero);
+            recargar();
+        } else {
+            JOptionPane.showMessageDialog(this, "Mesero no encontrado.");
         }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Ingrese un DNI válido.");
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al modificar al mesero: " + e.getMessage());
+    }
         
     }//GEN-LAST:event_jbModificarActionPerformed
 
     private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
         // TODO add your handling code here:
-        int dni= Integer.parseInt(jtDni.getText());
-        MeseroData meseroEncontrado= new MeseroData();
-
+         try {
+        int dni = Integer.parseInt(jtDni.getText());
+        MeseroData meseroEncontrado = new MeseroData();
         Mesero mesero = meseroEncontrado.buscarMeseroporDni(dni);
 
         if (mesero != null) {
-//             Si se encuentra el alumno, elimínalo
             meseroEncontrado.eliminarMesero(dni);
             recargar();
         } else {
-//             Si no se encuentra el alumno, muestra un mensaje de error
-            JOptionPane.showMessageDialog(this, "Mesa no encontrado");
+            JOptionPane.showMessageDialog(this, "Mesero no encontrado.");
         }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Ingrese un DNI válido.");
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al eliminar al mesero: " + e.getMessage());
+    }
     }//GEN-LAST:event_jbEliminarActionPerformed
 
     private void jBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBajaActionPerformed
         // TODO add your handling code here:
-        int fila = tabla.getSelectedRow();
-        if(fila >=0){
-            mesero.setIdMesero((int) modelo.getValueAt(fila, 0));
-            mesero.setNombre((String) modelo.getValueAt(fila,1));
-            mesero.setApellido((String) modelo.getValueAt(fila,2));
-            mesero.setDni((int) modelo.getValueAt(fila,3));
-            if((Boolean)modelo.getValueAt(fila, 4)){
-                mesero.setEstado(false);
-            }
-            else{
-                mesero.setEstado(true);
-            }
-            md.modificarMesero(mesero);
-            recargar();
-        }else{
-            JOptionPane.showMessageDialog(this, "Seleccione una mesa ocupada");
+      int fila = tabla.getSelectedRow();
+    if (fila >= 0) {
+        mesero.setIdMesero((int) modelo.getValueAt(fila, 0));
+        mesero.setNombre((String) modelo.getValueAt(fila, 1));
+        mesero.setApellido((String) modelo.getValueAt(fila, 2));
+        mesero.setDni((int) modelo.getValueAt(fila, 3));
+        if ((Boolean) modelo.getValueAt(fila, 4)) {
+            mesero.setEstado(false);
+        } else {
+            mesero.setEstado(true);
         }
+        md.modificarMesero(mesero);
+        recargar();
+    } else {
+        JOptionPane.showMessageDialog(this, "Seleccione un mesero en la tabla o una mesa ocupada.");
+    }
     }//GEN-LAST:event_jBajaActionPerformed
 
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
