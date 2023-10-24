@@ -59,7 +59,7 @@ public class Mesa {
 
     @Override
     public String toString() {
-        return  "id:"+ idMesa + ",cap:"+ capacidad +",est=" + estado;
+        return  "N°"+ idMesa + "-cap:"+ capacidad;
     }
 
     public boolean isBaja() {

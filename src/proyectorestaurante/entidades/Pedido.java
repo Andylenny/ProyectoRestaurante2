@@ -114,7 +114,7 @@ public class Pedido {
 
     @Override
     public String toString() {
-        return "Pedido{" + "idPedido=" + idPedido + ", idMesa=" + idMesa + ", idMesero=" + idMesero + ", idProducto=" + idProducto + ", fechaPedido=" + fechaPedido + ", horaPedido=" + horaPedido + ", estadoPago=" + estadoPago + ", estado=" + estado + ", cantidadProducto=" + cantidadProducto +'}';
+        return "Pedido" + "N° pedido" + idPedido + ",N° mesa " + idMesa + ",N° mesero " + idMesero + ",Producto" + idProducto + ", fecha Pedido=" + fechaPedido + ", hora Pedido=" + horaPedido + ", estado Pago=" + estadoPago + ", estado=" + estado + ", cantidad Producto=" + cantidadProducto +'}';
     }
     
     
