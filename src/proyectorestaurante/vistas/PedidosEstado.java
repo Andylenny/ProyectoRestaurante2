@@ -173,9 +173,10 @@ private DefaultTableModel modelo = new DefaultTableModel() {
         if(fila >=0){
             Pedido pedido=pedidoData.buscarPedidoCodigo((int)modelo.getValueAt(fila,0));
             if(pedido.isEstado()==false){
+               stock(pedido);
                pedidoData.eliminarPedido(pedido.getIdPedido());
-                borrarFilas();
-                armarTabla();
+               borrarFilas();
+               armarTabla();
             }
             else{
                 JOptionPane.showMessageDialog(this, "Seleccione un pedido pendiente.");
@@ -201,6 +202,7 @@ private DefaultTableModel modelo = new DefaultTableModel() {
     private void armarCabecera() {
         ArrayList<Object> columnas = new ArrayList<>();
         modelo.addColumn("Id Pedido");
+        modelo.addColumn("Fecha");
         modelo.addColumn("Producto");
         modelo.addColumn("Cantidad");
         modelo.addColumn("Precio unidad");
@@ -236,14 +238,19 @@ private DefaultTableModel modelo = new DefaultTableModel() {
             Producto producto=productoData.buscarProductoporId(pedido.getIdProducto());
             String nombre=producto.getNombreProducto();
             int precio=producto.getPrecio();
-            modelo.addRow(new Object[]{pedido.getIdPedido(), nombre,precio, pedido.getCantidadProducto(), precio*pedido.getCantidadProducto(), Estado(pedido)});
+            modelo.addRow(new Object[]{pedido.getIdPedido(),pedido.getFechaPedido(), nombre,pedido.getCantidadProducto(), precio, precio*pedido.getCantidadProducto(), Estado(pedido)});
         }
         listaPedidos=(ArrayList<Pedido>)pedidoData.listarPedidosPorMesaP(mesa1.getIdMesa());
         for(Pedido pedido:listaPedidos){
             Producto producto=productoData.buscarProductoporId(pedido.getIdProducto());
             String nombre=producto.getNombreProducto();
             int precio=producto.getPrecio();
-            modelo.addRow(new Object[]{pedido.getIdPedido(), nombre,precio, pedido.getCantidadProducto(), precio*pedido.getCantidadProducto(), Estado(pedido)});
+            modelo.addRow(new Object[]{pedido.getIdPedido(),pedido.getFechaPedido(), nombre,pedido.getCantidadProducto(), precio, precio*pedido.getCantidadProducto(), Estado(pedido)});
         }
+    }
+    private void stock(Pedido pe){
+        Producto producto=productoData.buscarProductoporId(pe.getIdProducto());
+        producto.setStock(producto.getStock()+pe.getCantidadProducto());
+        productoData.modificarProducto(producto);
     }
 }

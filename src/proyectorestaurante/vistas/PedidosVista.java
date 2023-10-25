@@ -319,7 +319,10 @@ public class PedidosVista extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         for(Pedido x:listaPedidos){
             pedidoData.guardarPedido(x);
+            stock(x);
         }
+        listaPedidos=new ArrayList<>();
+        recargar();
     }//GEN-LAST:event_GuardarActionPerformed
 
     private void tPedidoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tPedidoMouseClicked
@@ -364,8 +367,10 @@ public class PedidosVista extends javax.swing.JInternalFrame {
         modelo1.addColumn("Codigo");
         modelo1.addColumn("Nombre");
         modelo1.addColumn("Precio");
+        modelo1.addColumn("Stock");
         tProducto.setModel(modelo1);
     }
+    
     private void armarCabecera2() {
         ArrayList<Object> columnas = new ArrayList<>();
         modelo2.addColumn("Codigo");
@@ -374,31 +379,44 @@ public class PedidosVista extends javax.swing.JInternalFrame {
         modelo2.addColumn("Cantidad");
         tPedido.setModel(modelo2);
     }
+    
     public void cargarMesas(){
         for(Mesa m : mesaData.listarMesas())
                cbMesa.addItem(m);
      }
+    
     public void cargarMeseros(){
         for(Mesero m : meseroData.listarMeseros())
                cbMesero.addItem(m);
     }
+    
     private void armarTablaP(){
         listaProducto=(ArrayList<Producto>) productoData.listarProductos();
         for(Producto x:listaProducto){
-            modelo1.addRow(new Object[]{x.getCodigo(),x.getNombreProducto(),x.getPrecio()});
+            modelo1.addRow(new Object[]{x.getCodigo(),x.getNombreProducto(),x.getPrecio(),x.getStock()});
         }
     }
+    
     private void armarTabla(){
         for(Pedido x:listaPedidos){
             Producto pro=productoData.buscarProductoporId(x.getIdProducto());
             modelo2.addRow(new Object[]{pro.getCodigo(),pro.getNombreProducto(),pro.getPrecio()*x.getCantidadProducto(),x.getCantidadProducto()});
         }
     }
+    
     private void borrarFilas() {
         int filas = tPedido.getRowCount() - 1;
 
         for (int f = filas; f >= 0; f--) {
             modelo2.removeRow(f);
+        }
+    }
+    
+    private void borrarFilas2() {
+        int filas = tProducto.getRowCount() - 1;
+
+        for (int f = filas; f >= 0; f--) {
+            modelo1.removeRow(f);
         }
     }
     
@@ -426,6 +444,7 @@ public class PedidosVista extends javax.swing.JInternalFrame {
             armarTabla();
         }
     }
+    
     private void CargarTotal(){
         int z=0;
         for(Pedido x:listaPedidos){
@@ -452,6 +471,22 @@ public class PedidosVista extends javax.swing.JInternalFrame {
                     armarTabla();
                     break;
                 }
+            }
+        }
+    }
+    
+    private void recargar(){
+        borrarFilas();
+        borrarFilas2();
+        armarTablaP();
+        Total.setText(""+0);
+    }
+    
+    private void stock(Pedido pe){
+        for(Producto x:listaProducto){
+            if(x.getIdProducto()==pe.getIdProducto()){
+                x.setStock(x.getStock()-pe.getCantidadProducto());
+                productoData.modificarProducto(x);
             }
         }
     }

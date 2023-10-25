@@ -5,6 +5,9 @@
  */
 package proyectorestaurante.vistas;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -44,8 +47,8 @@ public class CajaVista extends javax.swing.JInternalFrame {
     private Mesa mesa1 = new Mesa();
     private Pedido pedido=new Pedido();
     private ArrayList<Mesa> listaMesas;
-    private ArrayList<Pedido> listaPedidos;
-    private ArrayList<Pedido> listaPagos;
+    private ArrayList<Pedido> listaPedidos=new ArrayList();
+    private ArrayList<Pedido> listaPagos=new ArrayList();
     private ArrayList<Pedido> listaGuardar=new ArrayList();
     public CajaVista() {
         initComponents();
@@ -78,6 +81,17 @@ public class CajaVista extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        Hora = new javax.swing.JLabel();
+        horaIni = new javax.swing.JTextField();
+        minutoIni = new javax.swing.JTextField();
+        Hora1 = new javax.swing.JLabel();
+        horaFin = new javax.swing.JTextField();
+        minutoFin = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jCfecha = new com.toedter.calendar.JDateChooser();
+        jButton1 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        TotalFinal = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -85,7 +99,6 @@ public class CajaVista extends javax.swing.JInternalFrame {
 
         pagos.setBackground(new java.awt.Color(255, 153, 102));
         pagos.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        pagos.setForeground(new java.awt.Color(0, 0, 0));
         pagos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -101,7 +114,6 @@ public class CajaVista extends javax.swing.JInternalFrame {
 
         acobrar.setBackground(new java.awt.Color(255, 153, 102));
         acobrar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        acobrar.setForeground(new java.awt.Color(0, 0, 0));
         acobrar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -122,7 +134,6 @@ public class CajaVista extends javax.swing.JInternalFrame {
 
         pendiente.setBackground(new java.awt.Color(255, 153, 102));
         pendiente.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        pendiente.setForeground(new java.awt.Color(0, 0, 0));
         pendiente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -178,17 +189,53 @@ public class CajaVista extends javax.swing.JInternalFrame {
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Pedidos a cobrar");
 
+        Hora.setFont(new java.awt.Font("Courier New", 1, 18)); // NOI18N
+        Hora.setForeground(new java.awt.Color(255, 255, 255));
+        Hora.setText("Hora:");
+
+        horaIni.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        horaIni.setText("00");
+
+        minutoIni.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        minutoIni.setText("00");
+
+        Hora1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Hora1.setForeground(new java.awt.Color(255, 255, 255));
+        Hora1.setText("Hora:");
+
+        horaFin.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        horaFin.setText("00");
+        horaFin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                horaFinActionPerformed(evt);
+            }
+        });
+
+        minutoFin.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        minutoFin.setText("00");
+
+        jLabel7.setFont(new java.awt.Font("Courier New", 1, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Fecha:");
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/lupa_1.png"))); // NOI18N
+        jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Total pagos");
+
+        TotalFinal.setText("0.00");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(combo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(82, 82, 82)
                         .addComponent(jLabel5))
@@ -197,55 +244,112 @@ public class CajaVista extends javax.swing.JInternalFrame {
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(combo, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(3, 3, 3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(75, 75, 75)
+                        .addComponent(jLabel4))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(82, 82, 82)
-                        .addComponent(jLabel4)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel3)
+                        .addGap(27, 27, 27)
+                        .addComponent(TotalFinal)
+                        .addGap(51, 51, 51)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
                         .addComponent(Total)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(Cobrar)
-                        .addGap(37, 37, 37))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(22, Short.MAX_VALUE))
+                        .addGap(36, 36, 36))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel6)
-                        .addGap(69, 69, 69))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel7)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jCfecha, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(Hora)
+                                        .addGap(3, 3, 3)
+                                        .addComponent(horaIni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(14, 14, 14)
+                                        .addComponent(minutoIni, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(Hora1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(horaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(minutoFin, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(55, 55, 55))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton1)
+                                    .addComponent(jLabel6))
+                                .addGap(81, 81, 81))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
+                .addContainerGap(14, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(jCfecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(Total)
-                            .addComponent(Cobrar))
-                        .addGap(37, 37, 37))
+                            .addComponent(horaIni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(minutoIni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Hora)
+                            .addComponent(Hora1)
+                            .addComponent(horaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(minutoFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addGap(14, 14, 14)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(TotalFinal))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(Total)
+                            .addComponent(Cobrar))))
+                .addContainerGap())
         );
 
         pack();
@@ -253,22 +357,6 @@ public class CajaVista extends javax.swing.JInternalFrame {
 
     private void comboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboActionPerformed
         // TODO add your handling code here:
-        try {
-            
-        mesa1=(Mesa) combo.getSelectedItem();
-         if (mesa1 != null) {
-        listaPagos=(ArrayList<Pedido>) pedidoData.listarPedidosPorMesaP(mesa1.getIdMesa());
-        armarTablaPagos();
-        listaPedidos=(ArrayList<Pedido>) pedidoData.listarPedidosPorMesaI(mesa1.getIdMesa());
-        armarTablaPendiente();
-         }else{
-              JOptionPane.showMessageDialog(this, "Seleccione una mesa válida.");
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al cargar los pedidos: " + e.getMessage());
-        }
-         
-                              
     }//GEN-LAST:event_comboActionPerformed
 
     private void pendienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pendienteMouseClicked
@@ -317,12 +405,15 @@ public class CajaVista extends javax.swing.JInternalFrame {
     private void CobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CobrarActionPerformed
         // TODO add your handling code here:
        try {
+            LocalDate fechaPedido=jCfecha.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalTime Ini=LocalTime.of(Integer.parseInt(horaIni.getText()), Integer.parseInt(minutoIni.getText()));
+            LocalTime Fin=LocalTime.of(Integer.parseInt(horaFin.getText()), Integer.parseInt(minutoFin.getText()));
             for (Pedido x : listaGuardar) {
                 pedidoData.modificarPedido(x);
             }
-            listaPagos = (ArrayList<Pedido>) pedidoData.listarPedidosPorMesaP(mesa1.getIdMesa());
+            armaListas(Ini, Fin, fechaPedido);
             armarTablaPagos();
-            listaGuardar = new ArrayList();
+            armarTablaPendiente();
             armarTablaCobrar();
             total();
         } catch (Exception e) {
@@ -330,20 +421,57 @@ public class CajaVista extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_CobrarActionPerformed
 
+    private void horaFinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_horaFinActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_horaFinActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        try{
+        mesa1=(Mesa) combo.getSelectedItem();
+        LocalDate fechaPedido=jCfecha.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalTime Ini=LocalTime.of(Integer.parseInt(horaIni.getText()), Integer.parseInt(minutoIni.getText()));
+        LocalTime Fin=LocalTime.of(Integer.parseInt(horaFin.getText()), Integer.parseInt(minutoFin.getText()));
+        listaPedidos=(ArrayList<Pedido>) pedidoData.BuscarPedidosEntreHora(mesa1.getIdMesa(),Ini,Fin,fechaPedido);
+        if (mesa1 != null) {
+            armaListas(Ini, Fin, fechaPedido);
+            armarTablaPagos();
+            armarTablaPendiente();
+            total();
+         }else{
+              JOptionPane.showMessageDialog(this, "Seleccione una mesa válida.");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar los pedidos: " + e.getMessage());
+        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Cobrar;
+    private javax.swing.JLabel Hora;
+    private javax.swing.JLabel Hora1;
     private javax.swing.JLabel Total;
+    private javax.swing.JLabel TotalFinal;
     private javax.swing.JTable acobrar;
     private javax.swing.JComboBox<Mesa> combo;
+    private javax.swing.JTextField horaFin;
+    private javax.swing.JTextField horaIni;
+    private javax.swing.JButton jButton1;
+    private com.toedter.calendar.JDateChooser jCfecha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTextField minutoFin;
+    private javax.swing.JTextField minutoIni;
     private javax.swing.JTable pagos;
     private javax.swing.JTable pendiente;
     // End of variables declaration//GEN-END:variables
@@ -401,6 +529,20 @@ public class CajaVista extends javax.swing.JInternalFrame {
         for (int f = filas; f >= 0; f--) {
             modeloCobrar.removeRow(f);
         }
+    }
+    private void armaListas(LocalTime ini,LocalTime fin,LocalDate fecha){
+        listaGuardar=(ArrayList<Pedido>) pedidoData.BuscarPedidosEntreHora(mesa1.getIdMesa(), ini, fin, fecha);
+        listaPagos=new ArrayList();
+        listaPedidos=new ArrayList();
+        for(Pedido pe:listaGuardar){
+            if(pe.isEstadoPago()){
+                listaPagos.add(pe);
+            }
+            else{
+                listaPedidos.add(pe);
+            }
+        }
+        listaGuardar=new ArrayList();
     }
     private void armarTablaPagos(){
         borrarFilas2();
@@ -476,10 +618,16 @@ public class CajaVista extends javax.swing.JInternalFrame {
     }
     private void total(){
         int suma=0;
+        int suma2=0;
         for(Pedido p:listaGuardar){
             Producto producto=productoData.buscarProductoporId(p.getIdProducto());
             suma=producto.getPrecio()*p.getCantidadProducto()+suma;
         }
+        for(Pedido p:listaPagos){
+            Producto producto=productoData.buscarProductoporId(p.getIdProducto());
+            suma2=producto.getPrecio()*p.getCantidadProducto()+suma2;
+        }
         Total.setText(suma+"");
+        TotalFinal.setText(suma2+"");
     }
 }
