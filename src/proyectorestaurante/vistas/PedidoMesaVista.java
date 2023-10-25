@@ -70,6 +70,8 @@ public class PedidoMesaVista extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
+        setResizable(true);
+        setTitle("Pedidos entre Horas");
 
         Hora.setFont(new java.awt.Font("Courier New", 1, 18)); // NOI18N
         Hora.setForeground(new java.awt.Color(255, 255, 255));

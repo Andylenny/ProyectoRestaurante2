@@ -57,6 +57,7 @@ public class PagosFecha extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
+        setTitle("Pedidos pagos");
 
         jLabel9.setFont(new java.awt.Font("Courier New", 1, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));

@@ -59,6 +59,7 @@ private DefaultTableModel modelo = new DefaultTableModel() {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
+        setTitle("Estado del Pedido");
 
         entregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/editar.png"))); // NOI18N
         entregar.setText("Entregar");
@@ -89,7 +90,6 @@ private DefaultTableModel modelo = new DefaultTableModel() {
 
         tabla.setBackground(new java.awt.Color(255, 153, 102));
         tabla.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        tabla.setForeground(new java.awt.Color(0, 0, 0));
         tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},

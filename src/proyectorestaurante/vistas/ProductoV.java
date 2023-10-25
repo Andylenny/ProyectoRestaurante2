@@ -37,7 +37,7 @@ public class ProductoV extends javax.swing.JInternalFrame {
         initComponents();
         armarCabecera1();
         armarTabla();
-        
+
     }
 
     /**
@@ -72,6 +72,7 @@ public class ProductoV extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
+        setTitle("Menu");
 
         jLabel1.setFont(new java.awt.Font("Courier New", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -274,7 +275,7 @@ public class ProductoV extends javax.swing.JInternalFrame {
 
             JOptionPane.showMessageDialog(this, "Debe ingresar un numero válido");
         }
-         recargar();
+        recargar();
     }//GEN-LAST:event_jbBuscarActionPerformed
 
     private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
@@ -289,21 +290,50 @@ public class ProductoV extends javax.swing.JInternalFrame {
         jbGuardar.setEnabled(true);
         jbBuscar.setEnabled(true);
         jbEliminar.setEnabled(true);
-        
+
     }//GEN-LAST:event_jbNuevoActionPerformed
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
         // TODO add your handling code here:
-        int codigo = Integer.parseInt(jtCodigo.getText());
-        String nombre = jtNombre.getText();
-        int precio = Integer.parseInt(jtPrecio.getText());
-        int stock = Integer.parseInt(jtStock.getText());
-        boolean estado = jrEstado.isEnabled();
+        try {
+            int codigo = Integer.parseInt(jtCodigo.getText());
+            String nombre = jtNombre.getText();
+            int precio = Integer.parseInt(jtPrecio.getText());
+            int stock = Integer.parseInt(jtStock.getText());
 
-        Producto pro = new Producto(nombre, precio, stock, codigo, estado);
-        ProductoData pd = new ProductoData();
-        pd.guardarProducto(pro);
-         recargar();
+            // Validación del código
+            if (codigo <= 0) {
+                JOptionPane.showMessageDialog(this, "El código del producto debe ser un número positivo.");
+                return;
+            }
+            if (nombre.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "El nombre del producto no puede estar vacío.");
+                return;
+            }
+
+            // Validación del precio
+            if (precio <= 0) {
+                JOptionPane.showMessageDialog(this, "El precio del producto debe ser un número positivo.");
+                return;
+            }
+
+            // Validación del stock
+            if (stock < 0) {
+                JOptionPane.showMessageDialog(this, "El stock del producto no puede ser un número negativo.");
+                return;
+            }
+
+            boolean estado = jrEstado.isSelected();
+            Producto pro = new Producto(nombre, precio, stock, codigo, estado);
+            ProductoData pd = new ProductoData();
+            pd.guardarProducto(pro);
+            recargar();
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Asegúrate de ingresar números válidos en los campos de código, precio y stock.");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al guardar el producto: " + e.getMessage());
+        }
     }//GEN-LAST:event_jbGuardarActionPerformed
 
     private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
@@ -315,6 +345,11 @@ public class ProductoV extends javax.swing.JInternalFrame {
             int precio = Integer.parseInt(jtPrecio.getText());
             int stock = Integer.parseInt(jtStock.getText());
             boolean estado = jrEstado.isSelected();
+
+            if (codigo <= 0) {
+                JOptionPane.showMessageDialog(null, "El código del producto debe ser un número positivo.");
+                return;
+            }
 
             ProductoData pd = new ProductoData();
 
@@ -331,45 +366,66 @@ public class ProductoV extends javax.swing.JInternalFrame {
         } catch (NumberFormatException n) {
             JOptionPane.showMessageDialog(null, "Debe ingresar un id válido");
         }
-         recargar();
+        recargar();
     }//GEN-LAST:event_jbModificarActionPerformed
 
     private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
         // TODO add your handling code here:
-        int codigo = Integer.parseInt(jtCodigo.getText());
 
-        ProductoData prodEncontrado = new ProductoData();
-        Producto pro = prodEncontrado.buscarProductoporCodigo(codigo);
+        try {
+            int codigo = Integer.parseInt(jtCodigo.getText());
+            if (codigo <= 0) {
+                JOptionPane.showMessageDialog(this, "El código del producto debe ser un número positivo.");
+                return;
+            }
 
-        if (pro != null) {
+            ProductoData prodEncontrado = new ProductoData();
+            Producto pro = prodEncontrado.buscarProductoporCodigo(codigo);
+
+            if (pro != null) {
 //             Si se encuentra el producto, lo elimína de la base de datos
-            prodEncontrado.eliminarProducto(codigo);
-            limpiar();
+                prodEncontrado.eliminarProducto(codigo);
+                limpiar();
 
-        } else {
+            } else {
 //             Si no se encuentra el alumno, muestra un mensaje de error
-            JOptionPane.showMessageDialog(this, "Producto no encontrado");
+                JOptionPane.showMessageDialog(this, "Producto no encontrado");
+            }
+            recargar();
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar un código válido (número entero).");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al eliminar el producto: " + e.getMessage());
         }
-         recargar();
+
     }//GEN-LAST:event_jbEliminarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        int codigo = Integer.parseInt(jtCodigo.getText());
+        try {
 
-        ProductoData prodEncontrado = new ProductoData();
-        Producto pro = prodEncontrado.buscarProductoporCodigo(codigo);
+            int codigo = Integer.parseInt(jtCodigo.getText());
+            if (codigo <= 0) {
+                JOptionPane.showMessageDialog(this, "El código del producto debe ser un número positivo.");
+                return;
+            }
 
-        if (pro != null) {
+            ProductoData prodEncontrado = new ProductoData();
+            Producto pro = prodEncontrado.buscarProductoporCodigo(codigo);
+
+            if (pro != null) {
 //             Si se encuentra el producto, lo elimína de la base de datos
-            prodEncontrado.eliminarProductoLogico(codigo);
-            limpiar();
+                prodEncontrado.eliminarProductoLogico(codigo);
+                limpiar();
 
-        } else {
+            } else {
 //             Si no se encuentra el alumno, muestra un mensaje de error
-            JOptionPane.showMessageDialog(this, "Producto no encontrado");
+                JOptionPane.showMessageDialog(this, "Producto no encontrado");
+            }
+            recargar();
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar un código válido (número entero).");
         }
-         recargar();
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
@@ -428,21 +484,24 @@ private void desactivarCampos() {
         modelo1.addColumn("Estado");
         tabla.setModel(modelo1);
     }
-     private void borrarFilas() {
+
+    private void borrarFilas() {
         int filas = tabla.getRowCount() - 1;
         for (int f = filas; f >= 0; f--) {
             modelo1.removeRow(f);
         }
     }
-    private void armarTabla(){
-        listaProductos=(ArrayList<Producto>) pd.listarProductos();
-        for(Producto x:listaProductos){
-            modelo1.addRow(new Object[]{x.getCodigo(),x.getNombreProducto(),x.getPrecio(),x.getStock(),x.isEstado()});
-        
+
+    private void armarTabla() {
+        listaProductos = (ArrayList<Producto>) pd.listarProductos();
+        for (Producto x : listaProductos) {
+            modelo1.addRow(new Object[]{x.getCodigo(), x.getNombreProducto(), x.getPrecio(), x.getStock(), x.isEstado()});
+
         }
-       
+
     }
-    private void recargar(){
+
+    private void recargar() {
         borrarFilas();
         armarTabla();
     }
