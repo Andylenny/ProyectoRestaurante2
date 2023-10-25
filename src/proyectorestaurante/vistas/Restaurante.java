@@ -134,6 +134,7 @@ public class Restaurante extends javax.swing.JFrame {
 
         jMenuItem6.setFont(new java.awt.Font("Copperplate Gothic Light", 1, 14)); // NOI18N
         jMenuItem6.setForeground(new java.awt.Color(255, 51, 51));
+        jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/gestion-de-crisis.png"))); // NOI18N
         jMenuItem6.setText("GESTION DE PEDIDOS");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -164,6 +165,7 @@ public class Restaurante extends javax.swing.JFrame {
 
         jMenuItem11.setFont(new java.awt.Font("Copperplate Gothic Light", 1, 14)); // NOI18N
         jMenuItem11.setForeground(new java.awt.Color(255, 51, 51));
+        jMenuItem11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/pedido-en-linea.png"))); // NOI18N
         jMenuItem11.setText("PEDIDOS DE MESAS");
         jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -194,6 +196,7 @@ public class Restaurante extends javax.swing.JFrame {
 
         jMenuItem10.setFont(new java.awt.Font("Copperplate Gothic Light", 1, 14)); // NOI18N
         jMenuItem10.setForeground(new java.awt.Color(255, 51, 51));
+        jMenuItem10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/ordenar-comida.png"))); // NOI18N
         jMenuItem10.setText("Pedidos por meseros");
         jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -225,6 +228,7 @@ public class Restaurante extends javax.swing.JFrame {
         jMenuItem14.setBackground(new java.awt.Color(0, 0, 0));
         jMenuItem14.setFont(new java.awt.Font("Copperplate Gothic Light", 1, 12)); // NOI18N
         jMenuItem14.setForeground(new java.awt.Color(255, 51, 51));
+        jMenuItem14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/dolar.png"))); // NOI18N
         jMenuItem14.setText("PEDIDOS PAGOS");
         jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

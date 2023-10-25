@@ -125,6 +125,9 @@ public class MeseroV extends javax.swing.JInternalFrame {
             }
         });
 
+        tabla.setBackground(new java.awt.Color(255, 255, 255));
+        tabla.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        tabla.setForeground(new java.awt.Color(0, 0, 0));
         tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -391,6 +394,7 @@ public class MeseroV extends javax.swing.JInternalFrame {
 
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
         // TODO add your handling code here:
+        dispose();
     }//GEN-LAST:event_jbSalirActionPerformed
 
 

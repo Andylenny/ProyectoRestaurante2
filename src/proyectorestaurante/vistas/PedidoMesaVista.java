@@ -71,7 +71,8 @@ public class PedidoMesaVista extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
 
-        Hora.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Hora.setFont(new java.awt.Font("Courier New", 1, 18)); // NOI18N
+        Hora.setForeground(new java.awt.Color(255, 255, 255));
         Hora.setText("Hora:");
 
         horaIni.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -84,6 +85,7 @@ public class PedidoMesaVista extends javax.swing.JInternalFrame {
         minutoIni.setText("00");
 
         Hora1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Hora1.setForeground(new java.awt.Color(255, 255, 255));
         Hora1.setText("Hora:");
 
         horaFin.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -95,7 +97,8 @@ public class PedidoMesaVista extends javax.swing.JInternalFrame {
         minutoFin.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         minutoFin.setText("00");
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Courier New", 1, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Fecha:");
 
         combo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -105,9 +108,13 @@ public class PedidoMesaVista extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Courier New", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Mesa:");
 
+        tabla.setBackground(new java.awt.Color(255, 153, 102));
+        tabla.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        tabla.setForeground(new java.awt.Color(0, 0, 0));
         tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -121,6 +128,7 @@ public class PedidoMesaVista extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(tabla);
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/lupa_1.png"))); // NOI18N
         jButton1.setText("Buscar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -148,16 +156,16 @@ public class PedidoMesaVista extends javax.swing.JInternalFrame {
                                 .addComponent(combo, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(Hora)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(horaIni, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(3, 3, 3)
+                                .addComponent(horaIni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(minutoIni, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(56, 56, 56)
                                 .addComponent(Hora1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(horaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(3, 3, 3)
+                                .addComponent(horaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -166,7 +174,7 @@ public class PedidoMesaVista extends javax.swing.JInternalFrame {
                                 .addComponent(jButton1))))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane1)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(

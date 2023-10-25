@@ -75,7 +75,8 @@ public class PedidosMeseroVista extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Courier New", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Mesero");
 
         combo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -85,15 +86,21 @@ public class PedidosMeseroVista extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Courier New", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Fecha");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Courier New", 1, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Pedidos atendidos");
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Courier New", 1, 24)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Pedidos cobrados");
 
+        tablaFecha.setBackground(new java.awt.Color(255, 153, 102));
+        tablaFecha.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        tablaFecha.setForeground(new java.awt.Color(0, 0, 0));
         tablaFecha.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -107,6 +114,9 @@ public class PedidosMeseroVista extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(tablaFecha);
 
+        tablaAtendido.setBackground(new java.awt.Color(255, 153, 102));
+        tablaAtendido.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        tablaAtendido.setForeground(new java.awt.Color(0, 0, 0));
         tablaAtendido.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -120,6 +130,7 @@ public class PedidosMeseroVista extends javax.swing.JInternalFrame {
         ));
         jScrollPane4.setViewportView(tablaAtendido);
 
+        buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/lupa_1.png"))); // NOI18N
         buscar.setText("Buscar");
         buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -179,7 +190,7 @@ public class PedidosMeseroVista extends javax.swing.JInternalFrame {
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))

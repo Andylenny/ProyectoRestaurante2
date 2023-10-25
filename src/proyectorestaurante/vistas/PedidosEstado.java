@@ -60,6 +60,7 @@ private DefaultTableModel modelo = new DefaultTableModel() {
         setIconifiable(true);
         setMaximizable(true);
 
+        entregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/editar.png"))); // NOI18N
         entregar.setText("Entregar");
         entregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -67,6 +68,7 @@ private DefaultTableModel modelo = new DefaultTableModel() {
             }
         });
 
+        eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyectorestaurante/recursos/eliminar_1.png"))); // NOI18N
         eliminar.setText("Eliminar");
         eliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -81,9 +83,13 @@ private DefaultTableModel modelo = new DefaultTableModel() {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Courier New", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Mesa:");
 
+        tabla.setBackground(new java.awt.Color(255, 153, 102));
+        tabla.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        tabla.setForeground(new java.awt.Color(0, 0, 0));
         tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -106,9 +112,9 @@ private DefaultTableModel modelo = new DefaultTableModel() {
                 .addComponent(entregar)
                 .addGap(76, 76, 76)
                 .addComponent(eliminar)
-                .addContainerGap(176, Short.MAX_VALUE))
+                .addContainerGap(136, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(104, Short.MAX_VALUE)
+                .addContainerGap(106, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(combo, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
