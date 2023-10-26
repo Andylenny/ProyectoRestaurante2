@@ -261,21 +261,27 @@ public class MeseroV extends javax.swing.JInternalFrame {
         try {
         String dniText = jtDni.getText().trim(); // Obtén el texto del campo DNI y elimina espacios en blanco
         if (dniText.length() == 8) { // Verifica que el DNI tenga una longitud de 8 caracteres
-            int dni = Integer.parseInt(dniText); // Realiza el casting a entero
-            MeseroData meseroEncontrado = new MeseroData();
-            Mesero mesero = meseroEncontrado.buscarMeseroporDni(dni);
+            int dni = Integer.parseInt(dniText);
 
-            if (mesero != null) {
-                // Si se encuentra el mesero, muestra su información en los campos de texto
-                jtNombre.setText(mesero.getNombre());
-                jtApellido.setText(mesero.getApellido());
-                jrEstado.setSelected(mesero.isEstado());
-                jtId.setText(String.valueOf(mesero.getIdMesero()));
+            // Validar que el DNI no sea negativo
+            if (dni > 0) {
+                MeseroData meseroEncontrado = new MeseroData();
+                Mesero mesero = meseroEncontrado.buscarMeseroporDni(dni);
+
+                if (mesero != null) {
+                    // Si se encuentra el mesero, muestra su información en los campos de texto
+                    jtNombre.setText(mesero.getNombre());
+                    jtApellido.setText(mesero.getApellido());
+                    jrEstado.setSelected(mesero.isEstado());
+                    jtId.setText(String.valueOf(mesero.getIdMesero()));
+                } else {
+                    JOptionPane.showMessageDialog(this, "Mesero no encontrado.");
+                }
             } else {
-                JOptionPane.showMessageDialog(this, "Mesero no encontrado.");
+                JOptionPane.showMessageDialog(this, "El DNI no puede ser un número negativo.");
             }
         } else {
-            JOptionPane.showMessageDialog(this, "El DNI debe tener una longitud de 8 caracteres y ser un número válido o positivo.");
+            JOptionPane.showMessageDialog(this, "El DNI debe tener una longitud de 8 caracteres ");
         }
     } catch (NumberFormatException e) {
         JOptionPane.showMessageDialog(this, "Debe ingresar un número válido para el DNI del mesero.");
@@ -303,26 +309,33 @@ public class MeseroV extends javax.swing.JInternalFrame {
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
         // TODO add your handling code here:
          try {
-              String dniText = jtDni.getText().trim(); // Obtén el texto del campo DNI y elimina espacios en blanco
+        String dniText = jtDni.getText().trim(); // Obtén el texto del campo DNI y elimina espacios en blanco
         if (dniText.length() == 8) { // Verifica que el DNI tenga una longitud de 8 caracteres
-        int dni = Integer.parseInt(jtDni.getText());
-        String nombre = jtNombre.getText();
-        String apellido = jtApellido.getText();
-        boolean estado = jrEstado.isSelected();
+            int dni = Integer.parseInt(dniText);
 
-        Mesero mesero = new Mesero(nombre, apellido, dni, estado);
+            // Validar que el DNI no sea negativo
+            if (dni >= 0) {
+                String nombre = jtNombre.getText();
+                String apellido = jtApellido.getText();
+                boolean estado = jrEstado.isSelected();
 
-        MeseroData md = new MeseroData();
-        md.guardarMesero(mesero);
-        recargar();
+                Mesero mesero = new Mesero(nombre, apellido, dni, estado);
+
+                MeseroData md = new MeseroData();
+                md.guardarMesero(mesero);
+                recargar();
+            } else {
+                JOptionPane.showMessageDialog(this, "El DNI no puede ser un número negativo.");
+            }
         } else {
-            JOptionPane.showMessageDialog(this, "El DNI debe tener una longitud de 8 caracteres y ser un número válido o positivo.");
+            JOptionPane.showMessageDialog(this, "El DNI debe tener una longitud de 8 caracteres ");
         }
     } catch (NumberFormatException e) {
         JOptionPane.showMessageDialog(this, "Ingrese un DNI válido.");
     } catch (Exception e) {
         JOptionPane.showMessageDialog(this, "Error al guardar al mesero: " + e.getMessage());
     }
+                             
     }//GEN-LAST:event_jbGuardarActionPerformed
 
     private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
@@ -369,7 +382,7 @@ public class MeseroV extends javax.swing.JInternalFrame {
     } catch (NumberFormatException e) {
         JOptionPane.showMessageDialog(this, "Ingrese un DNI válido.");
     } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Error al eliminar al mesero: " + e.getMessage());
+        JOptionPane.showMessageDialog(this, "Error al eliminar al mesero: " );
     }
     }//GEN-LAST:event_jbEliminarActionPerformed
 

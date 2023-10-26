@@ -55,8 +55,9 @@ public class MeseroData {
             JOptionPane.showMessageDialog(null, "Mesero Despedido");
 
         } catch (SQLException e) {
+            
             JOptionPane.showMessageDialog(null, "Error al acceder al eliminar mesero");
-
+            e.printStackTrace();
         }
     }
 
