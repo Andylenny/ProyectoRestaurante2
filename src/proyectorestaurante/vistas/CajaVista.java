@@ -5,6 +5,7 @@
  */
 package proyectorestaurante.vistas;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -52,6 +53,11 @@ public class CajaVista extends javax.swing.JInternalFrame {
     private ArrayList<Pedido> listaGuardar=new ArrayList();
     public CajaVista() {
         initComponents();
+        jCfecha.setDate(Date.valueOf(LocalDate.now()));
+        horaFin.setText(""+LocalTime.now().getHour());
+        minutoFin.setText(""+LocalTime.now().getMinute());
+        horaIni.setText(""+(LocalTime.now().getHour()-1));
+        minutoIni.setText(""+LocalTime.now().getMinute());
         armarCabecera1();
         armarCabecera2();
         armarCabecera3();
@@ -403,21 +409,26 @@ public class CajaVista extends javax.swing.JInternalFrame {
 
     private void CobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CobrarActionPerformed
         // TODO add your handling code here:
-       try {
-            LocalDate fechaPedido=jCfecha.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            LocalTime Ini=LocalTime.of(Integer.parseInt(horaIni.getText()), Integer.parseInt(minutoIni.getText()));
-            LocalTime Fin=LocalTime.of(Integer.parseInt(horaFin.getText()), Integer.parseInt(minutoFin.getText()));
-            for (Pedido x : listaGuardar) {
-                pedidoData.modificarPedido(x);
+        int respuesta = JOptionPane.showConfirmDialog(this, "¿Desea cobrar pedido?", "Confirmación", JOptionPane.YES_NO_OPTION);
+        if (respuesta == JOptionPane.YES_OPTION) {
+            try {
+                LocalDate fechaPedido=jCfecha.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                LocalTime Ini=LocalTime.of(Integer.parseInt(horaIni.getText()), Integer.parseInt(minutoIni.getText()));
+                LocalTime Fin=LocalTime.of(Integer.parseInt(horaFin.getText()), Integer.parseInt(minutoFin.getText()));
+             
+                for (Pedido x : listaGuardar) {
+                    pedidoData.modificarPedido(x);
+                }
+                armaListas(Ini, Fin, fechaPedido);
+                armarTablaPagos();
+                armarTablaPendiente();
+                armarTablaCobrar();
+                total();
+                estadoMesa();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al realizar el cobro: " + e.getMessage());
             }
-            armaListas(Ini, Fin, fechaPedido);
-            armarTablaPagos();
-            armarTablaPendiente();
-            armarTablaCobrar();
-            total();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al realizar el cobro: " + e.getMessage());
-        }
+       }
     }//GEN-LAST:event_CobrarActionPerformed
 
     private void horaFinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_horaFinActionPerformed
@@ -628,5 +639,16 @@ public class CajaVista extends javax.swing.JInternalFrame {
         }
         Total.setText(suma+"");
         TotalFinal.setText(suma2+"");
+    }
+    private void estadoMesa(){
+        if(listaPedidos.size()==0){
+            int respuesta = JOptionPane.showConfirmDialog(this, "¿Desea liberar la mesa?", "Confirmación", JOptionPane.YES_NO_OPTION);
+            if (respuesta == JOptionPane.YES_OPTION) {
+                mesa1.setEstado(false);
+                mesa.modificarMesa(mesa1);
+                combo.removeAllItems();
+                cargarCombo();
+            }
+        }
     }
 }

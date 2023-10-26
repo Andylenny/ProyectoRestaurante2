@@ -5,6 +5,7 @@
  */
 package proyectorestaurante.vistas;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -37,7 +38,12 @@ public class PedidoMesaVista extends javax.swing.JInternalFrame {
     private ArrayList<Mesa> listaMesas;
     private ArrayList<Pedido> listaPedidos;
     public PedidoMesaVista() {
-        initComponents();
+        initComponents(); 
+        jCfecha.setDate(Date.valueOf(LocalDate.now()));
+        horaFin.setText(""+LocalTime.now().getHour());
+        minutoFin.setText(""+LocalTime.now().getMinute());
+        horaIni.setText(""+(LocalTime.now().getHour()-1));
+        minutoIni.setText(""+LocalTime.now().getMinute());
         armarCabecera();
         cargarCombo();
     }

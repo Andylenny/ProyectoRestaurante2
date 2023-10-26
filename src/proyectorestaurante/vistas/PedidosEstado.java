@@ -5,6 +5,10 @@
  */
 package proyectorestaurante.vistas;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -34,8 +38,10 @@ private DefaultTableModel modelo = new DefaultTableModel() {
     private Mesa mesa1 = new Mesa();
     private ArrayList<Mesa> listaMesas;
     private ArrayList<Pedido> listaPedidos;
+    private LocalDate fechaPedido;
     public PedidosEstado() {
         initComponents();
+        jCfecha.setDate(Date.valueOf(LocalDate.now()));
         armarCabecera();
         cargarCombo();
     }
@@ -55,6 +61,8 @@ private DefaultTableModel modelo = new DefaultTableModel() {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
+        jCfecha = new com.toedter.calendar.JDateChooser();
+        buscar = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -103,41 +111,59 @@ private DefaultTableModel modelo = new DefaultTableModel() {
         ));
         jScrollPane1.setViewportView(tabla);
 
+        buscar.setText("jButton1");
+        buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(174, 174, 174)
-                .addComponent(entregar)
-                .addGap(76, 76, 76)
-                .addComponent(eliminar)
-                .addContainerGap(136, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(106, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(combo, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(158, 158, 158))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 561, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(174, 174, 174)
+                        .addComponent(entregar)
+                        .addGap(76, 76, 76)
+                        .addComponent(eliminar)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(combo, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jCfecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(buscar))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1)
+                            .addComponent(jCfecha, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(buscar)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(entregar)
                     .addComponent(eliminar))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
@@ -152,7 +178,7 @@ private DefaultTableModel modelo = new DefaultTableModel() {
                 pedido.setEstado(true);
                 pedidoData.modificarPedido(pedido);
                 borrarFilas();
-                armarTabla();
+                armarTabla(fechaPedido);
             }
             else{
                 JOptionPane.showMessageDialog(this, "Seleccione un pedido pendiente.");
@@ -162,9 +188,6 @@ private DefaultTableModel modelo = new DefaultTableModel() {
 
     private void comboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboActionPerformed
         // TODO add your handling code here:
-        mesa1=(Mesa) combo.getSelectedItem();
-        borrarFilas();
-        armarTabla();
     }//GEN-LAST:event_comboActionPerformed
 
     private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
@@ -176,7 +199,7 @@ private DefaultTableModel modelo = new DefaultTableModel() {
                stock(pedido);
                pedidoData.eliminarPedido(pedido.getIdPedido());
                borrarFilas();
-               armarTabla();
+               armarTabla(fechaPedido);
             }
             else{
                 JOptionPane.showMessageDialog(this, "Seleccione un pedido pendiente.");
@@ -184,11 +207,21 @@ private DefaultTableModel modelo = new DefaultTableModel() {
         }
     }//GEN-LAST:event_eliminarActionPerformed
 
+    private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
+        // TODO add your handling code here:
+        mesa1=(Mesa) combo.getSelectedItem();
+        LocalDate fechaPedido=jCfecha.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        borrarFilas();
+        armarTabla(fechaPedido);
+    }//GEN-LAST:event_buscarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buscar;
     private javax.swing.JComboBox<Object> combo;
     private javax.swing.JButton eliminar;
     private javax.swing.JButton entregar;
+    private com.toedter.calendar.JDateChooser jCfecha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabla;
@@ -232,15 +265,8 @@ private DefaultTableModel modelo = new DefaultTableModel() {
         }
         return estado;
     }
-    private void armarTabla(){
-        listaPedidos=(ArrayList<Pedido>)pedidoData.listarPedidosPorMesaI(mesa1.getIdMesa());
-        for(Pedido pedido:listaPedidos){
-            Producto producto=productoData.buscarProductoporId(pedido.getIdProducto());
-            String nombre=producto.getNombreProducto();
-            int precio=producto.getPrecio();
-            modelo.addRow(new Object[]{pedido.getIdPedido(),pedido.getFechaPedido(), nombre,pedido.getCantidadProducto(), precio, precio*pedido.getCantidadProducto(), Estado(pedido)});
-        }
-        listaPedidos=(ArrayList<Pedido>)pedidoData.listarPedidosPorMesaP(mesa1.getIdMesa());
+    private void armarTabla(LocalDate fecha){
+        listaPedidos=(ArrayList<Pedido>)pedidoData.BuscarPedidosEntreHora(mesa1.getIdMesa(), LocalTime.of(06, 00), LocalTime.of(23, 00), fecha);
         for(Pedido pedido:listaPedidos){
             Producto producto=productoData.buscarProductoporId(pedido.getIdProducto());
             String nombre=producto.getNombreProducto();

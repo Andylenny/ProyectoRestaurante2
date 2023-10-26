@@ -5,6 +5,7 @@
  */
 package proyectorestaurante.vistas;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ public class PagosFecha extends javax.swing.JInternalFrame {
     private ArrayList<Pedido> listaPedidos;
     public PagosFecha() {
         initComponents();
+        jCfecha.setDate(Date.valueOf(LocalDate.now()));
         armarCabecera();
     }
 
