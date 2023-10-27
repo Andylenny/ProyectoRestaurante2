@@ -171,6 +171,7 @@ private DefaultTableModel modelo = new DefaultTableModel() {
 
     private void entregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entregarActionPerformed
         // TODO add your handling code here:
+      try {
         int fila = tabla.getSelectedRow();
         if(fila >=0){
             Pedido pedido=pedidoData.buscarPedidoCodigo((int)modelo.getValueAt(fila,0));
@@ -183,7 +184,13 @@ private DefaultTableModel modelo = new DefaultTableModel() {
             else{
                 JOptionPane.showMessageDialog(this, "Seleccione un pedido pendiente.");
             }
+        }else{
+            JOptionPane.showMessageDialog(this, "Seleccione una fila de la tabla.");
         }
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error al entregar el pedido: " + ex.getMessage());
+    }
+        
     }//GEN-LAST:event_entregarActionPerformed
 
     private void comboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboActionPerformed
@@ -192,6 +199,7 @@ private DefaultTableModel modelo = new DefaultTableModel() {
 
     private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
         // TODO add your handling code here:
+        try {
         int fila = tabla.getSelectedRow();
         if(fila >=0){
             Pedido pedido=pedidoData.buscarPedidoCodigo((int)modelo.getValueAt(fila,0));
@@ -204,15 +212,29 @@ private DefaultTableModel modelo = new DefaultTableModel() {
             else{
                 JOptionPane.showMessageDialog(this, "Seleccione un pedido pendiente.");
             }
+        }else {
+            JOptionPane.showMessageDialog(this, "Seleccione una fila de la tabla.");
         }
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error al eliminar el pedido: " + ex.getMessage());
+    }
+        
     }//GEN-LAST:event_eliminarActionPerformed
 
     private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
         // TODO add your handling code here:
+        try{
         mesa1=(Mesa) combo.getSelectedItem();
+        if (mesa != null){
         LocalDate fechaPedido=jCfecha.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         borrarFilas();
         armarTabla(fechaPedido);
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione una mesa.");
+        }
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error al buscar pedidos: " + ex.getMessage());
+    }
     }//GEN-LAST:event_buscarActionPerformed
 
 

@@ -258,7 +258,7 @@ public class MeseroV extends javax.swing.JInternalFrame {
 
     private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
         // TODO add your handling code here:
-        try {
+      try {
         String dniText = jtDni.getText().trim(); // Obtén el texto del campo DNI y elimina espacios en blanco
         if (dniText.length() == 8) { // Verifica que el DNI tenga una longitud de 8 caracteres
             int dni = Integer.parseInt(dniText);
@@ -288,6 +288,8 @@ public class MeseroV extends javax.swing.JInternalFrame {
     } catch (Exception e) {
         JOptionPane.showMessageDialog(this, "Error al buscar al mesero: " + e.getMessage());
     }
+                                  
+
     }//GEN-LAST:event_jbBuscarActionPerformed
 
     private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed

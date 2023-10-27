@@ -9,6 +9,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import proyectorestaurante.AccesoAdatos.MeseroData;
 import proyectorestaurante.AccesoAdatos.PedidoData;
@@ -210,10 +211,19 @@ public class PedidosMeseroVista extends javax.swing.JInternalFrame {
 
     private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
         // TODO add your handling code here:
+        try{
         mesero=(Mesero) combo.getSelectedItem();
+        if (mesero != null){
         LocalDate fechaPedido=jCfecha.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         borrarFilas2();
         armarTablaFecha(fechaPedido);
+        }else{
+             JOptionPane.showMessageDialog(this, "Seleccione un mesero.");
+        }
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error al buscar pedidos: " + ex.getMessage());
+    }
+        
     }//GEN-LAST:event_buscarActionPerformed
 
 

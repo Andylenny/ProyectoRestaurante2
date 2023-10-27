@@ -301,6 +301,7 @@ public class PedidosVista extends javax.swing.JInternalFrame {
 
     private void tProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tProductoMouseClicked
         // TODO add your handling code here:
+        try{
         mesa=(Mesa) cbMesa.getSelectedItem();
         mesero=(Mesero) cbMesero.getSelectedItem();
         LocalTime horaPedido=LocalTime.of(Integer.parseInt(hora.getText()), Integer.parseInt(minuto.getText()));
@@ -315,20 +316,28 @@ public class PedidosVista extends javax.swing.JInternalFrame {
         pedido=new Pedido(0, mesa.getIdMesa(), mesero.getIdMesero(), producto.getIdProducto(), 1 , fechaPedido, horaPedido, false, false);
         GuardarPedido(pedido,producto);
         CargarTotal();
+         } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error al agregar el producto al pedido: " + ex.getMessage());
+    }
     }//GEN-LAST:event_tProductoMouseClicked
 
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
         // TODO add your handling code here:
+        try{
         for(Pedido x:listaPedidos){
             pedidoData.guardarPedido(x);
             stock(x);
         }
         listaPedidos=new ArrayList<>();
         recargar();
+        } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error al guardar pedidos: " + ex.getMessage());
+    }
     }//GEN-LAST:event_GuardarActionPerformed
 
     private void tPedidoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tPedidoMouseClicked
         // TODO add your handling code here:
+        try{
         int fila = tPedido.getSelectedRow();
         if(fila >=0){
             int x=(int)modelo2.getValueAt(fila,0);
@@ -337,6 +346,9 @@ public class PedidosVista extends javax.swing.JInternalFrame {
             CargarTotal();
         }else{
             JOptionPane.showMessageDialog(this, "Seleccione producto");
+        }
+        }catch (Exception ex){
+            JOptionPane.showMessageDialog(this, "Error al eliminar el producto del pedido: " + ex.getMessage());
         }
     }//GEN-LAST:event_tPedidoMouseClicked
 
