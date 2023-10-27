@@ -435,6 +435,7 @@ public class PedidosVista extends javax.swing.JInternalFrame {
     }
     
     private void GuardarPedido(Pedido x,Producto y){
+        try{
         int z= listaPedidos.size();
         int p=0;
         for(int i=0;i<z;i++){
@@ -457,6 +458,9 @@ public class PedidosVista extends javax.swing.JInternalFrame {
             borrarFilas();
             armarTabla();
         }
+        } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error al guardar el pedido: " + ex.getMessage());
+    }
     }
     
     private void CargarTotal(){
@@ -469,6 +473,7 @@ public class PedidosVista extends javax.swing.JInternalFrame {
     }
     
     private void eliminarProducto(Producto pedidoE){
+        try{
         int z=listaPedidos.size();
         for(int i=0;i<z;i++){
             if(listaPedidos.get(i).getIdProducto()==pedidoE.getIdProducto()){
@@ -487,7 +492,10 @@ public class PedidosVista extends javax.swing.JInternalFrame {
                 }
             }
         }
+    }catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error al eliminar el producto del pedido: " + ex.getMessage());
     }
+}
     
     private void recargar(){
         borrarFilas();
@@ -497,11 +505,17 @@ public class PedidosVista extends javax.swing.JInternalFrame {
     }
     
     private void stock(Pedido pe){
+        try{
         for(Producto x:listaProducto){
             if(x.getIdProducto()==pe.getIdProducto()){
                 x.setStock(x.getStock()-pe.getCantidadProducto());
                 productoData.modificarProducto(x);
-            }
+            } else {
+                    JOptionPane.showMessageDialog(this, "Stock insuficiente: " + x.getNombreProducto());
+                }
         }
+    }catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error al actualizar el stock: " + ex.getMessage());
     }
+}
 }

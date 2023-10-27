@@ -9,6 +9,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import proyectorestaurante.AccesoAdatos.PedidoData;
 import proyectorestaurante.AccesoAdatos.ProductoData;
@@ -154,9 +155,18 @@ public class PagosFecha extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        LocalDate fechaPedido=jCfecha.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        listaPedidos=(ArrayList<Pedido>) pedidoData.listarPedidosPagosxFecha(fechaPedido);
-        armarTabla();
+       try {
+        LocalDate fechaPedido = jCfecha.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        
+        if (fechaPedido != null) {
+            listaPedidos = (ArrayList<Pedido>) pedidoData.listarPedidosPagosxFecha(fechaPedido);
+            armarTabla();
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione una fecha válida.");
+        }
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error al listar pedidos pagos: " + ex.getMessage());
+    }
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
