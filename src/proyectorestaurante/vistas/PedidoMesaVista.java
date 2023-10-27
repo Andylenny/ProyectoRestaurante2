@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import proyectorestaurante.AccesoAdatos.MesaData;
 import proyectorestaurante.AccesoAdatos.PedidoData;
@@ -224,12 +225,22 @@ public class PedidoMesaVista extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        try{
         mesa1=(Mesa) combo.getSelectedItem();
+        if(mesa1 !=null){
         LocalDate fechaPedido=jCfecha.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalTime Ini=LocalTime.of(Integer.parseInt(horaIni.getText()), Integer.parseInt(minutoIni.getText()));
         LocalTime Fin=LocalTime.of(Integer.parseInt(horaFin.getText()), Integer.parseInt(minutoFin.getText()));
         listaPedidos=(ArrayList<Pedido>) pedidoData.BuscarPedidosEntreHora(mesa1.getIdMesa(),Ini,Fin,fechaPedido);
         armarTabla();
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione una mesa.");
+        }
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(this, "Ingrese horas y minutos válidos.");
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error al buscar pedidos: " + ex.getMessage());
+    }
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
@@ -275,6 +286,8 @@ public class PedidoMesaVista extends javax.swing.JInternalFrame {
     }
     private String Estado(Pedido pedido){
         String estado;
+        try{
+        
         if(pedido.isEstado()==true){
             if(pedido.isEstadoPago()==true){
                 estado="Pago";
@@ -286,6 +299,10 @@ public class PedidoMesaVista extends javax.swing.JInternalFrame {
         else{
             estado="Pendiente";
         }
+        
+    } catch (Exception ex) {
+        estado = "Error al obtener estado"; // Manejo de excepciones inesperadas
+    }
         return estado;
     }
     private void armarTabla(){
