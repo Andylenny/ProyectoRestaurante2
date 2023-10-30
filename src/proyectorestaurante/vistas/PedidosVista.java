@@ -471,9 +471,13 @@ public class PedidosVista extends javax.swing.JInternalFrame {
             }
         }
         if(p==0){
+             if (y.getStock() > 0){
             listaPedidos.add(x);
             borrarFilas();
             armarTabla();
+             }else {
+                JOptionPane.showMessageDialog(this, "Stock insuficiente: " + y.getNombreProducto() + " = " + y.getStock());
+            }
         }
         } catch (Exception ex) {
         JOptionPane.showMessageDialog(this, "Error al guardar el pedido: " + ex.getMessage());

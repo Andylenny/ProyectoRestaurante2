@@ -37,7 +37,7 @@ private DefaultTableModel modelo = new DefaultTableModel() {
     private ProductoData productoData=new ProductoData();
     private Mesa mesa1 = new Mesa();
     private ArrayList<Mesa> listaMesas;
-    private ArrayList<Pedido> listaPedidos;
+    private ArrayList<Pedido> listaPedidos = new ArrayList();
     private LocalDate fechaPedido;
     public PedidosEstado() {
         initComponents();
