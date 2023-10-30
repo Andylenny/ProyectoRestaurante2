@@ -458,9 +458,10 @@ public class MesaVista extends javax.swing.JInternalFrame {
                     Mesa mesa = new Mesa(cap, estado, numMesa, baja);
                     MesaData md = new MesaData();
                     md.guardarMesa(mesa);
-                    JOptionPane.showMessageDialog(this, "Mesa guardada.");
+                  
                 }
                 recargar();
+                
 
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(this, "Ingrese números válidos en los campos de capacidad y número de mesa.");

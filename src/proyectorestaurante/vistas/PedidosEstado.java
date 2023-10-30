@@ -193,7 +193,7 @@ public class PedidosEstado extends javax.swing.JInternalFrame {
 
     private void entregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entregarActionPerformed
         // TODO add your handling code here:
-//        try {
+        try {
             int fila = tabla.getSelectedRow();
             if (fila >= 0) {
                 Pedido pedido = pedidoData.buscarPedidoCodigo((int) modelo.getValueAt(fila, 0));
@@ -213,11 +213,11 @@ public class PedidosEstado extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, "Pedido no encontrado.");
 
             }
-//        } catch (Exception ex) {
-//         
-//            JOptionPane.showMessageDialog(null, "Error al entregar el pedido: " + ex.getMessage());
-//            //TIRA ERROR : NULL
-//        }
+        } catch (Exception ex) {
+         
+            JOptionPane.showMessageDialog(null, "Error al entregar el pedido: " + ex.getMessage());
+            //TIRA ERROR : NULL
+        }
 
 
     }//GEN-LAST:event_entregarActionPerformed

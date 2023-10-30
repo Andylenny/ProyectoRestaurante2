@@ -40,7 +40,7 @@ public class MesaData {
             ps.close();
 
         } catch (SQLException ex) {
-            //JOptionPane.showMessageDialog(null, "Error al acceder a la tabla mesa");
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla mesa" + ex.getMessage());
 
         }
 
