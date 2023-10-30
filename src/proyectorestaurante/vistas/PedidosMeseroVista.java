@@ -104,7 +104,6 @@ public class PedidosMeseroVista extends javax.swing.JInternalFrame {
 
         tablaFecha.setBackground(new java.awt.Color(255, 153, 102));
         tablaFecha.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        tablaFecha.setForeground(new java.awt.Color(0, 0, 0));
         tablaFecha.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -120,7 +119,6 @@ public class PedidosMeseroVista extends javax.swing.JInternalFrame {
 
         tablaAtendido.setBackground(new java.awt.Color(255, 153, 102));
         tablaAtendido.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        tablaAtendido.setForeground(new java.awt.Color(0, 0, 0));
         tablaAtendido.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
