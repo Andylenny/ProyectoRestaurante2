@@ -140,7 +140,7 @@ public PedidoData(){
             }
 
         } catch (SQLException ex) {
-            ex.printStackTrace();
+//            ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error al modificar el Pedido");
         }
 
@@ -299,7 +299,13 @@ public PedidoData(){
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setTime(1, Time.valueOf(ini));
             ps.setTime(2, Time.valueOf(fin));
+            if (fecha != null) {
             ps.setDate(3, Date.valueOf(fecha));
+        } else {
+            // Manejo de error: la fecha es nula
+           JOptionPane.showMessageDialog(null, "Seleccione una fecha existente");
+            return pedidos; // Retorna una lista vacía o null, según tus necesidades.
+        }
             ps.setInt(4, idMesa);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {

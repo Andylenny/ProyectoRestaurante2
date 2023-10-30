@@ -24,7 +24,8 @@ import proyectorestaurante.entidades.Producto;
  * @author pc
  */
 public class PedidosEstado extends javax.swing.JInternalFrame {
-private DefaultTableModel modelo = new DefaultTableModel() {
+
+    private DefaultTableModel modelo = new DefaultTableModel() {
         public boolean isCellEditable(int fila, int columna) {
             return false;
         }
@@ -33,12 +34,13 @@ private DefaultTableModel modelo = new DefaultTableModel() {
      * Creates new form PedidosEstado
      */
     private MesaData mesa = new MesaData();
-    private PedidoData pedidoData= new PedidoData();
-    private ProductoData productoData=new ProductoData();
+    private PedidoData pedidoData = new PedidoData();
+    private ProductoData productoData = new ProductoData();
     private Mesa mesa1 = new Mesa();
     private ArrayList<Mesa> listaMesas;
-    private ArrayList<Pedido> listaPedidos = new ArrayList();
-    private LocalDate fechaPedido;
+    private ArrayList<Pedido> listaPedidos;
+    private LocalDate fechaPedido = LocalDate.now();
+
     public PedidosEstado() {
         initComponents();
         jCfecha.setDate(Date.valueOf(LocalDate.now()));
@@ -191,33 +193,33 @@ private DefaultTableModel modelo = new DefaultTableModel() {
 
     private void entregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entregarActionPerformed
         // TODO add your handling code here:
-      try {
-        int fila = tabla.getSelectedRow();
-        if(fila >=0){
-            Pedido pedido=pedidoData.buscarPedidoCodigo((int)modelo.getValueAt(fila,0));
-            if (pedido != null) {
-            if(pedido.isEstado()==false){
-                pedido.setEstado(true);
-                pedidoData.modificarPedido(pedido);
-                borrarFilas();
-                armarTabla(fechaPedido);
-            }
-            else{
-                JOptionPane.showMessageDialog(this, "Seleccione un pedido pendiente.");
-            }
-        }else{
-            JOptionPane.showMessageDialog(this, "Seleccione una fila de la tabla.");
-        }
-        }else{
-            JOptionPane.showMessageDialog(this, "Pedido no encontrado.");
+//        try {
+            int fila = tabla.getSelectedRow();
+            if (fila >= 0) {
+                Pedido pedido = pedidoData.buscarPedidoCodigo((int) modelo.getValueAt(fila, 0));
+                if (pedido != null) {
+                    if (pedido.isEstado() == false) {
+                        pedido.setEstado(true);
+                        pedidoData.modificarPedido(pedido);
+                        borrarFilas();
+                        armarTabla(fechaPedido);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Seleccione un pedido pendiente.");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Seleccione una fila de la tabla.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Pedido no encontrado.");
 
-        }
-    } catch (Exception ex) {
-        JOptionPane.showMessageDialog(null, "Error al entregar el pedido: " + ex.getMessage());
-   //TIRA ERROR : NULL
-    }
-      
-        
+            }
+//        } catch (Exception ex) {
+//         
+//            JOptionPane.showMessageDialog(null, "Error al entregar el pedido: " + ex.getMessage());
+//            //TIRA ERROR : NULL
+//        }
+
+
     }//GEN-LAST:event_entregarActionPerformed
 
     private void comboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboActionPerformed
@@ -227,41 +229,40 @@ private DefaultTableModel modelo = new DefaultTableModel() {
     private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
         // TODO add your handling code here:
         try {
-        int fila = tabla.getSelectedRow();
-        if(fila >=0){
-            Pedido pedido=pedidoData.buscarPedidoCodigo((int)modelo.getValueAt(fila,0));
-            if(pedido.isEstado()==false){
-               stock(pedido);
-               pedidoData.eliminarPedido(pedido.getIdPedido());
-               borrarFilas();
-               armarTabla(fechaPedido);
+            int fila = tabla.getSelectedRow();
+            if (fila >= 0) {
+                Pedido pedido = pedidoData.buscarPedidoCodigo((int) modelo.getValueAt(fila, 0));
+                if (pedido.isEstado() == false) {
+                    stock(pedido);
+                    pedidoData.eliminarPedido(pedido.getIdPedido());
+                    borrarFilas();
+                    armarTabla(fechaPedido);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Seleccione un pedido pendiente.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Seleccione una fila de la tabla.");
             }
-            else{
-                JOptionPane.showMessageDialog(this, "Seleccione un pedido pendiente.");
-            }
-        }else {
-            JOptionPane.showMessageDialog(this, "Seleccione una fila de la tabla.");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al eliminar el pedido: " + ex.getMessage());
         }
-    } catch (Exception ex) {
-        JOptionPane.showMessageDialog(this, "Error al eliminar el pedido: " + ex.getMessage());
-    }
-        
+
     }//GEN-LAST:event_eliminarActionPerformed
 
     private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
         // TODO add your handling code here:
-        try{
-        mesa1=(Mesa) combo.getSelectedItem();
-        if (mesa != null){
-        LocalDate fechaPedido=jCfecha.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        borrarFilas();
-        armarTabla(fechaPedido);
-        } else {
-            JOptionPane.showMessageDialog(this, "Seleccione una mesa.");
+        try {
+            mesa1 = (Mesa) combo.getSelectedItem();
+            if (mesa != null) {
+                LocalDate fechaPedido = jCfecha.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                borrarFilas();
+                armarTabla(fechaPedido);
+            } else {
+                JOptionPane.showMessageDialog(this, "Seleccione una mesa.");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al buscar pedidos: " + ex.getMessage());
         }
-    } catch (Exception ex) {
-        JOptionPane.showMessageDialog(this, "Error al buscar pedidos: " + ex.getMessage());
-    }
     }//GEN-LAST:event_buscarActionPerformed
 
 
@@ -277,12 +278,13 @@ private DefaultTableModel modelo = new DefaultTableModel() {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabla;
     // End of variables declaration//GEN-END:variables
-    private void cargarCombo(){
-        listaMesas=(ArrayList<Mesa>) mesa.listarMesas();
-        for(Mesa m:listaMesas){
+    private void cargarCombo() {
+        listaMesas = (ArrayList<Mesa>) mesa.listarMesas();
+        for (Mesa m : listaMesas) {
             combo.addItem(m);
         }
     }
+
     private void armarCabecera() {
         ArrayList<Object> columnas = new ArrayList<>();
         modelo.addColumn("Id Pedido");
@@ -291,43 +293,45 @@ private DefaultTableModel modelo = new DefaultTableModel() {
         modelo.addColumn("Cantidad");
         modelo.addColumn("Precio unidad");
         modelo.addColumn("Total");
-        modelo.addColumn("Estado"); 
+        modelo.addColumn("Estado");
         tabla.setModel(modelo);
     }
-    private void borrarFilas(){
-        int filas = tabla.getRowCount() -1;
+
+    private void borrarFilas() {
+        int filas = tabla.getRowCount() - 1;
         for (int f = filas; f >= 0; f--) {
             modelo.removeRow(f);
         }
-        
+
     }
-    private String Estado(Pedido pedido){
+
+    private String Estado(Pedido pedido) {
         String estado;
-        if(pedido.isEstado()==true){
-            if(pedido.isEstadoPago()==true){
-                estado="Pago";
+        if (pedido.isEstado() == true) {
+            if (pedido.isEstadoPago() == true) {
+                estado = "Pago";
+            } else {
+                estado = "Entregado";
             }
-            else{
-            estado="Entregado";
-            }
-        }
-        else{
-            estado="Pendiente";
+        } else {
+            estado = "Pendiente";
         }
         return estado;
     }
-    private void armarTabla(LocalDate fecha){
-        listaPedidos=(ArrayList<Pedido>)pedidoData.BuscarPedidosEntreHora(mesa1.getIdMesa(), LocalTime.of(06, 00), LocalTime.of(23, 00), fecha);
-        for(Pedido pedido:listaPedidos){
-            Producto producto=productoData.buscarProductoporId(pedido.getIdProducto());
-            String nombre=producto.getNombreProducto();
-            int precio=producto.getPrecio();
-            modelo.addRow(new Object[]{pedido.getIdPedido(),pedido.getFechaPedido(), nombre,pedido.getCantidadProducto(), precio, precio*pedido.getCantidadProducto(), Estado(pedido)});
+
+    private void armarTabla(LocalDate fecha) {
+        listaPedidos = (ArrayList<Pedido>) pedidoData.BuscarPedidosEntreHora(mesa1.getIdMesa(), LocalTime.of(06, 00), LocalTime.of(23, 00), fecha);
+        for (Pedido pedido : listaPedidos) {
+            Producto producto = productoData.buscarProductoporId(pedido.getIdProducto());
+            String nombre = producto.getNombreProducto();
+            int precio = producto.getPrecio();
+            modelo.addRow(new Object[]{pedido.getIdPedido(), pedido.getFechaPedido(), nombre, pedido.getCantidadProducto(), precio, precio * pedido.getCantidadProducto(), Estado(pedido)});
         }
     }
-    private void stock(Pedido pe){
-        Producto producto=productoData.buscarProductoporId(pe.getIdProducto());
-        producto.setStock(producto.getStock()+pe.getCantidadProducto());
+
+    private void stock(Pedido pe) {
+        Producto producto = productoData.buscarProductoporId(pe.getIdProducto());
+        producto.setStock(producto.getStock() + pe.getCantidadProducto());
         productoData.modificarProducto(producto);
     }
 }
