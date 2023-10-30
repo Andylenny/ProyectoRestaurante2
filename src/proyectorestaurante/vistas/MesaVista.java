@@ -33,6 +33,7 @@ public class MesaVista extends javax.swing.JInternalFrame {
     private MesaData mesa = new MesaData();
     private Mesa mesa1 = null;
     private ArrayList<Mesa> listaMesas;
+
     /**
      * Creates new form Mesa
      */
@@ -412,44 +413,61 @@ public class MesaVista extends javax.swing.JInternalFrame {
 
     private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
         // TODO add your handling code here:
-       try {
-        int id = Integer.parseInt(jtidMesa.getText());
-        MesaData mesaEncontrada = new MesaData();
-        Mesa mesa = mesaEncontrada.buscarMesaporId(id);
+        try {
+            int id = Integer.parseInt(jtidMesa.getText());
+            MesaData mesaEncontrada = new MesaData();
+            Mesa mesa = mesaEncontrada.buscarMesaporId(id);
 
-        if (mesa != null) {
-            // Si se encuentra la mesa, muestra su información en los campos de texto
-            jtCapacidad.setText(String.valueOf(mesa.getCapacidad()));
-            jtEstado.setSelected(mesa.isEstado());
-            jtNumMesa.setText(String.valueOf(mesa.getNumeroMesa()));
-            jtBaja.setSelected(mesa.isBaja());
-        } else {
-            JOptionPane.showMessageDialog(this, "Mesa no encontrada.");
+            if (mesa != null) {
+                // Si se encuentra la mesa, muestra su información en los campos de texto
+                jtCapacidad.setText(String.valueOf(mesa.getCapacidad()));
+                jtEstado.setSelected(mesa.isEstado());
+                jtNumMesa.setText(String.valueOf(mesa.getNumeroMesa()));
+                jtBaja.setSelected(mesa.isBaja());
+            } else {
+                JOptionPane.showMessageDialog(this, "Mesa no encontrada.");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar un número válido para el ID de la mesa.");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al buscar la mesa: " + e.getMessage());
         }
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Debe ingresar un número válido para el ID de la mesa.");
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Error al buscar la mesa: " + e.getMessage());
-    }
     }//GEN-LAST:event_jbBuscarActionPerformed
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
         // TODO add your handling code here:
-try {
-        int capacidad = Integer.parseInt(jtCapacidad.getText());
-        int numeroMesa = Integer.parseInt(jtNumMesa.getText());
-        boolean estado = jtEstado.isSelected();
-        boolean baja = jtBaja.isSelected();
-        Mesa mesa = new Mesa(capacidad, estado, numeroMesa, baja);
-        MesaData md = new MesaData();
-        md.guardarMesa(mesa);
-        JOptionPane.showMessageDialog(this, "Mesa guardada.");
-        recargar();
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Ingrese números válidos en los campos de capacidad y número de mesa.");
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Error al guardar la mesa: " + e.getMessage());
-    }
+        String capacidad = jtCapacidad.getText();
+        String numeroMesa = jtNumMesa.getText();
+
+        if (capacidad.isEmpty() || numeroMesa.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Los campos de capacidad y número de mesa no pueden estar vacíos.");
+        } else {
+
+            try {
+                int cap = Integer.parseInt(jtCapacidad.getText());
+                int numMesa = Integer.parseInt(jtNumMesa.getText());
+
+                if (cap < 1 || cap > 10) {
+                    JOptionPane.showMessageDialog(this, "La capacidad debe estar entre 1 y 10.");
+                } else if (numMesa < 1 || numMesa > 50) {
+                    JOptionPane.showMessageDialog(this, "El número de mesa debe estar entre 1 y 50.");
+                } else {
+
+                    boolean estado = jtEstado.isSelected();
+                    boolean baja = jtBaja.isSelected();
+                    Mesa mesa = new Mesa(cap, estado, numMesa, baja);
+                    MesaData md = new MesaData();
+                    md.guardarMesa(mesa);
+                    JOptionPane.showMessageDialog(this, "Mesa guardada.");
+                }
+                recargar();
+
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Ingrese números válidos en los campos de capacidad y número de mesa.");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al guardar la mesa: " + e.getMessage());
+            }
+        }
     }//GEN-LAST:event_jbGuardarActionPerformed
 
     private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
@@ -467,109 +485,125 @@ try {
     private void jbEliminarLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarLActionPerformed
         // TODO add your handling code here:
         try {
-        int id = Integer.parseInt(jtidMesa.getText());
-        MesaData mesaEncontrada = new MesaData();
-        Mesa mesa = mesaEncontrada.buscarMesaporId(id);
+            int id = Integer.parseInt(jtidMesa.getText());
+            MesaData mesaEncontrada = new MesaData();
+            Mesa mesa = mesaEncontrada.buscarMesaporId(id);
 
-        if (mesa != null) {
-            mesaEncontrada.eliminarMeseroLogico(id);
-            recargar();
-        } else {
-            JOptionPane.showMessageDialog(this, "Mesa no encontrada.");
+            if (mesa != null) {
+                mesaEncontrada.eliminarMeseroLogico(id);
+                recargar();
+            } else {
+                JOptionPane.showMessageDialog(this, "Mesa no encontrada.");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un número válido para el ID de la mesa.");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al eliminar la mesa: " + e.getMessage());
         }
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Ingrese un número válido para el ID de la mesa.");
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Error al eliminar la mesa: " + e.getMessage());
-    }
 
 
     }//GEN-LAST:event_jbEliminarLActionPerformed
 
     private void jbEliminarTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarTActionPerformed
         // TODO add your handling code here:
-       try {
-        int id = Integer.parseInt(jtidMesa.getText());
-        MesaData mesaEncontrada = new MesaData();
-        Mesa mesa = mesaEncontrada.buscarMesaporId(id);
+        try {
+            int id = Integer.parseInt(jtidMesa.getText());
+            MesaData mesaEncontrada = new MesaData();
+            Mesa mesa = mesaEncontrada.buscarMesaporId(id);
 
-        if (mesa != null) {
-            mesaEncontrada.eliminarMesa(id);
-            recargar();
-        } else {
-            JOptionPane.showMessageDialog(this, "Mesa no encontrada.");
+            if (mesa != null) {
+                mesaEncontrada.eliminarMesa(id);
+                recargar();
+            } else {
+                JOptionPane.showMessageDialog(this, "Mesa no encontrada.");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un número válido para el ID de la mesa.");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al eliminar la mesa: " + e.getMessage());
         }
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Ingrese un número válido para el ID de la mesa.");
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Error al eliminar la mesa: " + e.getMessage());
-    }
     }//GEN-LAST:event_jbEliminarTActionPerformed
 
     private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
         // TODO add your handling code here:
-       try {
-        int id = Integer.parseInt(jtidMesa.getText());
-        int cap = Integer.parseInt(jtCapacidad.getText());
-        int numMesa = Integer.parseInt(jtNumMesa.getText());
-        boolean estado = jtEstado.isSelected();
-        boolean baja = jtBaja.isSelected();
-        MesaData mesaEncontrada = new MesaData();
-        Mesa mesa = mesaEncontrada.buscarMesaporId(id);
-        if (mesa != null) {
-            mesa.setCapacidad(cap);
-            mesa.setNumeroMesa(numMesa);
-            mesa.setEstado(estado);
-            mesa.setBaja(baja);
-            mesaEncontrada.modificarMesa(mesa);
-            recargar();
+        String idMesa = jtidMesa.getText();
+        String capacidad = jtCapacidad.getText();
+        String numeroMesa = jtNumMesa.getText();
+        if (idMesa.isEmpty() || capacidad.isEmpty() || numeroMesa.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Los campos de ID, capacidad y número de mesa no pueden estar vacíos.");
         } else {
-            JOptionPane.showMessageDialog(this, "Mesa no encontrada.");
+
+            try {
+                int id = Integer.parseInt(jtidMesa.getText());
+                int cap = Integer.parseInt(jtCapacidad.getText());
+                int numMesa = Integer.parseInt(jtNumMesa.getText());
+                boolean estado = jtEstado.isSelected();
+                boolean baja = jtBaja.isSelected();
+                MesaData mesaEncontrada = new MesaData();
+                Mesa mesa = mesaEncontrada.buscarMesaporId(id);
+                if (mesa != null) {
+                    mesa.setCapacidad(cap);
+                    mesa.setNumeroMesa(numMesa);
+                    mesa.setEstado(estado);
+                    mesa.setBaja(baja);
+                    mesaEncontrada.modificarMesa(mesa);
+                    recargar();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Mesa no encontrada.");
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Ingrese un ID válido para la mesa.");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al modificar la mesa: " + e.getMessage());
+            }
         }
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Ingrese un ID válido para la mesa.");
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Error al modificar la mesa: " + e.getMessage());
-    }
     }//GEN-LAST:event_jbModificarActionPerformed
 
     private void jbOcuparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbOcuparActionPerformed
         // OCUPAR MESA
-        int fila = jtLibre.getSelectedRow();
-        mesa1=new Mesa();
-        if(fila >=0){
-            mesa1.setIdMesa((int) modelo1.getValueAt(fila, 0));
-            mesa1.setCapacidad((int) modelo1.getValueAt(fila,1));
-            mesa1.setNumeroMesa((int) modelo1.getValueAt(fila,2));
-            mesa1.setEstado(true);
-            mesa1.setBaja(true);
-            mesa.modificarMesa(mesa1);
-            recargar();
-        }else{
-            JOptionPane.showMessageDialog(this, "Seleccione una mesa libre");
-        }
+        try {
+            int fila = jtLibre.getSelectedRow();
+            mesa1 = new Mesa();
+            if (fila >= 0) {
+                mesa1.setIdMesa((int) modelo1.getValueAt(fila, 0));
+                mesa1.setCapacidad((int) modelo1.getValueAt(fila, 1));
+                mesa1.setNumeroMesa((int) modelo1.getValueAt(fila, 2));
+                mesa1.setEstado(true);
+                mesa1.setBaja(true);
+                mesa.modificarMesa(mesa1);
+                recargar();
+            } else {
+                JOptionPane.showMessageDialog(this, "Seleccione una mesa libre");
+            }
+        } catch (NumberFormatException n) {
+            JOptionPane.showMessageDialog(this, "Ingrese un número válido.");
+        } 
     }//GEN-LAST:event_jbOcuparActionPerformed
 
     private void jbLiberarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLiberarActionPerformed
         // LIBERAR MESA
+       try{
         int fila = jtOcupada.getSelectedRow();
-        mesa1=new Mesa();
-        if(fila >=0){
+        mesa1 = new Mesa();
+        if (fila >= 0) {
             mesa1.setIdMesa((int) modelo2.getValueAt(fila, 0));
-            mesa1.setCapacidad((int) modelo2.getValueAt(fila,1));
-            mesa1.setNumeroMesa((int) modelo2.getValueAt(fila,2));
+            mesa1.setCapacidad((int) modelo2.getValueAt(fila, 1));
+            mesa1.setNumeroMesa((int) modelo2.getValueAt(fila, 2));
             mesa1.setEstado(false);
             mesa1.setBaja(true);
             mesa.modificarMesa(mesa1);
             recargar();
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Seleccione una mesa ocupada");
         }
+       }catch(NumberFormatException n) {
+            JOptionPane.showMessageDialog(this, "Ingrese un número válido.");
+        } 
     }//GEN-LAST:event_jbLiberarActionPerformed
 
     private void jtLibreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtLibreMouseClicked
         // TODO add your handling code here:
-        System.out.println(modelo1.getValueAt((jtLibre.getSelectedRow()),(jtLibre.getSelectedColumn())));
+        System.out.println(modelo1.getValueAt((jtLibre.getSelectedRow()), (jtLibre.getSelectedColumn())));
     }//GEN-LAST:event_jtLibreMouseClicked
 
 
@@ -644,6 +678,7 @@ try {
         }
         jtLibre.setModel(modelo1);
     }
+
     private void armarCabecera2() {
         ArrayList<Object> columnas = new ArrayList<>();
         modelo2.addColumn("IdMesa");
@@ -665,6 +700,7 @@ try {
             modelo1.removeRow(f);
         }
     }
+
     private void borrarFilas2() {
         int filas = jtOcupada.getRowCount() - 1;
 
@@ -673,18 +709,18 @@ try {
         }
     }
 
-    private void armarTabla(){
-        listaMesas=(ArrayList<Mesa>) mesa.listarMesasVacias();
-        for(Mesa x:listaMesas){
-            modelo1.addRow(new Object[]{x.getIdMesa(),x.getCapacidad(),x.getNumeroMesa(),"Libre"});
+    private void armarTabla() {
+        listaMesas = (ArrayList<Mesa>) mesa.listarMesasVacias();
+        for (Mesa x : listaMesas) {
+            modelo1.addRow(new Object[]{x.getIdMesa(), x.getCapacidad(), x.getNumeroMesa(), "Libre"});
         }
-        listaMesas=(ArrayList<Mesa>) mesa.listarMesas();
-                for(Mesa x:listaMesas){
-            modelo2.addRow(new Object[]{x.getIdMesa(),x.getCapacidad(),x.getNumeroMesa(),"Ocupada"});
+        listaMesas = (ArrayList<Mesa>) mesa.listarMesas();
+        for (Mesa x : listaMesas) {
+            modelo2.addRow(new Object[]{x.getIdMesa(), x.getCapacidad(), x.getNumeroMesa(), "Ocupada"});
         }
     }
-    
-    private void recargar(){
+
+    private void recargar() {
         borrarFilas1();
         borrarFilas2();
         armarTabla();

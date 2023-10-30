@@ -23,6 +23,7 @@ import proyectorestaurante.entidades.Producto;
  * @author pc
  */
 public class PedidosMeseroVista extends javax.swing.JInternalFrame {
+
     private DefaultTableModel modelo1 = new DefaultTableModel() {
         public boolean isCellEditable(int fila, int columna) {
             return false;
@@ -36,12 +37,13 @@ public class PedidosMeseroVista extends javax.swing.JInternalFrame {
     /**
      * Creates new form PedidosMeseroVista
      */
-    private Mesero mesero=new Mesero();
-    private MeseroData meseroData=new MeseroData();
-    private PedidoData pedidoData=new PedidoData();
-    private ProductoData productoData=new ProductoData();
+    private Mesero mesero = new Mesero();
+    private MeseroData meseroData = new MeseroData();
+    private PedidoData pedidoData = new PedidoData();
+    private ProductoData productoData = new ProductoData();
     private ArrayList<Mesero> listaMesero;
     private ArrayList<Pedido> listaPedido;
+
     public PedidosMeseroVista() {
         initComponents();
         jCfecha.setDate(Date.valueOf(LocalDate.now()));
@@ -201,7 +203,7 @@ public class PedidosMeseroVista extends javax.swing.JInternalFrame {
 
     private void comboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboActionPerformed
         // TODO add your handling code here:
-        mesero=(Mesero) combo.getSelectedItem();
+        mesero = (Mesero) combo.getSelectedItem();
         borrarFilas1();
         borrarFilas2();
         armarTablaPediente();
@@ -209,19 +211,22 @@ public class PedidosMeseroVista extends javax.swing.JInternalFrame {
 
     private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
         // TODO add your handling code here:
-        try{
-        mesero=(Mesero) combo.getSelectedItem();
-        if (mesero != null){
-        LocalDate fechaPedido=jCfecha.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        borrarFilas2();
-        armarTablaFecha(fechaPedido);
-        }else{
-             JOptionPane.showMessageDialog(this, "Seleccione un mesero.");
+        try {
+        mesero = (Mesero) combo.getSelectedItem();
+        if (mesero != null) {
+            LocalDate fechaPedido = jCfecha.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            if (fechaPedido != null) {
+                borrarFilas2();
+                armarTablaFecha(fechaPedido);
+            } else {
+                JOptionPane.showMessageDialog(this, "Seleccione una fecha.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione un mesero.");
         }
     } catch (Exception ex) {
         JOptionPane.showMessageDialog(this, "Error al buscar pedidos: " + ex.getMessage());
     }
-        
     }//GEN-LAST:event_buscarActionPerformed
 
 
@@ -239,12 +244,13 @@ public class PedidosMeseroVista extends javax.swing.JInternalFrame {
     private javax.swing.JTable tablaAtendido;
     private javax.swing.JTable tablaFecha;
     // End of variables declaration//GEN-END:variables
-    private void cargarCombo(){
-        listaMesero=(ArrayList<Mesero>) meseroData.listarMeseros();
-        for(Mesero m:listaMesero){
+    private void cargarCombo() {
+        listaMesero = (ArrayList<Mesero>) meseroData.listarMeseros();
+        for (Mesero m : listaMesero) {
             combo.addItem(m);
         }
     }
+
     private void armarCabecera1() {
         ArrayList<Object> columnas = new ArrayList<>();
         modelo1.addColumn("Id Pedido");
@@ -253,9 +259,10 @@ public class PedidosMeseroVista extends javax.swing.JInternalFrame {
         modelo1.addColumn("Cantidad");
         modelo1.addColumn("Precio unidad");
         modelo1.addColumn("Total");
-        modelo1.addColumn("Estado"); 
+        modelo1.addColumn("Estado");
         tablaAtendido.setModel(modelo1);
     }
+
     private void armarCabecera2() {
         ArrayList<Object> columnas = new ArrayList<>();
         modelo2.addColumn("Id Pedido");
@@ -264,52 +271,55 @@ public class PedidosMeseroVista extends javax.swing.JInternalFrame {
         modelo2.addColumn("Cantidad");
         modelo2.addColumn("Precio unidad");
         modelo2.addColumn("Total");
-        modelo2.addColumn("Estado"); 
+        modelo2.addColumn("Estado");
         tablaFecha.setModel(modelo2);
     }
-    private void borrarFilas1(){
-        int filas = tablaAtendido.getRowCount() -1;
+
+    private void borrarFilas1() {
+        int filas = tablaAtendido.getRowCount() - 1;
         for (int f = filas; f >= 0; f--) {
             modelo1.removeRow(f);
-        }  
+        }
     }
-    private void borrarFilas2(){
-        int filas = tablaFecha.getRowCount() -1;
+
+    private void borrarFilas2() {
+        int filas = tablaFecha.getRowCount() - 1;
         for (int f = filas; f >= 0; f--) {
             modelo2.removeRow(f);
-        }  
-    }
-    private String Estado(Pedido pedido){
-        String estado;
-        if(pedido.isEstado()==true){
-            if(pedido.isEstadoPago()==true){
-                estado="Pago";
-            }
-            else{
-            estado="Entregado";
-            }
         }
-        else{
-            estado="Pendiente";
+    }
+
+    private String Estado(Pedido pedido) {
+        String estado;
+        if (pedido.isEstado() == true) {
+            if (pedido.isEstadoPago() == true) {
+                estado = "Pago";
+            } else {
+                estado = "Entregado";
+            }
+        } else {
+            estado = "Pendiente";
         }
         return estado;
     }
-    private void armarTablaPediente(){
-        listaPedido=(ArrayList<Pedido>)pedidoData.BuscarPedidosxMesero(mesero.getIdMesero());
-        for(Pedido pedido:listaPedido){
-            Producto producto=productoData.buscarProductoporId(pedido.getIdProducto());
-            String nombre=producto.getNombreProducto();
-            int precio=producto.getPrecio();
-            modelo1.addRow(new Object[]{pedido.getIdPedido(), pedido.getIdMesa(), nombre, pedido.getCantidadProducto(), precio, pedido.getCantidadProducto()*precio, Estado(pedido)});
+
+    private void armarTablaPediente() {
+        listaPedido = (ArrayList<Pedido>) pedidoData.BuscarPedidosxMesero(mesero.getIdMesero());
+        for (Pedido pedido : listaPedido) {
+            Producto producto = productoData.buscarProductoporId(pedido.getIdProducto());
+            String nombre = producto.getNombreProducto();
+            int precio = producto.getPrecio();
+            modelo1.addRow(new Object[]{pedido.getIdPedido(), pedido.getIdMesa(), nombre, pedido.getCantidadProducto(), precio, pedido.getCantidadProducto() * precio, Estado(pedido)});
         }
     }
-    private void armarTablaFecha(LocalDate dia){
-        listaPedido=(ArrayList<Pedido>)pedidoData.BuscarPedidosxFecha(dia,mesero);
-        for(Pedido pedido:listaPedido){
-            Producto producto=productoData.buscarProductoporId(pedido.getIdProducto());
-            String nombre=producto.getNombreProducto();
-            int precio=producto.getPrecio();
-            modelo2.addRow(new Object[]{pedido.getIdPedido(), pedido.getIdMesa(), nombre, pedido.getCantidadProducto(), precio, pedido.getCantidadProducto()*precio, Estado(pedido)});
+
+    private void armarTablaFecha(LocalDate dia) {
+        listaPedido = (ArrayList<Pedido>) pedidoData.BuscarPedidosxFecha(dia, mesero);
+        for (Pedido pedido : listaPedido) {
+            Producto producto = productoData.buscarProductoporId(pedido.getIdProducto());
+            String nombre = producto.getNombreProducto();
+            int precio = producto.getPrecio();
+            modelo2.addRow(new Object[]{pedido.getIdPedido(), pedido.getIdMesa(), nombre, pedido.getCantidadProducto(), precio, pedido.getCantidadProducto() * precio, Estado(pedido)});
         }
     }
 }
