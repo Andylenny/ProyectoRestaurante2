@@ -99,7 +99,7 @@ public class PedidosVista extends javax.swing.JInternalFrame {
 
         cbMesa.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
-        tProducto.setBackground(new java.awt.Color(255, 153, 102));
+        tProducto.setBackground(new java.awt.Color(255, 255, 255));
         tProducto.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         tProducto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -119,7 +119,7 @@ public class PedidosVista extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tProducto);
 
-        tPedido.setBackground(new java.awt.Color(255, 153, 102));
+        tPedido.setBackground(new java.awt.Color(255, 255, 255));
         tPedido.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         tPedido.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -266,7 +266,6 @@ public class PedidosVista extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel8)
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

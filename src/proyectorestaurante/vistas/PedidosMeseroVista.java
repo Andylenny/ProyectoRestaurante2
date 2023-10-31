@@ -119,7 +119,7 @@ public class PedidosMeseroVista extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(tablaFecha);
 
-        tablaAtendido.setBackground(new java.awt.Color(255, 153, 102));
+        tablaAtendido.setBackground(new java.awt.Color(255, 255, 255));
         tablaAtendido.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         tablaAtendido.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
