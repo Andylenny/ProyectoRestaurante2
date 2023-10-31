@@ -310,39 +310,44 @@ public class MeseroV extends javax.swing.JInternalFrame {
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
         // TODO add your handling code here:
-         try {
-        String dniText = jtDni.getText().trim(); // Obtén el texto del campo DNI y elimina espacios en blanco
-        if (dniText.length() == 8) { // Verifica que el DNI tenga una longitud de 8 caracteres
-            int dni = Integer.parseInt(dniText);
+        try {
+            String dniText = jtDni.getText().trim(); // Obtén el texto del campo DNI y elimina espacios en blanco
+            if (dniText.length() == 8) {
+                int dni = Integer.parseInt(dniText);
 
-            // Validar que el DNI no sea negativo
-            if (dni >= 0) {
-                String nombre = jtNombre.getText();
-                String apellido = jtApellido.getText();
-                boolean estado = jrEstado.isSelected();
+                if (dni >= 0) {
+                    String nombre = jtNombre.getText();
+                    String apellido = jtApellido.getText();
 
-                Mesero mesero = new Mesero(nombre, apellido, dni, estado);
+                    if (nombre.matches("^[a-zA-Z ]+$") && apellido.matches("^[a-zA-Z ]+$")) {
+                        boolean estado = jrEstado.isSelected();
 
-                MeseroData md = new MeseroData();
-                md.guardarMesero(mesero);
-                recargar();
+                        Mesero mesero = new Mesero(nombre, apellido, dni, estado);
+
+                        MeseroData md = new MeseroData();
+                        md.guardarMesero(mesero);
+                        recargar();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "En los campos 'Nombre' y 'Apellido' ingrese solo letras y espacios.");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "El DNI no puede ser un número negativo.");
+                }
             } else {
-                JOptionPane.showMessageDialog(this, "El DNI no puede ser un número negativo.");
+                JOptionPane.showMessageDialog(this, "El DNI debe tener una longitud de 8 caracteres.");
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "El DNI debe tener una longitud de 8 caracteres ");
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un DNI válido.");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al guardar al mesero: " + e.getMessage());
         }
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Ingrese un DNI válido.");
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Error al guardar al mesero: " + e.getMessage());
-    }
-                             
+
     }//GEN-LAST:event_jbGuardarActionPerformed
 
     private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
         // TODO add your handling code here:
-             try {
+         try {
         int dni = Integer.parseInt(jtDni.getText());
         String nombre = jtNombre.getText();
         String apellido = jtApellido.getText();
@@ -350,13 +355,18 @@ public class MeseroV extends javax.swing.JInternalFrame {
 
         MeseroData meseroEncontrado = new MeseroData();
         Mesero mesero = meseroEncontrado.buscarMeseroporDni(dni);
+        
         if (mesero != null) {
-            mesero.setDni(dni);
-            mesero.setNombre(nombre);
-            mesero.setApellido(apellido);
-            mesero.setEstado(estado);
-            meseroEncontrado.modificarMesero(mesero);
-            recargar();
+            if (nombre.matches("^[a-zA-Z ]+$") && apellido.matches("^[a-zA-Z ]+$")) {
+                mesero.setDni(dni);
+                mesero.setNombre(nombre);
+                mesero.setApellido(apellido);
+                mesero.setEstado(estado);
+                meseroEncontrado.modificarMesero(mesero);
+                recargar();
+            } else {
+                JOptionPane.showMessageDialog(this, "En los campos 'Nombre' y 'Apellido' ingrese solo letras y espacios.");
+            }
         } else {
             JOptionPane.showMessageDialog(this, "Mesero no encontrado.");
         }
@@ -365,7 +375,6 @@ public class MeseroV extends javax.swing.JInternalFrame {
     } catch (Exception e) {
         JOptionPane.showMessageDialog(this, "Error al modificar al mesero: " + e.getMessage());
     }
-        
     }//GEN-LAST:event_jbModificarActionPerformed
 
     private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
